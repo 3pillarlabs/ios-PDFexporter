@@ -70,7 +70,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) { (
 
 ## Important notes
 
-Images need to be used in Asset Catalog as vector .pdf files. Apple provides support for vectorial images starting with Xcodes 6 and iOS 7. Regular images are drawn at their actual size. At high zoom in level, the regular images look pixelated.
+Images need to be used in Asset Catalog as vector .pdf files. Apple provides support for vectorial images starting with Xcode 6 and iOS 7. Regular images are drawn at their actual size. At a high zoom level, the images look pixelated.
 
 ## License
 
