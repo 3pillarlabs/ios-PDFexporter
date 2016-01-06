@@ -10,35 +10,19 @@
 
 @implementation UILabel (Extension)
 
+- (void)drawBackgroundWithPath:(UIBezierPath *)path {
+    // the layer will draw the background as well
+}
+
 - (void)drawContentWithPath:(UIBezierPath *)path {
     [super drawContentWithPath:path];
     
-    [self drawTextInsideRect:path.bounds];
-}
-
-- (void)drawTextInsideRect:(CGRect)rect {
-    NSAttributedString *attrString = self.attributedText;
-    NSMutableAttributedString *mutableAttrString = [attrString mutableCopy];
-    
-    NSMutableDictionary *textAttributes = [[attrString attributesAtIndex:0 effectiveRange:nil] mutableCopy];
-    
-    NSMutableParagraphStyle *style = [[textAttributes valueForKey:NSParagraphStyleAttributeName] mutableCopy];
-    
-    if (style) {
-        style.lineBreakMode = NSLineBreakByWordWrapping;
-        [mutableAttrString addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, attrString.length)];
-    }
-    
-    CGRect textRect = [self.text boundingRectWithSize:CGSizeMake(CGRectGetWidth(rect), CGRectGetHeight(rect))
-                                              options:NSStringDrawingUsesLineFragmentOrigin
-                                           attributes:textAttributes
-                                              context:nil];
-    
-    textRect = CGRectMake(rect.origin.x,
-                          rect.origin.y + ((rect.size.height - textRect.size.height) / 2),
-                          rect.size.width,
-                          rect.size.height);
-    [mutableAttrString drawInRect:rect];
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
+    CGPoint origin = path.bounds.origin;
+    CGContextTranslateCTM(context, origin.x, origin.y);
+    [self drawLayer:self.layer inContext:context];
+    CGContextRestoreGState(context);
 }
 
 @end

@@ -14,8 +14,18 @@
     return !self.hidden && self.alpha > 0;
 }
 
-- (void)drawViewWithRect:(CGRect)rect {
-    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:self.layer.cornerRadius];
+- (CGRect)drawingFrame {
+    return self.frame;
+}
+
+#pragma mark - Public Interface
+
+- (NSArray *)drawingSubviewsForRect:(CGRect)rect {
+    return self.subviews;
+}
+
+- (void)drawViewWithPageRect:(CGRect)pageRect {
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:pageRect cornerRadius:self.layer.cornerRadius];
     
     [self drawBackgroundWithPath:path];
     [self drawContentWithPath:path];

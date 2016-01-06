@@ -21,6 +21,12 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		FF2F463B1C3A96130048D8E8 /* UIScrollView+Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = FF2F46391C3A96130048D8E8 /* UIScrollView+Extension.h */; };
+		FF2F463C1C3A96130048D8E8 /* UIScrollView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2F463A1C3A96130048D8E8 /* UIScrollView+Extension.m */; };
+		FF2F463F1C3A99190048D8E8 /* UITableView+Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = FF2F463D1C3A99190048D8E8 /* UITableView+Extension.h */; };
+		FF2F46401C3A99190048D8E8 /* UITableView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2F463E1C3A99190048D8E8 /* UITableView+Extension.m */; };
+		FF649BA91C3D00000022A311 /* UIView+StatePersistance.h in Headers */ = {isa = PBXBuildFile; fileRef = FF649BA71C3D00000022A311 /* UIView+StatePersistance.h */; };
+		FF649BAA1C3D00000022A311 /* UIView+StatePersistance.m in Sources */ = {isa = PBXBuildFile; fileRef = FF649BA81C3D00000022A311 /* UIView+StatePersistance.m */; };
 		FF7A16401C317B0B0073001D /* PDFHeaderFooterPaging.h in Headers */ = {isa = PBXBuildFile; fileRef = FF7A163B1C317B0B0073001D /* PDFHeaderFooterPaging.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF7A16411C317B0B0073001D /* PDFPaperSizes.h in Headers */ = {isa = PBXBuildFile; fileRef = FF7A163C1C317B0B0073001D /* PDFPaperSizes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF7A16421C317B0B0073001D /* PDFPaperSizes.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7A163D1C317B0B0073001D /* PDFPaperSizes.m */; };
@@ -57,6 +63,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FF2F46391C3A96130048D8E8 /* UIScrollView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Extension.h"; sourceTree = "<group>"; };
+		FF2F463A1C3A96130048D8E8 /* UIScrollView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Extension.m"; sourceTree = "<group>"; };
+		FF2F463D1C3A99190048D8E8 /* UITableView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+Extension.h"; sourceTree = "<group>"; };
+		FF2F463E1C3A99190048D8E8 /* UITableView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+Extension.m"; sourceTree = "<group>"; };
+		FF649BA71C3D00000022A311 /* UIView+StatePersistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+StatePersistance.h"; sourceTree = "<group>"; };
+		FF649BA81C3D00000022A311 /* UIView+StatePersistance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+StatePersistance.m"; sourceTree = "<group>"; };
 		FF7A163B1C317B0B0073001D /* PDFHeaderFooterPaging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFHeaderFooterPaging.h; sourceTree = "<group>"; };
 		FF7A163C1C317B0B0073001D /* PDFPaperSizes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFPaperSizes.h; sourceTree = "<group>"; };
 		FF7A163D1C317B0B0073001D /* PDFPaperSizes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFPaperSizes.m; sourceTree = "<group>"; };
@@ -186,8 +198,14 @@
 				FFB7CC961C29A79E0051004B /* UITextView+Extension.m */,
 				FFB7CC971C29A79E0051004B /* UIView+Extension.h */,
 				FFB7CC981C29A79E0051004B /* UIView+Extension.m */,
+				FF649BA71C3D00000022A311 /* UIView+StatePersistance.h */,
+				FF649BA81C3D00000022A311 /* UIView+StatePersistance.m */,
 				FFB7CC991C29A79E0051004B /* UIView+SubclassExtension.h */,
 				FFB7CC9A1C29A79E0051004B /* UIView+SubclassExtension.m */,
+				FF2F46391C3A96130048D8E8 /* UIScrollView+Extension.h */,
+				FF2F463A1C3A96130048D8E8 /* UIScrollView+Extension.m */,
+				FF2F463D1C3A99190048D8E8 /* UITableView+Extension.h */,
+				FF2F463E1C3A99190048D8E8 /* UITableView+Extension.m */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -202,8 +220,11 @@
 				FFB7CCA91C29A79F0051004B /* UITextView+Extension.h in Headers */,
 				FFB7CCAB1C29A79F0051004B /* UIView+Extension.h in Headers */,
 				FF7A16411C317B0B0073001D /* PDFPaperSizes.h in Headers */,
+				FF649BA91C3D00000022A311 /* UIView+StatePersistance.h in Headers */,
 				FF7A16431C317B0B0073001D /* PDFPrintPageRenderer.h in Headers */,
+				FF2F463F1C3A99190048D8E8 /* UITableView+Extension.h in Headers */,
 				FFB7CCA11C29A79F0051004B /* UIButton+Extension.h in Headers */,
+				FF2F463B1C3A96130048D8E8 /* UIScrollView+Extension.h in Headers */,
 				FF7A16401C317B0B0073001D /* PDFHeaderFooterPaging.h in Headers */,
 				FFB7CCA31C29A79F0051004B /* UIImageView+Extension.h in Headers */,
 				FFB7CCA71C29A79F0051004B /* UITextField+Extension.h in Headers */,
@@ -333,10 +354,13 @@
 				FFB7CCAC1C29A79F0051004B /* UIView+Extension.m in Sources */,
 				FFB7CCA61C29A79F0051004B /* UILabel+Extension.m in Sources */,
 				FF7A16421C317B0B0073001D /* PDFPaperSizes.m in Sources */,
+				FF2F463C1C3A96130048D8E8 /* UIScrollView+Extension.m in Sources */,
 				FFB7CCA81C29A79F0051004B /* UITextField+Extension.m in Sources */,
 				FF7A16441C317B0B0073001D /* PDFPrintPageRenderer.m in Sources */,
+				FF649BAA1C3D00000022A311 /* UIView+StatePersistance.m in Sources */,
 				FFB7CCAE1C29A79F0051004B /* UIView+SubclassExtension.m in Sources */,
 				FFB7CCAA1C29A79F0051004B /* UITextView+Extension.m in Sources */,
+				FF2F46401C3A99190048D8E8 /* UITableView+Extension.m in Sources */,
 				FFB7CCA41C29A79F0051004B /* UIImageView+Extension.m in Sources */,
 				FFB7CCA21C29A79F0051004B /* UIButton+Extension.m in Sources */,
 			);
@@ -461,6 +485,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.3PillarGlobal.PDFExporter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

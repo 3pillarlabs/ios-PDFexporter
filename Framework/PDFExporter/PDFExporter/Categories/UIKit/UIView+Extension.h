@@ -7,10 +7,16 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UIView (Extension)
 
 @property (nonatomic, readonly, getter=isDrawable) BOOL drawable;
+@property (nonatomic, readonly) CGRect drawingFrame;
 
-- (void)drawViewWithRect:(CGRect)rect;
+- (NSArray *)drawingSubviewsForRect:(CGRect)rect;
+- (void)drawViewWithPageRect:(CGRect)pageRect;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -5,9 +5,12 @@
 //  Copyright © 2015 3Pillar Global. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "UIView+Extension.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface UIButton (Extension)
 
 @end
+
+NS_ASSUME_NONNULL_END

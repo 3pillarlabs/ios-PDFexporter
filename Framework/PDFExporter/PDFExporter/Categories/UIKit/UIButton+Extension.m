@@ -18,7 +18,7 @@
 }
 
 - (void)drawTextInsideRect:(CGRect)rect {
-    [self.titleLabel drawViewWithRect:CGRectOffset(self.titleLabel.frame, rect.origin.x, rect.origin.y)];
+    [self.titleLabel drawViewWithPageRect:CGRectOffset(self.titleLabel.frame, rect.origin.x, rect.origin.y)];
 }
 
 @end

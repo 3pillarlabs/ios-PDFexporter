@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  *  Drawing override for subclasses.
  */
@@ -17,3 +19,5 @@
 - (void)drawBorderWithPath:(UIBezierPath *)path;
 
 @end
+
+NS_ASSUME_NONNULL_END
