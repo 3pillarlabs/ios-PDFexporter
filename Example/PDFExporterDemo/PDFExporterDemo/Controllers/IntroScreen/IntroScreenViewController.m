@@ -15,9 +15,11 @@
 
 static NSString * const kPDFFileName = @"ExportedPDF.pdf";
 
-@interface IntroScreenViewController () <SettingsViewControllerDelegate>
+@interface IntroScreenViewController () <SettingsViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UILabel *USLabel;
 
 @property (nonatomic) PDFPrintPageRenderer *PDFRenderer;
 
@@ -29,10 +31,12 @@ static NSString * const kPDFFileName = @"ExportedPDF.pdf";
     [super viewDidLoad];
     
     self.PDFRenderer = [PDFPrintPageRenderer new];
-    self.PDFRenderer.contentView = self.contentView;
+    self.PDFRenderer.contentView = self.tableView;
     
     self.PDFRenderer.headerView = [[HeaderView alloc] initFromXib];
     self.PDFRenderer.footerView = [[FooterView alloc] initFromXib];
+    
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
 }
 
 - (void)tapContentView:(id)sender {
@@ -57,6 +61,32 @@ static NSString * const kPDFFileName = @"ExportedPDF.pdf";
 - (IBAction)previewPDFButtonPressed:(UIButton *)sender {
     NSData *PDFData = [self generatePDF];
     [self presentViewController:[[PDFPreviewViewController alloc] initWithPDFData:PDFData] animated:YES completion:nil];
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 10;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class]) forIndexPath:indexPath];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", indexPath];
+    cell.textLabel.numberOfLines = 0;
+    cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [NSString stringWithFormat:@"%lu", (unsigned long)section];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    return [NSString stringWithFormat:@"%lu", (unsigned long)section];
 }
 
 #pragma mark - SettingsViewControllerDelegate

@@ -195,7 +195,15 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     CGRect scaledPageOffset = CGRectScaleByFactor(pageOffset, self.contentRectScale);
     scaledPageOffset.origin.y = pageIndex * CGRectGetHeight(scaledPageOffset);
     
+    if (pageIndex == 0) {
+        
+    }
+    
     NSArray *printableViews = [self viewHierarchy:self.contentView rootView:self.contentView containedInRect:scaledPageOffset]; // get all the views that are contained by the page
+    
+    if (pageIndex == 0) {
+        NSLog(@"Views:%@", printableViews);
+    }
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
