@@ -5,18 +5,18 @@
 //  Copyright © 2016 3Pillar Global. All rights reserved.
 //
 
-#import "UIView+StatePersistance.h"
+#import "UIView+PDFExporterStatePersistance.h"
 #import <objc/runtime.h>
 
 static void * const kUIViewPersistenceStatesAssociatedStorageKey = (void *)&kUIViewPersistenceStatesAssociatedStorageKey;
 
-@interface UIView (StatePersistancePrivate)
+@interface UIView (PDFExporterStatePersistancePrivate)
 
 @property (nonatomic) NSMutableArray *persistenceStates;
 
 @end
 
-@implementation UIView (StatePersistance)
+@implementation UIView (PDFExporterStatePersistance)
 
 - (NSMutableArray *)persistenceStates {
     NSMutableArray *_persistenceStates = objc_getAssociatedObject(self, kUIViewPersistenceStatesAssociatedStorageKey);

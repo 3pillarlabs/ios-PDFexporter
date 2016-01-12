@@ -5,10 +5,13 @@
 //  Copyright © 2015 3Pillar Global. All rights reserved.
 //
 
-#import "UITextView+Extension.h"
-#import "UIView+SubclassExtension.h"
+#import "UITextView+PDFExporterExtension.h"
 
-@implementation UITextView (Extension)
+@implementation UITextView (PDFExporterExtension)
+
+- (CGRect)drawingFrame {
+    return self.frame;
+}
 
 - (void)drawContentWithPath:(UIBezierPath *)path {
     [super drawContentWithPath:path];

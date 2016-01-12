@@ -5,13 +5,12 @@
 //  Copyright © 2016 3Pillar Global. All rights reserved.
 //
 
-#import "UIScrollView+Extension.h"
+#import "UIScrollView+PDFExporterExtension.h"
 
-@implementation UIScrollView (Extension)
+@implementation UIScrollView (PDFExporterExtension)
 
 - (CGRect)drawingFrame {
-    CGRect drawingFrame = CGRectZero;
-    drawingFrame.size.width = CGRectGetWidth(self.bounds);
+    CGRect drawingFrame = self.frame;
     drawingFrame.size.height = self.contentSize.height;
     return  drawingFrame;
 }

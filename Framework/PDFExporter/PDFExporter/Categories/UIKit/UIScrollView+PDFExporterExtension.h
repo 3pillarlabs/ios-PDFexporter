@@ -1,15 +1,15 @@
 //
-//  UITableView+Extension.h
+//  UIScrollView+Extension.h
 //  PDFExporter
 //
 //  Copyright © 2016 3Pillar Global. All rights reserved.
 //
 
-#import "UIView+Extension.h"
+#import "UIView+PDFExporterExtension.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UITableView (Extension)
+@interface UIScrollView (PDFExporterExtension)
 
 @end
 

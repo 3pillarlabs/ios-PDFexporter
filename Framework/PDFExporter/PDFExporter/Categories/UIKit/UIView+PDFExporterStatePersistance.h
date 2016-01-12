@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UIView (StatePersistance)
+@interface UIView (PDFExporterStatePersistance)
 
 - (void)saveState;
 - (void)restoreState;

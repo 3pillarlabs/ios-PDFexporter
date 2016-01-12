@@ -5,8 +5,8 @@
 //  Copyright © 2016 3Pillar Global. All rights reserved.
 //
 
-#import "UITableView+Extension.h"
-#import "UIView+StatePersistance.h"
+#import "UITableView+PDFExporterExtension.h"
+#import "UIView+PDFExporterStatePersistance.h"
 
 @interface UITableViewPersistenceState : UIViewPersistenceState
 
@@ -18,7 +18,7 @@
 
 @end
 
-@implementation UITableView (Extension)
+@implementation UITableView (PDFExporterExtension)
 
 - (NSArray *)drawingSubviewsForRect:(CGRect)rect {
     NSMutableArray *drawingSubviews = [NSMutableArray new];

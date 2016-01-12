@@ -7,8 +7,8 @@
 
 #import "PDFPrintPageRenderer.h"
 #import "PDFPaperSizes.h"
-#import "UIView+Extension.h"
-#import "UIView+StatePersistance.h"
+#import "UIView+PDFExporterExtension.h"
+#import "UIView+PDFExporterStatePersistance.h"
 #import "CGGeometry+Additions.h"
 
 @interface UIView (PDFPrintPageRendererPrivate)
@@ -157,7 +157,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     for (UIView *view in printableViews) {
         // convert view frame to the content view coordinates and offset based on header height and the page that's being drawn
         CGRect drawRect = [view convertRectToRootView:self.headerView];
-        [view drawViewWithPageRect:drawRect];
+        [view drawViewWithRect:drawRect];
     }
     
     CGContextRestoreGState(context);
@@ -179,7 +179,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     for (UIView *view in printableViews) {
         // convert view frame to the content view coordinates and offset based on header height and the page that's being drawn
         CGRect drawRect = [view convertRectToRootView:self.footerView];
-        [view drawViewWithPageRect:drawRect];
+        [view drawViewWithRect:drawRect];
     }
     
     CGContextRestoreGState(context);
@@ -209,7 +209,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
         // convert view frame to the content view coordinates and offset based on header height and the page that's being drawn
         CGRect drawRect = [view convertRectToRootView:self.contentView];
         drawRect = [self drawRectWithOriginalRect:drawRect pageRect:scaledPageOffset];
-        [view drawViewWithPageRect:drawRect];
+        [view drawViewWithRect:drawRect];
     }
     
     CGContextRestoreGState(context);
@@ -224,7 +224,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     if ([view isDrawable] && CGRectIntersectsRect(translatedViewFrame, rect)) {
         [views addObject:view];
         
-        if ([view isKindOfClass:[UITextField class]]) { // UITextField will handle its subviews
+        if ([view handlesSubviewsDrawing]) {
             return views;
         }
         
