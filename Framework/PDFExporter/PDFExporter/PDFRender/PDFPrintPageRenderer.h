@@ -8,11 +8,13 @@
 #import <UIKit/UIKit.h>
 #import <PDFExporter/PDFHeaderFooterPaging.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface PDFPrintPageRenderer : UIPrintPageRenderer
 
-@property (nonatomic) UIView *headerView;
+@property (nonatomic, nullable) UIView *headerView;
 @property (nonatomic) UIView *contentView;
-@property (nonatomic) UIView<PDFHeaderFooterPaging> *footerView;
+@property (nonatomic, nullable) UIView<PDFHeaderFooterPaging> *footerView;
 
 @property (nonatomic) UIEdgeInsets paperInsets; // default is {30, 30, 30, 30}
 @property (nonatomic) CGSize paperSize; // default is PDFPaperSizeUSLetter
@@ -21,3 +23,5 @@
 - (NSData *)drawPagesToPDFData;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -7,7 +7,8 @@
 
 #import "PDFPrintPageRenderer.h"
 #import "PDFPaperSizes.h"
-#import "UIView+Extension.h"
+#import "UIView+PDFExporterExtension.h"
+#import "UIView+PDFExporterStatePersistance.h"
 #import "CGGeometry+Additions.h"
 
 @interface UIView (PDFPrintPageRendererPrivate)
@@ -41,6 +42,11 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 }
 
 - (void)drawPages:(CGRect)inBounds {
+    if ([self.contentView isKindOfClass:[UITableView class]]) {
+        UITableView *tableView = (UITableView *)self.contentView;
+        [tableView saveState];
+    }
+    
     CGRect headerRect = self.printableRect;
     headerRect.size.height = self.headerHeight;
     self.headerRect = headerRect;
@@ -61,6 +67,11 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 		UIGraphicsBeginPDFPage();
 		[self drawPageAtIndex:pageNumber inRect:self.printableRect];
 	}
+    
+    if ([self.contentView isKindOfClass:[UITableView class]]) {
+        UITableView *tableView = (UITableView *)self.contentView;
+        [tableView restoreState];
+    }
 }
 
 - (NSData *)drawPagesToPDFData {
@@ -86,7 +97,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 
 - (NSInteger)numberOfPages {
     CGRect scaledContentRect = CGRectScaleByFactor(self.contentRect, self.contentRectScale);
-    return ceilf(CGRectGetHeight(self.contentView.bounds) / CGRectGetHeight(scaledContentRect));
+    return ceilf(CGRectGetHeight(self.contentView.drawingFrame) / CGRectGetHeight(scaledContentRect));
 }
 
 - (CGFloat)headerHeight {
@@ -102,8 +113,8 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 }
 
 - (CGRect)headerFrame {
-    CGFloat headerScaleFactor = self.printableRect.size.width / self.headerView.frame.size.width;
-    return CGRectScaleByFactor(self.headerView.frame, headerScaleFactor);
+    CGFloat headerScaleFactor = self.printableRect.size.width / self.headerView.drawingFrame.size.width;
+    return CGRectScaleByFactor(self.headerView.drawingFrame, headerScaleFactor);
 }
 
 - (CGFloat)footerHeight {
@@ -119,8 +130,8 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 }
 
 - (CGRect)footerFrame {
-    CGFloat footerScaleFactor = self.printableRect.size.width / self.footerView.frame.size.width;
-    return CGRectScaleByFactor(self.footerView.frame, footerScaleFactor);
+    CGFloat footerScaleFactor = self.printableRect.size.width / self.footerView.drawingFrame.size.width;
+    return CGRectScaleByFactor(self.footerView.drawingFrame, footerScaleFactor);
 }
 
 #pragma mark - Overriden
@@ -136,8 +147,8 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     
     NSArray *printableViews = [self viewHierarchy:self.headerView rootView:self.headerView containedInRect:self.headerView.bounds]; // get all the views that are contained by the header
     
-    CGFloat headerScaleFactor = self.printableRect.size.width / self.headerView.frame.size.width;
-    CGFloat heightHeaderScaleFactor = self.headerRect.size.height / self.headerView.frame.size.height;
+    CGFloat headerScaleFactor = self.printableRect.size.width / self.headerView.drawingFrame.size.width;
+    CGFloat heightHeaderScaleFactor = self.headerRect.size.height / self.headerView.drawingFrame.size.height;
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     CGContextTranslateCTM(context, headerRect.origin.x, headerRect.origin.y);
@@ -158,8 +169,8 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     [self.footerView updatePageNumber:(pageIndex + 1) totalPages:self.numberOfPages];
     NSArray *printableViews = [self viewHierarchy:self.footerView rootView:self.footerView containedInRect:self.footerView.bounds]; // get all the views that are contained by the footer
     
-    CGFloat footerScaleFactor = self.printableRect.size.width / self.footerView.frame.size.width;
-    CGFloat heightFooterScaleFactor = self.footerRect.size.height / self.footerView.frame.size.height;
+    CGFloat footerScaleFactor = self.printableRect.size.width / self.footerView.drawingFrame.size.width;
+    CGFloat heightFooterScaleFactor = self.footerRect.size.height / self.footerView.drawingFrame.size.height;
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     CGContextTranslateCTM(context, footerRect.origin.x, footerRect.origin.y);
@@ -183,6 +194,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     pageOffset.origin.y = pageHeightOffset;
     CGRect scaledPageOffset = CGRectScaleByFactor(pageOffset, self.contentRectScale);
     scaledPageOffset.origin.y = pageIndex * CGRectGetHeight(scaledPageOffset);
+    
     NSArray *printableViews = [self viewHierarchy:self.contentView rootView:self.contentView containedInRect:scaledPageOffset]; // get all the views that are contained by the page
     
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -212,11 +224,11 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     if ([view isDrawable] && CGRectIntersectsRect(translatedViewFrame, rect)) {
         [views addObject:view];
         
-        if ([view isKindOfClass:[UITextField class]]) { // UITextField will handle its subviews
+        if ([view handlesSubviewsDrawing]) {
             return views;
         }
         
-        for (UIView *subView in view.subviews) {
+        for (UIView *subView in [view drawingSubviewsForRect:[self.contentView convertRect:rect toView:view]]) {
             [views addObjectsFromArray:[self viewHierarchy:subView rootView:rootView containedInRect:rect]];
         }
     }
@@ -244,9 +256,9 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 
 - (CGRect)convertRectToRootView:(UIView *)rootView {
     if (self == rootView) {
-        return self.frame;
+        return self.drawingFrame;
     } else {
-        return [self.superview convertRect:self.frame toView:rootView];
+        return [self.superview convertRect:self.drawingFrame toView:rootView];
     }
 }
 

@@ -10,6 +10,8 @@
 
 // References for paper size: http://www.prepressure.com/library/paper-size , https://en.wikipedia.org/wiki/Paper_size
 
+CF_ASSUME_NONNULL_BEGIN
+
 CG_EXTERN CGSize const PDFPaperSizeUSLetter;
 CG_EXTERN CGSize const PDFPaperSizeUSGovernmentLetter;
 CG_EXTERN CGSize const PDFPaperSizeUSLegal;
@@ -64,3 +66,5 @@ CG_EXTERN CGFloat PDFPaperConvertInchToPoint(CGFloat inches);
 CG_EXTERN CGFloat PDFPaperConvertMMToPoint(CGFloat milimeters);
 CG_EXTERN CGSize PDFPaperSizeMakeUsingMM(CGFloat widthUsingMM, CGFloat heightUsingMM);
 CG_EXTERN CGSize PDFPaperSizeMakeUsingInch(CGFloat widthUsingInch, CGFloat heightUsingInch);
+
+CF_ASSUME_NONNULL_END

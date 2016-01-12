@@ -5,10 +5,13 @@
 //  Copyright © 2015 3Pillar Global. All rights reserved.
 //
 
-#import "UITextField+Extension.h"
-#import "UIView+SubclassExtension.h"
+#import "UITextField+PDFExporterExtension.h"
 
-@implementation UITextField (Extension)
+@implementation UITextField (PDFExporterExtension)
+
+- (BOOL)handlesSubviewsDrawing {
+    return YES;
+}
 
 - (void)drawBackgroundWithPath:(UIBezierPath *)path {
     // don't draw background, there is a subview as background

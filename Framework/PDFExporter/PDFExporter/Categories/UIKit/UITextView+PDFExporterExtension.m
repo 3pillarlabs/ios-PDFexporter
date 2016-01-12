@@ -1,22 +1,32 @@
 //
-//  UILabel+Extension.m
+//  UITextView+Extension.m
 //  PDFExporter
 //
 //  Copyright © 2015 3Pillar Global. All rights reserved.
 //
 
-#import "UILabel+Extension.h"
-#import "UIView+SubclassExtension.h"
+#import "UITextView+PDFExporterExtension.h"
 
-@implementation UILabel (Extension)
+@implementation UITextView (PDFExporterExtension)
+
+- (CGRect)drawingFrame {
+    return self.frame;
+}
 
 - (void)drawContentWithPath:(UIBezierPath *)path {
     [super drawContentWithPath:path];
     
-    [self drawTextInsideRect:path.bounds];
+    CGRect rect = path.bounds;
+    UIEdgeInsets inset = self.textContainerInset;
+    CGFloat fragmentPadding = self.textContainer.lineFragmentPadding;
+    CGRect textFrame = CGRectMake(CGRectGetMinX(rect) + fragmentPadding,
+                                  CGRectGetMinY(rect) + inset.top,
+                                  CGRectGetWidth(rect) - fragmentPadding * 2.f,
+                                  CGRectGetHeight(rect) - (inset.top + inset.bottom));
+    [self drawTextInRect:textFrame];
 }
 
-- (void)drawTextInsideRect:(CGRect)rect {
+- (void)drawTextInRect:(CGRect)rect {
     NSAttributedString *attrString = self.attributedText;
     NSMutableAttributedString *mutableAttrString = [attrString mutableCopy];
     
@@ -29,15 +39,6 @@
         [mutableAttrString addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, attrString.length)];
     }
     
-    CGRect textRect = [self.text boundingRectWithSize:CGSizeMake(CGRectGetWidth(rect), CGRectGetHeight(rect))
-                                              options:NSStringDrawingUsesLineFragmentOrigin
-                                           attributes:textAttributes
-                                              context:nil];
-    
-    textRect = CGRectMake(rect.origin.x,
-                          rect.origin.y + ((rect.size.height - textRect.size.height) / 2),
-                          rect.size.width,
-                          rect.size.height);
     [mutableAttrString drawInRect:rect];
 }
 
