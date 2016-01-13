@@ -31,7 +31,8 @@ static NSString * const kPDFFileName = @"ExportedPDF.pdf";
     [super viewDidLoad];
     
     self.PDFRenderer = [PDFPrintPageRenderer new];
-    self.PDFRenderer.contentView = self.tableView;
+    self.PDFRenderer.contentView = self.contentView;
+    self.PDFRenderer.pagingMask = PDFPagingOptionFooter;
     
     self.PDFRenderer.headerView = [[HeaderView alloc] initFromXib];
     self.PDFRenderer.footerView = [[FooterView alloc] initFromXib];

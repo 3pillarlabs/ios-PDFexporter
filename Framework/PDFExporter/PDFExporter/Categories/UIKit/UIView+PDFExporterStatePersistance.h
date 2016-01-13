@@ -11,6 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIView (PDFExporterStatePersistance)
 
+@property (nonatomic, getter=shouldPersistState) BOOL persistState;
+
 - (void)saveState;
 - (void)restoreState;
 
@@ -18,12 +20,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIViewPersistenceState : NSObject
 
+@property (nonatomic) CGRect frame;
+
 @end
 
 @interface UIView (StatePersistanceSubclassing)
 
-- (nullable UIViewPersistenceState *)createState;
-- (void)performRestoreWithState:(UIViewPersistenceState *)state;
+- (Class)stateClass;
+- (void)configureState:(UIViewPersistenceState *)state NS_REQUIRES_SUPER;
+- (void)performRestoreWithState:(UIViewPersistenceState *)state NS_REQUIRES_SUPER;
 
 @end
 

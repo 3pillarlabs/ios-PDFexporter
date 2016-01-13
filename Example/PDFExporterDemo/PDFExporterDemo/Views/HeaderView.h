@@ -6,8 +6,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@import PDFExporter;
 
-@interface HeaderView : UIView
+@interface HeaderView : UIView <PDFHeaderFooterPaging>
 
 - (instancetype)initFromXib;
 

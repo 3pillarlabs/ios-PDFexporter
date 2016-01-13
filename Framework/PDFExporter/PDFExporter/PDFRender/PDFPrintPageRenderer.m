@@ -7,15 +7,10 @@
 
 #import "PDFPrintPageRenderer.h"
 #import "PDFPaperSizes.h"
-#import "UIView+PDFExporterExtension.h"
+#import "UIView+PDFExporterDrawing.h"
 #import "UIView+PDFExporterStatePersistance.h"
+#import "UIScrollView+PDFExporterDrawing.h"
 #import "CGGeometry+Additions.h"
-
-@interface UIView (PDFPrintPageRendererPrivate)
-
-- (CGRect)convertRectToRootView:(UIView *)rootView;
-
-@end
 
 static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 
@@ -36,42 +31,20 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     if (self = [super init]) {
         self.paperSize = PDFPaperSizeUSLetter;
         self.paperInsets = kDefaultPaperInsets;
+        self.pagingMask = PDFPagingOptionNone;
     }
     
     return self;
 }
 
 - (void)drawPages:(CGRect)inBounds {
-    if ([self.contentView isKindOfClass:[UITableView class]]) {
-        UITableView *tableView = (UITableView *)self.contentView;
-        [tableView saveState];
-    }
-    
-    CGRect headerRect = self.printableRect;
-    headerRect.size.height = self.headerHeight;
-    self.headerRect = headerRect;
-    self.footerRect = CGRectMake(CGRectGetMinX(self.printableRect),
-                                 CGRectGetMaxY(self.printableRect) - self.footerHeight,
-                                 CGRectGetWidth(self.printableRect),
-                                 self.footerHeight);
-    self.contentRect = CGRectMake(CGRectGetMinX(self.printableRect),
-                                  CGRectGetMaxY(self.headerRect),
-                                  CGRectGetWidth(self.printableRect),
-                                  CGRectGetMinY(self.footerRect) - CGRectGetMaxY(self.headerRect));
-    NSAssert(CGRectGetWidth(self.contentRect) >= 10.f && CGRectGetHeight(self.contentRect) >= 10.f, @"Invalid paperInsets or paperSize. Content rectangle should have at least 10 points width and height");
-    
-    self.contentViewScale = self.contentRect.size.width / self.contentView.bounds.size.width;
-    self.contentRectScale = self.contentView.bounds.size.width / self.contentRect.size.width;
-
+    [self calculateGeometry];
+    [self prepareContentForDrawing];
 	for (NSInteger pageNumber = 0; pageNumber < self.numberOfPages; pageNumber++) {
 		UIGraphicsBeginPDFPage();
 		[self drawPageAtIndex:pageNumber inRect:self.printableRect];
 	}
-    
-    if ([self.contentView isKindOfClass:[UITableView class]]) {
-        UITableView *tableView = (UITableView *)self.contentView;
-        [tableView restoreState];
-    }
+    [self cleanContentAfterDrawing];
 }
 
 - (NSData *)drawPagesToPDFData {
@@ -145,7 +118,10 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 - (void)drawHeaderForPageAtIndex:(NSInteger)pageIndex inRect:(CGRect)headerRect {
     [super drawHeaderForPageAtIndex:pageIndex inRect:headerRect];
     
-    NSArray *printableViews = [self viewHierarchy:self.headerView rootView:self.headerView containedInRect:self.headerView.bounds]; // get all the views that are contained by the header
+    if ((self.pagingMask & PDFPagingOptionHeader) == PDFPagingOptionHeader) {
+        NSAssert([self.headerView respondsToSelector:@selector(updatePageNumber:totalPages:)], @"Header view doesn't implement selector (updatePageNumber:totalPages:).");
+        [self.headerView updatePageNumber:pageIndex totalPages:self.numberOfPages];
+    }
     
     CGFloat headerScaleFactor = self.printableRect.size.width / self.headerView.drawingFrame.size.width;
     CGFloat heightHeaderScaleFactor = self.headerRect.size.height / self.headerView.drawingFrame.size.height;
@@ -154,11 +130,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     CGContextTranslateCTM(context, headerRect.origin.x, headerRect.origin.y);
     CGContextScaleCTM(context, headerScaleFactor, heightHeaderScaleFactor);
     
-    for (UIView *view in printableViews) {
-        // convert view frame to the content view coordinates and offset based on header height and the page that's being drawn
-        CGRect drawRect = [view convertRectToRootView:self.headerView];
-        [view drawViewWithRect:drawRect];
-    }
+    [self.headerView drawViewWithinPageRect:self.headerView.bounds];
     
     CGContextRestoreGState(context);
 }
@@ -166,8 +138,10 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 - (void)drawFooterForPageAtIndex:(NSInteger)pageIndex inRect:(CGRect)footerRect {
     [super drawFooterForPageAtIndex:pageIndex inRect:footerRect];
     
-    [self.footerView updatePageNumber:(pageIndex + 1) totalPages:self.numberOfPages];
-    NSArray *printableViews = [self viewHierarchy:self.footerView rootView:self.footerView containedInRect:self.footerView.bounds]; // get all the views that are contained by the footer
+    if ((self.pagingMask & PDFPagingOptionFooter) == PDFPagingOptionFooter) {
+        NSAssert([self.footerView respondsToSelector:@selector(updatePageNumber:totalPages:)], @"Footer view doesn't implement selector (updatePageNumber:totalPages:).");
+        [self.footerView updatePageNumber:(pageIndex + 1) totalPages:self.numberOfPages];
+    }
     
     CGFloat footerScaleFactor = self.printableRect.size.width / self.footerView.drawingFrame.size.width;
     CGFloat heightFooterScaleFactor = self.footerRect.size.height / self.footerView.drawingFrame.size.height;
@@ -176,34 +150,13 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     CGContextTranslateCTM(context, footerRect.origin.x, footerRect.origin.y);
     CGContextScaleCTM(context, footerScaleFactor, heightFooterScaleFactor);
     
-    for (UIView *view in printableViews) {
-        // convert view frame to the content view coordinates and offset based on header height and the page that's being drawn
-        CGRect drawRect = [view convertRectToRootView:self.footerView];
-        [view drawViewWithRect:drawRect];
-    }
+    [self.footerView drawViewWithinPageRect:self.footerView.bounds];
     
     CGContextRestoreGState(context);
 }
 
 - (void)drawContentForPageAtIndex:(NSInteger)pageIndex inRect:(CGRect)contentRect {
     [super drawContentForPageAtIndex:pageIndex inRect:contentRect];
-    
-    CGFloat pageHeightOffset = pageIndex * CGRectGetHeight(self.contentRect);
-    CGRect pageOffset = contentRect;
-    pageOffset.origin.x = 0.f;
-    pageOffset.origin.y = pageHeightOffset;
-    CGRect scaledPageOffset = CGRectScaleByFactor(pageOffset, self.contentRectScale);
-    scaledPageOffset.origin.y = pageIndex * CGRectGetHeight(scaledPageOffset);
-    
-    if (pageIndex == 0) {
-        
-    }
-    
-    NSArray *printableViews = [self viewHierarchy:self.contentView rootView:self.contentView containedInRect:scaledPageOffset]; // get all the views that are contained by the page
-    
-    if (pageIndex == 0) {
-        NSLog(@"Views:%@", printableViews);
-    }
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
@@ -213,61 +166,85 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     CGContextTranslateCTM(context, contentRect.origin.x, contentRect.origin.y);
     CGContextScaleCTM(context, self.contentViewScale, self.contentViewScale);
     
-    for (UIView *view in printableViews) {
-        // convert view frame to the content view coordinates and offset based on header height and the page that's being drawn
-        CGRect drawRect = [view convertRectToRootView:self.contentView];
-        drawRect = [self drawRectWithOriginalRect:drawRect pageRect:scaledPageOffset];
-        [view drawViewWithRect:drawRect];
-    }
+    CGRect scaledPageRect = [self scaledPageRectOffsetForIndex:pageIndex];
+    [self.contentView drawViewWithinPageRect:scaledPageRect];
     
     CGContextRestoreGState(context);
 }
 
+- (CGRect)scaledPageRectOffsetForIndex:(NSUInteger)index {
+    CGFloat pageHeightOffset = index * CGRectGetHeight(self.contentRect);
+    CGRect pageOffset = self.contentRect;
+    pageOffset.origin.x = 0.f;
+    pageOffset.origin.y = pageHeightOffset;
+    CGRect scaledPageOffset = CGRectScaleByFactor(pageOffset, self.contentRectScale);
+    scaledPageOffset.origin.y = index * CGRectGetHeight(scaledPageOffset);
+    return scaledPageOffset;
+}
+
 #pragma mark - Private
 
-- (NSArray *)viewHierarchy:(UIView *)view rootView:(UIView *)rootView containedInRect:(CGRect)rect {
-    NSMutableArray *views = [NSMutableArray array];
+- (void)calculateGeometry {
+    CGRect headerRect = self.printableRect;
+    headerRect.size.height = self.headerHeight;
+    self.headerRect = headerRect;
+    self.footerRect = CGRectMake(CGRectGetMinX(self.printableRect),
+                                 CGRectGetMaxY(self.printableRect) - self.footerHeight,
+                                 CGRectGetWidth(self.printableRect),
+                                 self.footerHeight);
+    self.contentRect = CGRectMake(CGRectGetMinX(self.printableRect),
+                                  CGRectGetMaxY(self.headerRect),
+                                  CGRectGetWidth(self.printableRect),
+                                  CGRectGetMinY(self.footerRect) - CGRectGetMaxY(self.headerRect));
+    NSAssert(CGRectGetWidth(self.contentRect) >= 10.f && CGRectGetHeight(self.contentRect) >= 10.f,
+             @"Invalid paperInsets or paperSize. Content rectangle should have at least 10 points width and height");
     
-    CGRect translatedViewFrame = [view convertRectToRootView:rootView];
-    if ([view isDrawable] && CGRectIntersectsRect(translatedViewFrame, rect)) {
-        [views addObject:view];
-        
-        if ([view handlesSubviewsDrawing]) {
-            return views;
-        }
-        
-        for (UIView *subView in [view drawingSubviewsForRect:[self.contentView convertRect:rect toView:view]]) {
-            [views addObjectsFromArray:[self viewHierarchy:subView rootView:rootView containedInRect:rect]];
-        }
-    }
+    self.contentViewScale = self.contentRect.size.width / self.contentView.bounds.size.width;
+    self.contentRectScale = self.contentView.bounds.size.width / self.contentRect.size.width;
     
-    return views;
+    
 }
 
-- (CGRect)drawRectWithOriginalRect:(CGRect)originalRect pageRect:(CGRect)pageRect {
-    if (CGRectGetMinY(pageRect) == 0) { // if it is first page
-        return originalRect;            // don't modify it
-    } else {
-        CGFloat drawHeight = CGRectGetMinY(originalRect) - CGRectGetMinY(pageRect);
-        if (drawHeight < 0) {
-            originalRect.origin.y = drawHeight; // change y in order to draw what's left
-        } else {
-            originalRect.origin.y -= CGRectGetMinY(pageRect); // normalize rect
-        }
-        return originalRect;
+- (void)prepareContentForDrawing {
+    self.headerView.persistState = YES;
+    self.contentView.persistState = YES;
+    if ([self.contentView isKindOfClass:[UIScrollView class]]) {
+        UIScrollView *scrollView = (UIScrollView *)self.contentView;
+        scrollView.drawEntireContentSize = YES;
     }
+    self.footerView.persistState = YES;
+    
+    [self.headerView prepareForDrawingWithPageSize:self.headerView.bounds.size];
+    CGRect scaledPageRect = [self scaledPageRectOffsetForIndex:0];
+    [self.contentView prepareForDrawingWithPageSize:scaledPageRect.size];
+    [self.footerView prepareForDrawingWithPageSize:self.footerView.bounds.size];
+    
+    CGRect viewFrame = self.headerView.frame;
+    viewFrame.origin = CGPointZero;
+    self.headerView.frame = viewFrame;
+    [self.headerView layoutIfNeeded];
+    viewFrame = self.contentView.frame;
+    viewFrame.origin = CGPointZero;
+    self.contentView.frame = viewFrame;
+    [self.contentView layoutIfNeeded];
+    viewFrame = self.footerView.frame;
+    viewFrame.origin = CGPointZero;
+    self.footerView.frame = viewFrame;
+    [self.footerView layoutIfNeeded];
 }
 
-@end
-
-@implementation UIView (PDFPrintPageRendererPrivate)
-
-- (CGRect)convertRectToRootView:(UIView *)rootView {
-    if (self == rootView) {
-        return self.drawingFrame;
-    } else {
-        return [self.superview convertRect:self.drawingFrame toView:rootView];
+- (void)cleanContentAfterDrawing {
+    [self.headerView cleanAfterDrawing];
+    [self.contentView cleanAfterDrawing];
+    [self.footerView cleanAfterDrawing];
+    
+    self.headerView.persistState = NO;
+    self.contentView.persistState = NO;
+    if ([self.contentView isKindOfClass:[UIScrollView class]]) {
+        UIScrollView *scrollView = (UIScrollView *)self.contentView;
+        scrollView.drawEntireContentSize = NO;
     }
+    self.footerView.persistState = NO;
 }
 
 @end

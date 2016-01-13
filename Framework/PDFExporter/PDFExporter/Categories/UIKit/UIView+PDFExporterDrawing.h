@@ -9,18 +9,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UIView (PDFExporterExtension)
+@interface UIView (PDFExporterDrawing)
 
 @property (nonatomic, readonly, getter=isDrawable) BOOL drawable;
+@property (nonatomic, readonly, getter=shouldDrawSubviews) BOOL drawSubviews;
 @property (nonatomic, readonly) CGRect drawingFrame;
 
-- (BOOL)handlesSubviewsDrawing; //  by default returns NO.
+- (void)prepareForDrawingWithPageSize:(CGSize)size;
+- (void)cleanAfterDrawing;
 
-- (NSArray *)drawingSubviewsForRect:(CGRect)rect;
-
-- (void)drawViewWithRect:(CGRect)rect;
+- (void)drawViewWithinPageRect:(CGRect)rect;
 - (void)drawBackgroundWithPath:(UIBezierPath *)path;
 - (void)drawContentWithPath:(UIBezierPath *)path;
+- (void)drawSubviewsWithPath:(UIBezierPath *)path withinPageRect:(CGRect)rect;
 - (void)drawBorderWithPath:(UIBezierPath *)path;
 
 @end

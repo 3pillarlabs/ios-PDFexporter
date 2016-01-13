@@ -5,11 +5,13 @@
 //  Copyright © 2016 3Pillar Global. All rights reserved.
 //
 
-#import "UIView+PDFExporterExtension.h"
+#import "UIView+PDFExporterDrawing.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UIScrollView (PDFExporterExtension)
+@interface UIScrollView (PDFExporterDrawing)
+
+@property (nonatomic, getter=isDrawingEntireContentSize) BOOL drawEntireContentSize;
 
 @end
 

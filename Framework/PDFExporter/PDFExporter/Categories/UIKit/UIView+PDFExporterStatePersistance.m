@@ -9,6 +9,7 @@
 #import <objc/runtime.h>
 
 static void * const kUIViewPersistenceStatesAssociatedStorageKey = (void *)&kUIViewPersistenceStatesAssociatedStorageKey;
+static void * const kUIViewPersistStateAssociatedStorageKey = (void *)&kUIViewPersistStateAssociatedStorageKey;
 
 @interface UIView (PDFExporterStatePersistancePrivate)
 
@@ -31,29 +32,51 @@ static void * const kUIViewPersistenceStatesAssociatedStorageKey = (void *)&kUIV
     objc_setAssociatedObject(self, kUIViewPersistenceStatesAssociatedStorageKey, persistenceStates, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)saveState {
-    UIViewPersistenceState *state = [self createState];
-    if (state) {
-        [self.persistenceStates addObject:state];
+- (BOOL)shouldPersistState {
+    NSNumber *persistStateNumber = objc_getAssociatedObject(self, kUIViewPersistStateAssociatedStorageKey);
+    return [persistStateNumber boolValue];
+}
+
+- (void)setPersistState:(BOOL)persistState {
+    NSNumber *persistStateNumber = nil;
+    if (persistState) {
+        persistStateNumber = @(persistState);
     }
+    objc_setAssociatedObject(self, kUIViewPersistStateAssociatedStorageKey, persistStateNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+#pragma mark - Public Interface
+
+- (void)saveState {
+    if (![self shouldPersistState]) {
+        return;
+    }
+    UIViewPersistenceState *state = [[self stateClass] new];
+    [self configureState:state];
+    [self.persistenceStates addObject:state];
 }
 
 - (void)restoreState {
-    UIViewPersistenceState *state = [self.persistenceStates lastObject];
-    if (state) {
-        [self performRestoreWithState:state];
-        [self.persistenceStates removeLastObject];
+    if (![self shouldPersistState]) {
+        return;
     }
+    UIViewPersistenceState *state = [self.persistenceStates lastObject];
+    [self performRestoreWithState:state];
+    [self.persistenceStates removeLastObject];
 }
 
 #pragma mark - StatePersistanceSubclassing
 
-- (UIViewPersistenceState *)createState {
-    return nil;
+- (Class)stateClass {
+    return [UIViewPersistenceState class];
+}
+
+- (void)configureState:(UIViewPersistenceState *)state {
+    state.frame = self.frame;
 }
 
 - (void)performRestoreWithState:(UIViewPersistenceState *)state {
-    // Nothing to do by default
+    self.frame = state.frame;
 }
 
 @end
