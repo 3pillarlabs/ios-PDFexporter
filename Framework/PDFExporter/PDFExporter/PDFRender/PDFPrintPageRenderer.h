@@ -23,7 +23,7 @@ typedef NS_OPTIONS(NSUInteger, PDFPagingOptions) {
 @property (nonatomic, nullable) UIView<PDFHeaderFooterPaging> *footerView; // if pagingMask && PDFPagingOptionFooter, footerView should implement protocol
 @property (nonatomic) PDFPagingOptions pagingMask; // default is PDFPagingOptionNone
 
-@property (nonatomic) UIEdgeInsets paperInsets; // default is {30, 30, 30, 30}
+@property (nonatomic) UIEdgeInsets paperInset; // default is {30, 30, 30, 30}
 @property (nonatomic) CGSize paperSize; // default is PDFPaperSizeUSLetter
 @property (nonatomic, readonly) CGRect contentRect;
 

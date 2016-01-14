@@ -6,8 +6,21 @@
 //
 
 #import "UITableView+PDFExporterDrawing.h"
+#import "UIView+PDFExporterDrawing.h"
 
 @implementation UITableView (PDFExporterExtension)
+
+- (void)drawViewWithinPageRect:(CGRect)rect {
+    CGRect drawingFrame = self.drawingFrame;
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:drawingFrame cornerRadius:self.layer.cornerRadius];
+    
+    [self drawBackgroundWithPath:path];
+    [self drawContentWithPath:path];
+    [self drawSubviewsWithPath:path withinPageRect:rect];
+    if (self.layer.borderWidth != 0) {
+        [self drawBorderWithPath:path];
+    }
+}
 
 - (void)drawSubviewsWithPath:(UIBezierPath *)path withinPageRect:(CGRect)rect {
     CGPoint offset = CGPointZero;
@@ -16,8 +29,10 @@
          yCoordinate += CGRectGetHeight(self.bounds)) {
         offset.y = yCoordinate;
         self.contentOffset = offset;
-        [self layoutHeadersAndFooters];
+        CGRect frame = self.frame;
         [self layoutIfNeeded];
+        self.frame = frame;
+        [self layoutHeadersAndFooters];
         [super drawSubviewsWithPath:path withinPageRect:rect];
     }
 }
@@ -27,12 +42,10 @@
         UIView *headerView = [self headerViewForSection:section];
         if (headerView) {
             headerView.frame = [self rectForHeaderInSection:section];
-            [headerView layoutIfNeeded];
         }
         UIView *footerView = [self footerViewForSection:section];
         if (footerView) {
             footerView.frame = [self rectForFooterInSection:section];
-            [footerView layoutIfNeeded];
         }
     }
 }

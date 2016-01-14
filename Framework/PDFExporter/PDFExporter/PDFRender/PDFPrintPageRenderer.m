@@ -30,7 +30,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 - (instancetype)init {
     if (self = [super init]) {
         self.paperSize = PDFPaperSizeUSLetter;
-        self.paperInsets = kDefaultPaperInsets;
+        self.paperInset = kDefaultPaperInsets;
         self.pagingMask = PDFPagingOptionNone;
     }
     
@@ -65,7 +65,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 }
 
 - (CGRect)printableRect {
-    return UIEdgeInsetsInsetRect(self.paperRect, self.paperInsets);
+    return UIEdgeInsetsInsetRect(self.paperRect, self.paperInset);
 }
 
 - (NSInteger)numberOfPages {
@@ -219,18 +219,18 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     [self.contentView prepareForDrawingWithPageSize:scaledPageRect.size];
     [self.footerView prepareForDrawingWithPageSize:self.footerView.bounds.size];
     
+    [self.headerView layoutIfNeeded];
+    [self.contentView layoutIfNeeded];
+    [self.footerView layoutIfNeeded];
     CGRect viewFrame = self.headerView.frame;
     viewFrame.origin = CGPointZero;
     self.headerView.frame = viewFrame;
-    [self.headerView layoutIfNeeded];
     viewFrame = self.contentView.frame;
     viewFrame.origin = CGPointZero;
     self.contentView.frame = viewFrame;
-    [self.contentView layoutIfNeeded];
     viewFrame = self.footerView.frame;
     viewFrame.origin = CGPointZero;
     self.footerView.frame = viewFrame;
-    [self.footerView layoutIfNeeded];
 }
 
 - (void)cleanContentAfterDrawing {

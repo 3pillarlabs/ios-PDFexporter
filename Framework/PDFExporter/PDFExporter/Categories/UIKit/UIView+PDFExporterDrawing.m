@@ -6,20 +6,7 @@
 //
 
 #import "UIView+PDFExporterDrawing.h"
-#import <objc/runtime.h>
 #import "UIView+PDFExporterStatePersistance.h"
-
-static void * const kUIViewPageViewsAssociatedStorageKey = (void *)&kUIViewPageViewsAssociatedStorageKey;
-static void * const kUIViewCreateMetadataAssociatedStorageKey = (void *)&kUIViewCreateMetadataAssociatedStorageKey;
-
-@interface UIView (PDFExporterMetadata)
-
-@property (nonatomic) NSMutableDictionary *pageViews;
-
-- (void)createMetadataWithPageSize:(CGSize)size rootView:(UIView *)rootView;
-- (void)removeMetadata;
-
-@end
 
 @implementation UIView (PDFExporterDrawing)
 
@@ -31,41 +18,20 @@ static void * const kUIViewCreateMetadataAssociatedStorageKey = (void *)&kUIView
     return YES;
 }
 
-- (BOOL)shouldCreateMetadata {
-    NSNumber *drawEntireContentSizeNumber = objc_getAssociatedObject(self, kUIViewCreateMetadataAssociatedStorageKey);
-    if ([[self superview] shouldCreateMetadata]) {
-        return [drawEntireContentSizeNumber boolValue];
-    } else {
-        return NO;
-    }
-}
-
-- (void)setCreateMetadata:(BOOL)createMetadata {
-    NSNumber *drawEntireContentSizeNumber = nil;
-    if (createMetadata) {
-        drawEntireContentSizeNumber = @(createMetadata);
-    }
-    objc_setAssociatedObject(self, kUIViewCreateMetadataAssociatedStorageKey, drawEntireContentSizeNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
 - (CGRect)drawingFrame {
     return self.frame;
 }
 
 #pragma mark - Drawing Setup
 
-- (void)prepareForDrawingWithPageSize:(CGSize)size rootView:(UIView *)rootView {
-    if ([self shouldCreateMetadata]) {
-        [self createMetadataWithPageSize:size rootView:rootView];
-    }
+- (void)prepareForDrawingWithPageSize:(CGSize)size {
     [self saveState];
     for (UIView *view in self.subviews) {
-        [view prepareForDrawingWithPageSize:size rootView:rootView];
+        [view prepareForDrawingWithPageSize:size];
     }
 }
 
 - (void)cleanAfterDrawing {
-    [self removeMetadata];
     [self restoreState];
     for (UIView *view in self.subviews) {
         [view cleanAfterDrawing];
@@ -100,6 +66,7 @@ static void * const kUIViewCreateMetadataAssociatedStorageKey = (void *)&kUIView
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     CGContextTranslateCTM(context, rect.origin.x, rect.origin.y);
+    rect.origin = CGPointZero; // context was translated, there is no need for origin
     [self drawRect:rect];
     CGContextRestoreGState(context);
 }
@@ -115,8 +82,7 @@ static void * const kUIViewCreateMetadataAssociatedStorageKey = (void *)&kUIView
         CGContextClip(context);
     }
     CGContextTranslateCTM(context, self.drawingFrame.origin.x, self.drawingFrame.origin.y);
-    NSArray *subviews = [self subviewsForPageRect:rect] ? : self.subviews;
-    for (UIView *view in subviews) {
+    for (UIView *view in self.subviews) {
         if ([view isDrawable]) {
             [view drawViewWithinPageRect:rect];
         }
@@ -136,50 +102,6 @@ static void * const kUIViewCreateMetadataAssociatedStorageKey = (void *)&kUIView
     shapeLayer.lineWidth = self.layer.borderWidth * 2; // the stroke is draw half inside, half outside
     [shapeLayer renderInContext:context];
     CGContextRestoreGState(context);
-}
-
-- (NSMutableArray *)subviewsForPageRect:(CGRect)rect {
-    NSUInteger page = CGRectGetMinY(rect) / CGRectGetHeight(rect);
-    return self.pageViews[@(page)];
-}
-
-@end
-
-@implementation UIView (PDFExporterMetadata)
-
-- (NSMutableDictionary *)pageViews {
-    NSMutableDictionary *_pageViews = objc_getAssociatedObject(self, kUIViewPageViewsAssociatedStorageKey);
-    if (!_pageViews) {
-        _pageViews = [NSMutableDictionary new];
-        self.pageViews = _pageViews;
-    }
-    return _pageViews;
-}
-
-- (void)setPageViews:(NSMutableDictionary *)pageViews {
-    objc_setAssociatedObject(self, kUIViewPageViewsAssociatedStorageKey, pageViews, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-#pragma mark - Interface
-
-- (void)createMetadataWithPageSize:(CGSize)size rootView:(UIView *)rootView {
-    for (UIView *view in self.subviews) {
-        CGRect drawingFrame = [rootView convertRect:view.drawingFrame fromView:view];
-        NSUInteger firstPage = CGRectGetMinY(drawingFrame) / size.height;
-        NSUInteger lastPage = CGRectGetMaxY(drawingFrame) / size.height;
-        for (NSUInteger pageIndex = firstPage; pageIndex <= lastPage; ++pageIndex) {
-            NSMutableArray *pageSubviews = self.pageViews[@(pageIndex)];
-            if (!pageSubviews) {
-                pageSubviews = [NSMutableArray new];
-                self.pageViews[@(pageIndex)] = pageSubviews;
-            }
-            [pageSubviews addObject:view];
-        }
-    }
-}
-
-- (void)removeMetadata {
-    self.pageViews = nil;
 }
 
 @end
