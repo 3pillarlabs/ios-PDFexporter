@@ -44,30 +44,6 @@ let PDFData: NSData = PDFRenderer.drawPagesToPDFData() // let the framework to  
 
 For more paper sizes , see [PDFPaperSize header](Framework/PDFExporter/PDFExporter/PDFRender/PDFPaperSizes.h). 
 
-If the view hierarchy is complex and drawing is taking too long, the task may be moved on a background queue. E.g. :
-
-**Objective-C**
-
-```objective-c
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *PDFData = [PDFRenderer drawPagesToPDFData]; // draw pages on background queue
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // use PDFData on main queue
-        });
-    });
-```
-
-**Swift**
-
-```swift
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) { () -> Void in
-	let PDFData: NSData = PDFRenderer.drawPagesToPDFData() // draw pages on background queue
-	dispatch_async(dispatch_get_main_queue() { () -> Void in
-		// use PDFData on main queue
-	}
-}
-```
-
 ## Important notes
 
 Images need to be used in Asset Catalog as vector .pdf files. Apple provides support for vectorial images starting with Xcode 6 and iOS 7. Regular images are drawn at their actual size. At a high zoom level, the images look pixelated.

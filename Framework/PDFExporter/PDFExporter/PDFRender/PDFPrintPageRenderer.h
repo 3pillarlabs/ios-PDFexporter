@@ -27,6 +27,7 @@ typedef NS_OPTIONS(NSUInteger, PDFPagingOptions) {
 @property (nonatomic) CGSize paperSize; // default is PDFPaperSizeUSLetter
 @property (nonatomic, readonly) CGRect contentRect;
 
+// Draws content. As any drawing method should be called only on main queue.
 - (NSData *)drawPagesToPDFData;
 
 @end
