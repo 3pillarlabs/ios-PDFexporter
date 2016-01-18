@@ -25,7 +25,14 @@ typedef NS_OPTIONS(NSUInteger, PDFPagingOptions) {
 
 @property (nonatomic) UIEdgeInsets paperInset; // default is {30, 30, 30, 30}
 @property (nonatomic) CGSize paperSize; // default is PDFPaperSizeUSLetter
+@property (nonatomic, readonly) CGRect headerRect;
 @property (nonatomic, readonly) CGRect contentRect;
+@property (nonatomic, readonly) CGRect footerRect;
+
+// By default nothing is scaled, i.e. properties are set to NO.
+@property (nonatomic, getter=isScalingHeader) BOOL scaleHeader;
+@property (nonatomic, getter=isScalingContent) BOOL scaleContent;
+@property (nonatomic, getter=isScalingFooter) BOOL scaleFooter;
 
 // Draws content. As any drawing method should be called only on main queue.
 - (NSData *)drawPagesToPDFData;

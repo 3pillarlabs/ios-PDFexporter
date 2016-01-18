@@ -20,6 +20,9 @@ static NSString * const kPDFFileName = @"ExportedPDF.pdf";
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *USLabel;
+@property (weak, nonatomic) IBOutlet UITextView *textView;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewWidthConstraint;
 
 @property (nonatomic) PDFPrintPageRenderer *PDFRenderer;
 
@@ -31,11 +34,30 @@ static NSString * const kPDFFileName = @"ExportedPDF.pdf";
     [super viewDidLoad];
     
     self.PDFRenderer = [PDFPrintPageRenderer new];
-    self.PDFRenderer.contentView = self.contentView;
+    self.PDFRenderer.contentView = self.textView;// self.tableView;
     self.PDFRenderer.pagingMask = PDFPagingOptionFooter;
+    self.textViewWidthConstraint.constant = CGRectGetWidth(self.PDFRenderer.contentRect);
     
-    self.PDFRenderer.headerView = [[HeaderView alloc] initFromXib];
-    self.PDFRenderer.footerView = [[FooterView alloc] initFromXib];
+    UIView<PDFHeaderFooterPaging> *headerView = [[HeaderView alloc] initFromXib];
+    self.PDFRenderer.headerView = headerView;
+    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:headerView
+                                                                       attribute:NSLayoutAttributeWidth
+                                                                       relatedBy:NSLayoutRelationEqual
+                                                                          toItem:nil
+                                                                       attribute:NSLayoutAttributeNotAnAttribute
+                                                                      multiplier:1.f
+                                                                        constant:CGRectGetWidth(self.PDFRenderer.headerRect)];
+    [headerView addConstraint:widthConstraint];
+    UIView<PDFHeaderFooterPaging> *footerView = [[FooterView alloc] initFromXib];
+    self.PDFRenderer.footerView = footerView;
+    widthConstraint = [NSLayoutConstraint constraintWithItem:footerView
+                                                   attribute:NSLayoutAttributeWidth
+                                                   relatedBy:NSLayoutRelationEqual
+                                                      toItem:nil
+                                                   attribute:NSLayoutAttributeNotAnAttribute
+                                                  multiplier:1.f
+                                                    constant:CGRectGetWidth(self.PDFRenderer.footerRect)];
+    [footerView addConstraint:widthConstraint];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
 }
@@ -51,7 +73,7 @@ static NSString * const kPDFFileName = @"ExportedPDF.pdf";
         if ([rootViewController isKindOfClass:[SettingsViewController class]]) {
             SettingsViewController *settingsVC = (SettingsViewController *)rootViewController;
             settingsVC.paperSize = self.PDFRenderer.paperSize;
-            settingsVC.contentPaperInsets = self.PDFRenderer.paperInsets;
+            settingsVC.contentPaperInset = self.PDFRenderer.paperInset;
             settingsVC.delegate = self;
         }
     }
@@ -97,7 +119,7 @@ static NSString * const kPDFFileName = @"ExportedPDF.pdf";
 }
 
 - (void)settingsViewController:(SettingsViewController *)settingsViewController didChangePaperInsets:(UIEdgeInsets)paperInsets {
-    self.PDFRenderer.paperInsets = paperInsets;
+    self.PDFRenderer.paperInset = paperInsets;
 }
 
 #pragma mark - Private

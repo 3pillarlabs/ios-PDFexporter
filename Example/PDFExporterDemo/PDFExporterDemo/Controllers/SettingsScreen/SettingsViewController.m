@@ -46,10 +46,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.topTextField.text = [NSString stringWithFormat:@"%.2f", self.contentPaperInsets.top];
-    self.bottomTextField.text = [NSString stringWithFormat:@"%.2f", self.contentPaperInsets.bottom];
-    self.leftTextField.text = [NSString stringWithFormat:@"%.2f", self.contentPaperInsets.left];
-    self.rightTextField.text = [NSString stringWithFormat:@"%.2f", self.contentPaperInsets.right];
+    self.topTextField.text = [NSString stringWithFormat:@"%.2f", self.contentPaperInset.top];
+    self.bottomTextField.text = [NSString stringWithFormat:@"%.2f", self.contentPaperInset.bottom];
+    self.leftTextField.text = [NSString stringWithFormat:@"%.2f", self.contentPaperInset.left];
+    self.rightTextField.text = [NSString stringWithFormat:@"%.2f", self.contentPaperInset.right];
     
     __block NSUInteger indexOfSelectedPaperType = NSUIntegerMax;
     [self.paperTypes enumerateObjectsUsingBlock:^(PaperType * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -104,7 +104,7 @@
 #pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    UIEdgeInsets edgeInsets = self.contentPaperInsets;
+    UIEdgeInsets edgeInsets = self.contentPaperInset;
     if (textField == self.topTextField) {
         edgeInsets.top = textField.text.floatValue;
     } else if (textField == self.bottomTextField) {
@@ -114,8 +114,8 @@
     } else { // textField == self.rightTextField
         edgeInsets.right = textField.text.floatValue;
     }
-    self.contentPaperInsets = edgeInsets;
-    [self.delegate settingsViewController:self didChangePaperInsets:self.contentPaperInsets];
+    self.contentPaperInset = edgeInsets;
+    [self.delegate settingsViewController:self didChangePaperInsets:self.contentPaperInset];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

@@ -6,11 +6,16 @@
 //
 
 #import "PDFPrintPageRenderer.h"
+#import <objc/runtime.h>
 #import "PDFPaperSizes.h"
 #import "UIView+PDFExporterDrawing.h"
 #import "UIView+PDFExporterStatePersistance.h"
 #import "UIScrollView+PDFExporterDrawing.h"
 #import "CGGeometry+Additions.h"
+
+static void * const kPDFPrintPageRendererScaleHeaderAssociatedStorageKey = (void *)&kPDFPrintPageRendererScaleHeaderAssociatedStorageKey;
+static void * const kPDFPrintPageRendererScaleContentAssociatedStorageKey = (void *)&kPDFPrintPageRendererScaleContentAssociatedStorageKey;
+static void * const kPDFPrintPageRendererScaleFooterAssociatedStorageKey = (void *)&kPDFPrintPageRendererScaleFooterAssociatedStorageKey;
 
 static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 
@@ -19,9 +24,9 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 @property (nonatomic) CGFloat contentViewScale;
 @property (nonatomic) CGFloat contentRectScale;
 
-@property (nonatomic) CGRect headerRect;
-@property (nonatomic) CGRect footerRect;
+@property (nonatomic, readwrite) CGRect headerRect;
 @property (nonatomic, readwrite) CGRect contentRect;
+@property (nonatomic, readwrite) CGRect footerRect;
 
 @end
 
@@ -38,7 +43,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 }
 
 - (void)drawPages:(CGRect)inBounds {
-    [self calculateGeometry];
+    [self computeGeometry];
     [self prepareContentForDrawing];
 	for (NSInteger pageNumber = 0; pageNumber < self.numberOfPages; pageNumber++) {
 		UIGraphicsBeginPDFPage();
@@ -69,32 +74,57 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 }
 
 - (NSInteger)numberOfPages {
-    CGRect scaledContentRect = CGRectScaleByFactor(self.contentRect, self.contentRectScale);
+    CGRect scaledContentRect = ([self isScalingContent]) ? CGRectScaleByFactor(self.contentRect, self.contentRectScale) : self.contentRect;
     return ceilf(CGRectGetHeight(self.contentView.drawingFrame) / CGRectGetHeight(scaledContentRect));
 }
 
 - (CGFloat)headerHeight {
-    if (self.headerView) {
-        return [self headerFrame].size.height;
-    } else {
+    if (!self.headerView) {
         return 0.f;
     }
+    
+    if ([self isScalingHeader]) {
+        CGFloat headerScaleFactor = self.printableRect.size.width / self.headerView.drawingFrame.size.width;
+        return ceilf(CGRectGetHeight(self.headerView.drawingFrame) * headerScaleFactor);
+    } else {
+        return CGRectGetHeight(self.headerView.drawingFrame);
+    }
+}
+
+- (CGRect)headerRect {
+    CGRect headerRect = self.printableRect;
+    headerRect.size.height = self.headerHeight;
+    return headerRect;
+}
+
+- (CGRect)contentRect {
+    return CGRectMake(CGRectGetMinX(self.printableRect),
+                      CGRectGetMaxY(self.headerRect),
+                      CGRectGetWidth(self.printableRect),
+                      CGRectGetMinY(self.footerRect) - CGRectGetMaxY(self.headerRect));
+}
+
+- (CGRect)footerRect {
+    return CGRectMake(CGRectGetMinX(self.printableRect),
+                      CGRectGetMaxY(self.printableRect) - self.footerHeight,
+                      CGRectGetWidth(self.printableRect),
+                      self.footerHeight);;
 }
 
 - (void)setHeaderHeight:(CGFloat)headerHeight {
     // Do nothing here.
 }
 
-- (CGRect)headerFrame {
-    CGFloat headerScaleFactor = self.printableRect.size.width / self.headerView.drawingFrame.size.width;
-    return CGRectScaleByFactor(self.headerView.drawingFrame, headerScaleFactor);
-}
-
 - (CGFloat)footerHeight {
-    if (self.footerView) {
-        return [self footerFrame].size.height;
-    } else {
+    if (!self.footerView) {
         return 0.f;
+    }
+    
+    if ([self isScalingFooter]) {
+        CGFloat footerScaleFactor = self.printableRect.size.width / self.footerView.drawingFrame.size.width;
+        return ceilf(CGRectGetHeight(self.footerView.drawingFrame) * footerScaleFactor);
+    } else {
+        return CGRectGetHeight(self.footerView.drawingFrame);
     }
 }
 
@@ -102,9 +132,43 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     // Do nothing.
 }
 
-- (CGRect)footerFrame {
-    CGFloat footerScaleFactor = self.printableRect.size.width / self.footerView.drawingFrame.size.width;
-    return CGRectScaleByFactor(self.footerView.drawingFrame, footerScaleFactor);
+- (BOOL)isScalingHeader {
+    NSNumber *scaleHeaderNumber = objc_getAssociatedObject(self, kPDFPrintPageRendererScaleHeaderAssociatedStorageKey);
+    return [scaleHeaderNumber boolValue];
+}
+
+- (void)setScaleHeader:(BOOL)scaleHeader {
+    NSNumber *scaleHeaderNumber = nil;
+    if (scaleHeader) {
+        scaleHeaderNumber = @(scaleHeader);
+    }
+    objc_setAssociatedObject(self, kPDFPrintPageRendererScaleHeaderAssociatedStorageKey, scaleHeaderNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)isScalingContent {
+    NSNumber *scaleHeaderNumber = objc_getAssociatedObject(self, kPDFPrintPageRendererScaleContentAssociatedStorageKey);
+    return [scaleHeaderNumber boolValue];
+}
+
+- (void)setScaleContent:(BOOL)scaleContent {
+    NSNumber *scaleContentNumber = nil;
+    if (scaleContent) {
+        scaleContentNumber = @(scaleContent);
+    }
+    objc_setAssociatedObject(self, kPDFPrintPageRendererScaleContentAssociatedStorageKey, scaleContentNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)isScalingFooter {
+    NSNumber *scaleFooterNumber = objc_getAssociatedObject(self, kPDFPrintPageRendererScaleFooterAssociatedStorageKey);
+    return [scaleFooterNumber boolValue];
+}
+
+- (void)setScaleFooter:(BOOL)scaleFooter {
+    NSNumber *scaleFooterNumber = nil;
+    if (scaleFooter) {
+        scaleFooterNumber = @(scaleFooter);
+    }
+    objc_setAssociatedObject(self, kPDFPrintPageRendererScaleFooterAssociatedStorageKey, scaleFooterNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark - Overriden
@@ -123,12 +187,17 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
         [self.headerView updatePageNumber:pageIndex totalPages:self.numberOfPages];
     }
     
-    CGFloat headerScaleFactor = self.printableRect.size.width / self.headerView.drawingFrame.size.width;
-    CGFloat heightHeaderScaleFactor = self.headerRect.size.height / self.headerView.drawingFrame.size.height;
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
+    UIBezierPath *headerPath = [UIBezierPath bezierPathWithRect:headerRect];
+    CGContextAddPath(context, headerPath.CGPath);
+    CGContextClip(context);
     CGContextTranslateCTM(context, headerRect.origin.x, headerRect.origin.y);
-    CGContextScaleCTM(context, headerScaleFactor, heightHeaderScaleFactor);
+    if ([self isScalingHeader]) {
+        CGFloat headerScaleFactor = self.printableRect.size.width / self.headerView.drawingFrame.size.width;
+        CGFloat heightHeaderScaleFactor = self.headerRect.size.height / self.headerView.drawingFrame.size.height;
+        CGContextScaleCTM(context, headerScaleFactor, heightHeaderScaleFactor);
+    }
     
     [self.headerView drawViewWithinPageRect:self.headerView.bounds];
     
@@ -143,12 +212,17 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
         [self.footerView updatePageNumber:(pageIndex + 1) totalPages:self.numberOfPages];
     }
     
-    CGFloat footerScaleFactor = self.printableRect.size.width / self.footerView.drawingFrame.size.width;
-    CGFloat heightFooterScaleFactor = self.footerRect.size.height / self.footerView.drawingFrame.size.height;
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
+    UIBezierPath *footerPath = [UIBezierPath bezierPathWithRect:footerRect];
+    CGContextAddPath(context, footerPath.CGPath);
+    CGContextClip(context);
     CGContextTranslateCTM(context, footerRect.origin.x, footerRect.origin.y);
-    CGContextScaleCTM(context, footerScaleFactor, heightFooterScaleFactor);
+    if ([self isScalingFooter]) {
+        CGFloat footerScaleFactor = self.printableRect.size.width / self.footerView.drawingFrame.size.width;
+        CGFloat heightFooterScaleFactor = self.footerRect.size.height / self.footerView.drawingFrame.size.height;
+        CGContextScaleCTM(context, footerScaleFactor, heightFooterScaleFactor);
+    }
     
     [self.footerView drawViewWithinPageRect:self.footerView.bounds];
     
@@ -164,45 +238,23 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     CGContextAddPath(context, contentPath.CGPath);
     CGContextClip(context);
     CGContextTranslateCTM(context, contentRect.origin.x, contentRect.origin.y);
-    CGContextScaleCTM(context, self.contentViewScale, self.contentViewScale);
+    if ([self isScalingContent]) {
+        CGContextScaleCTM(context, self.contentViewScale, self.contentViewScale);
+    }
     
-    CGRect scaledPageRect = [self scaledPageRectOffsetForIndex:pageIndex];
-    [self.contentView drawViewWithinPageRect:scaledPageRect];
+    [self.contentView drawViewWithinPageRect:[self scaledPageRectOffsetForIndex:pageIndex]];
     
     CGContextRestoreGState(context);
 }
 
-- (CGRect)scaledPageRectOffsetForIndex:(NSUInteger)index {
-    CGFloat pageHeightOffset = index * CGRectGetHeight(self.contentRect);
-    CGRect pageOffset = self.contentRect;
-    pageOffset.origin.x = 0.f;
-    pageOffset.origin.y = pageHeightOffset;
-    CGRect scaledPageOffset = CGRectScaleByFactor(pageOffset, self.contentRectScale);
-    scaledPageOffset.origin.y = index * CGRectGetHeight(scaledPageOffset);
-    return scaledPageOffset;
-}
-
 #pragma mark - Private
 
-- (void)calculateGeometry {
-    CGRect headerRect = self.printableRect;
-    headerRect.size.height = self.headerHeight;
-    self.headerRect = headerRect;
-    self.footerRect = CGRectMake(CGRectGetMinX(self.printableRect),
-                                 CGRectGetMaxY(self.printableRect) - self.footerHeight,
-                                 CGRectGetWidth(self.printableRect),
-                                 self.footerHeight);
-    self.contentRect = CGRectMake(CGRectGetMinX(self.printableRect),
-                                  CGRectGetMaxY(self.headerRect),
-                                  CGRectGetWidth(self.printableRect),
-                                  CGRectGetMinY(self.footerRect) - CGRectGetMaxY(self.headerRect));
+- (void)computeGeometry {
     NSAssert(CGRectGetWidth(self.contentRect) >= 10.f && CGRectGetHeight(self.contentRect) >= 10.f,
              @"Invalid paperInsets or paperSize. Content rectangle should have at least 10 points width and height");
     
     self.contentViewScale = self.contentRect.size.width / self.contentView.bounds.size.width;
     self.contentRectScale = self.contentView.bounds.size.width / self.contentRect.size.width;
-    
-    
 }
 
 - (void)prepareContentForDrawing {
@@ -245,6 +297,19 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
         scrollView.drawEntireContentSize = NO;
     }
     self.footerView.persistState = NO;
+}
+
+- (CGRect)scaledPageRectOffsetForIndex:(NSUInteger)index {
+    CGFloat pageHeightOffset = index * CGRectGetHeight(self.contentRect);
+    CGRect pageOffset = self.contentRect;
+    pageOffset.origin.x = 0.f;
+    pageOffset.origin.y = pageHeightOffset;
+    if (![self isScalingContent]) {
+        return pageOffset;
+    }
+    CGRect scaledPageOffset = CGRectScaleByFactor(pageOffset, self.contentRectScale);
+    scaledPageOffset.origin.y = index * CGRectGetHeight(scaledPageOffset);
+    return scaledPageOffset;
 }
 
 @end

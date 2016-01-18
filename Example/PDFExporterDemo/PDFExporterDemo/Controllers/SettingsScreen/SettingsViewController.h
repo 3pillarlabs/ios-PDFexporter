@@ -20,7 +20,7 @@
 
 @property (weak, nonatomic) id<SettingsViewControllerDelegate> delegate;
 
-@property (nonatomic) UIEdgeInsets contentPaperInsets;
+@property (nonatomic) UIEdgeInsets contentPaperInset;
 @property (nonatomic) CGSize paperSize;
 
 @end
