@@ -14,11 +14,19 @@
 
 CF_ASSUME_NONNULL_BEGIN
 
+CG_INLINE CGPoint CGPointTransTranslate(CGPoint point, CGPoint delta)
+{
+    CGPoint newPoint = point;
+    newPoint.x += delta.x;
+    newPoint.y += delta.y;
+    return newPoint;
+}
+
 CG_INLINE CGRect CGRectOffsetWithCGPoint(CGRect rect, CGPoint point)
 {
-    rect.origin.x += point.x;
-    rect.origin.y += point.y;
-    return rect;
+    CGRect newRect = rect;
+    newRect.origin = CGPointTransTranslate(rect.origin, point);
+    return newRect;
 }
 
 CG_INLINE CGRect CGRectBounds(CGRect rect)
@@ -37,6 +45,14 @@ CG_INLINE CGRect CGRectScaleByFactor(CGRect rect, CGFloat factor)
     scaledRect.size.height *= factor;
     return CGRectMake(ceilf(scaledRect.origin.x), ceilf(scaledRect.origin.y),
                       ceilf(scaledRect.size.width), ceilf(scaledRect.size.height));
+}
+
+CG_INLINE CGPoint CGPointMinus(CGPoint point)
+{
+    CGPoint minusPoint;
+    minusPoint.x = -point.x;
+    minusPoint.y = -point.y;
+    return minusPoint;
 }
 
 CF_ASSUME_NONNULL_END

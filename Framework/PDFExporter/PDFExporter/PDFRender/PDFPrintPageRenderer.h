@@ -34,6 +34,8 @@ typedef NS_OPTIONS(NSUInteger, PDFPagingOptions) {
 @property (nonatomic, getter=isScalingContent) BOOL scaleContent;
 @property (nonatomic, getter=isScalingFooter) BOOL scaleFooter;
 
+@property (nonatomic, getter=shouldSliceViews) BOOL sliceViews;
+
 // Draws content. As any drawing method should be called only on main queue.
 - (NSData *)drawPagesToPDFData;
 

@@ -72,7 +72,6 @@ CGFloat PDFPaperConvertMMToPoint(CGFloat milimeters)
     return PDFPaperConvertInchToPoint(inches);
 }
 
-
 CGSize PDFPaperSizeMakeUsingMM(CGFloat widthUsingMM, CGFloat heightUsingMM)
 {
     return CGSizeMake(PDFPaperConvertMMToPoint(widthUsingMM), PDFPaperConvertMMToPoint(heightUsingMM));

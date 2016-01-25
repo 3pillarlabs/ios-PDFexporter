@@ -61,7 +61,7 @@ CG_EXTERN CGSize const PDFPaperSizeNewsBroadsheet;
 CG_EXTERN CGSize const PDFPaperSizeNewsTabloid;
 CG_EXTERN CGSize const PDFPaperSizeNewsRhenish;
 
-
+// Utilities
 CG_EXTERN CGFloat PDFPaperConvertInchToPoint(CGFloat inches);
 CG_EXTERN CGFloat PDFPaperConvertMMToPoint(CGFloat milimeters);
 CG_EXTERN CGSize PDFPaperSizeMakeUsingMM(CGFloat widthUsingMM, CGFloat heightUsingMM);

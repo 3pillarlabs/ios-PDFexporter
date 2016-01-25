@@ -6,7 +6,7 @@
 //
 
 #import "UITableView+PDFExporterDrawing.h"
-#import "UIView+PDFExporterDrawing.h"
+#import "CGGeometry+Additions.h"
 
 @implementation UITableView (PDFExporterExtension)
 
@@ -47,6 +47,40 @@
         if (footerView) {
             footerView.frame = [self rectForFooterInSection:section];
         }
+    }
+}
+
+#pragma mark - PDFExpoterPageInformation
+
+- (CGPoint)renderingOffsetForPageRect:(CGRect)rect {
+    CGPoint renderingOffset = CGPointZero;
+    CGPoint contentOffset = CGPointZero;
+    for (CGFloat yCoordinate = CGRectGetMinY(rect);
+         yCoordinate < CGRectGetMaxY(rect);
+         yCoordinate += CGRectGetHeight(self.bounds)) {
+        
+        // prepare view for rect section
+        contentOffset.y = yCoordinate;
+        self.contentOffset = contentOffset;
+        CGRect frame = self.frame;
+        [self layoutIfNeeded];
+        self.frame = frame;
+        [self layoutHeadersAndFooters];
+        
+        // ask subviews their rendering offset
+        CGPoint subviewRenderingOffset = [super renderingOffsetForPageRect:rect];
+        renderingOffset.y = fmaxf(renderingOffset.y, subviewRenderingOffset.y);
+    }
+    return renderingOffset;
+}
+
+- (CGRect)subviewRect:(UIView *)subview {
+    if ([subview isKindOfClass:[UITableViewCell class]] ||
+        [subview isKindOfClass:[UITableViewHeaderFooterView class]]) {
+        CGRect subviewRect = CGRectOffsetWithCGPoint(subview.drawingFrame, CGPointMinus(self.contentOffset));
+        return subviewRect;
+    } else {
+        return [super subviewRect:subview];
     }
 }
 

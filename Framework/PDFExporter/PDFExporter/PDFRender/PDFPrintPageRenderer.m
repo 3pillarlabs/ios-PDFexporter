@@ -13,13 +13,9 @@
 #import "UIScrollView+PDFExporterDrawing.h"
 #import "CGGeometry+Additions.h"
 
-static void * const kPDFPrintPageRendererScaleHeaderAssociatedStorageKey = (void *)&kPDFPrintPageRendererScaleHeaderAssociatedStorageKey;
-static void * const kPDFPrintPageRendererScaleContentAssociatedStorageKey = (void *)&kPDFPrintPageRendererScaleContentAssociatedStorageKey;
-static void * const kPDFPrintPageRendererScaleFooterAssociatedStorageKey = (void *)&kPDFPrintPageRendererScaleFooterAssociatedStorageKey;
-
 static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 
-@interface PDFPrintPageRenderer ()
+@interface PDFPrintPageRenderer () <PDFRenderingDelegate>
 
 @property (nonatomic) CGFloat contentViewScale;
 @property (nonatomic) CGFloat contentRectScale;
@@ -27,6 +23,12 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 @property (nonatomic, readwrite) CGRect headerRect;
 @property (nonatomic, readwrite) CGRect contentRect;
 @property (nonatomic, readwrite) CGRect footerRect;
+
+@property (nonatomic) CGPoint renderingOffset;
+@property (nonatomic) CGPoint pageOffset;
+@property (nonatomic, readonly) CGRect renderingRect;
+
+@property (nonatomic) NSUInteger internalNumberOfPages;
 
 @end
 
@@ -45,6 +47,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 - (void)drawPages:(CGRect)inBounds {
     [self computeGeometry];
     [self prepareContentForDrawing];
+    [self computeNumberOfPages];
 	for (NSInteger pageNumber = 0; pageNumber < self.numberOfPages; pageNumber++) {
 		UIGraphicsBeginPDFPage();
 		[self drawPageAtIndex:pageNumber inRect:self.printableRect];
@@ -74,8 +77,13 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 }
 
 - (NSInteger)numberOfPages {
-    CGRect scaledContentRect = ([self isScalingContent]) ? CGRectScaleByFactor(self.contentRect, self.contentRectScale) : self.contentRect;
-    return ceilf(CGRectGetHeight(self.contentView.drawingFrame) / CGRectGetHeight(scaledContentRect));
+    return self.internalNumberOfPages;
+//    CGRect scaledContentRect = ([self isScalingContent]) ? CGRectScaleByFactor(self.contentRect, self.contentRectScale) : self.contentRect;
+//    return ceilf(CGRectGetHeight(self.contentView.drawingFrame) / CGRectGetHeight(scaledContentRect));
+}
+
+- (CGRect)renderingRect {
+    return ([self isScalingContent]) ? CGRectScaleByFactor(self.contentRect, self.contentRectScale) : self.contentRect;
 }
 
 - (CGFloat)headerHeight {
@@ -130,45 +138,6 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 
 - (void)setFooterHeight:(CGFloat)footerHeight {
     // Do nothing.
-}
-
-- (BOOL)isScalingHeader {
-    NSNumber *scaleHeaderNumber = objc_getAssociatedObject(self, kPDFPrintPageRendererScaleHeaderAssociatedStorageKey);
-    return [scaleHeaderNumber boolValue];
-}
-
-- (void)setScaleHeader:(BOOL)scaleHeader {
-    NSNumber *scaleHeaderNumber = nil;
-    if (scaleHeader) {
-        scaleHeaderNumber = @(scaleHeader);
-    }
-    objc_setAssociatedObject(self, kPDFPrintPageRendererScaleHeaderAssociatedStorageKey, scaleHeaderNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (BOOL)isScalingContent {
-    NSNumber *scaleHeaderNumber = objc_getAssociatedObject(self, kPDFPrintPageRendererScaleContentAssociatedStorageKey);
-    return [scaleHeaderNumber boolValue];
-}
-
-- (void)setScaleContent:(BOOL)scaleContent {
-    NSNumber *scaleContentNumber = nil;
-    if (scaleContent) {
-        scaleContentNumber = @(scaleContent);
-    }
-    objc_setAssociatedObject(self, kPDFPrintPageRendererScaleContentAssociatedStorageKey, scaleContentNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (BOOL)isScalingFooter {
-    NSNumber *scaleFooterNumber = objc_getAssociatedObject(self, kPDFPrintPageRendererScaleFooterAssociatedStorageKey);
-    return [scaleFooterNumber boolValue];
-}
-
-- (void)setScaleFooter:(BOOL)scaleFooter {
-    NSNumber *scaleFooterNumber = nil;
-    if (scaleFooter) {
-        scaleFooterNumber = @(scaleFooter);
-    }
-    objc_setAssociatedObject(self, kPDFPrintPageRendererScaleFooterAssociatedStorageKey, scaleFooterNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark - Overriden
@@ -283,6 +252,8 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     viewFrame = self.footerView.frame;
     viewFrame.origin = CGPointZero;
     self.footerView.frame = viewFrame;
+    
+    self.contentView.renderingDelegate = self;
 }
 
 - (void)cleanContentAfterDrawing {
@@ -297,6 +268,25 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
         scrollView.drawEntireContentSize = NO;
     }
     self.footerView.persistState = NO;
+    self.contentView.renderingDelegate = nil;
+}
+
+- (void)computeNumberOfPages {
+    if ([self shouldSliceViews]) {
+        self.internalNumberOfPages = ceilf(CGRectGetHeight(self.contentView.drawingFrame) / CGRectGetHeight(self.renderingRect));
+    } else {
+        NSUInteger pageIndex = 0;
+        CGRect pageOffset = [self scaledPageRectOffsetForIndex:pageIndex];
+        CGPoint renderingOffset = CGPointZero;
+        while (CGRectGetMaxY(pageOffset) < CGRectGetHeight(self.contentView.drawingFrame)) {
+            renderingOffset = [self.contentView renderingOffsetForPageRect:pageOffset];
+            ++pageIndex;
+            pageOffset = [self scaledPageRectOffsetForIndex:pageIndex];
+            pageOffset = CGRectOffsetWithCGPoint(pageOffset, CGPointMinus(renderingOffset));
+            renderingOffset = CGPointZero;
+        }
+        self.internalNumberOfPages = pageIndex + 1;
+    }
 }
 
 - (CGRect)scaledPageRectOffsetForIndex:(NSUInteger)index {
@@ -304,12 +294,32 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     CGRect pageOffset = self.contentRect;
     pageOffset.origin.x = 0.f;
     pageOffset.origin.y = pageHeightOffset;
+    pageOffset = CGRectOffsetWithCGPoint(pageOffset, CGPointMinus(self.renderingOffset));
     if (![self isScalingContent]) {
         return pageOffset;
     }
     CGRect scaledPageOffset = CGRectScaleByFactor(pageOffset, self.contentRectScale);
     scaledPageOffset.origin.y = index * CGRectGetHeight(scaledPageOffset);
     return scaledPageOffset;
+}
+
+#pragma mark - PDFRenderingDelegate
+
+- (void)view:(UIView *)view requiresOffsetDrawing:(CGPoint)offset {
+    if ([self shouldSliceViews]) {
+        return;
+    }
+    if (offset.y > self.renderingOffset.y) {
+        self.renderingOffset = offset;
+    }
+}
+
+- (CGRect)view:(UIView *)view convertRectToContentView:(CGRect)rect {
+    return [self.contentView convertRect:rect fromView:view];
+}
+
+- (BOOL)viewCanRequestOffsetForDrawing:(UIView *)view {
+    return ![self shouldSliceViews];
 }
 
 @end
