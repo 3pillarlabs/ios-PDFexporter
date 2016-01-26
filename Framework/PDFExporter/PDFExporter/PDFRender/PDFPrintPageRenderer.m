@@ -8,7 +8,10 @@
 #import "PDFPrintPageRenderer.h"
 #import <objc/runtime.h>
 #import "PDFPaperSizes.h"
+#import "PDFRenderingDelegate.h"
 #import "UIView+PDFExporterDrawing.h"
+#import "UIView+PDFExporterViewSlicing.h"
+#import "UIView+PDFExporterPageInformation.h"
 #import "UIView+PDFExporterStatePersistance.h"
 #import "UIScrollView+PDFExporterDrawing.h"
 #import "CGGeometry+Additions.h"
@@ -25,6 +28,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 @property (nonatomic, readwrite) CGRect footerRect;
 
 @property (nonatomic) CGPoint renderingOffset;
+@property (nonatomic) CGPoint pageRenderingOffset;
 @property (nonatomic) CGPoint pageOffset;
 @property (nonatomic, readonly) CGRect renderingRect;
 
@@ -61,7 +65,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 	CGRect bounds = UIGraphicsGetPDFContextBounds();
 	[self drawPages:bounds];
 	UIGraphicsEndPDFContext();
-	return pdfData.copy;
+	return pdfData;
 }
 
 #pragma mark - Getters and Setters
@@ -78,8 +82,6 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 
 - (NSInteger)numberOfPages {
     return self.internalNumberOfPages;
-//    CGRect scaledContentRect = ([self isScalingContent]) ? CGRectScaleByFactor(self.contentRect, self.contentRectScale) : self.contentRect;
-//    return ceilf(CGRectGetHeight(self.contentView.drawingFrame) / CGRectGetHeight(scaledContentRect));
 }
 
 - (CGRect)renderingRect {
@@ -286,6 +288,10 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
             renderingOffset = CGPointZero;
         }
         self.internalNumberOfPages = pageIndex + 1;
+        
+        // reset offsets
+        self.pageRenderingOffset = CGPointZero;
+        self.renderingOffset = CGPointZero;
     }
 }
 
@@ -294,6 +300,8 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     CGRect pageOffset = self.contentRect;
     pageOffset.origin.x = 0.f;
     pageOffset.origin.y = pageHeightOffset;
+    self.renderingOffset = CGPointTranslate(self.renderingOffset, self.pageRenderingOffset);
+    self.pageRenderingOffset = CGPointZero;
     pageOffset = CGRectOffsetWithCGPoint(pageOffset, CGPointMinus(self.renderingOffset));
     if (![self isScalingContent]) {
         return pageOffset;

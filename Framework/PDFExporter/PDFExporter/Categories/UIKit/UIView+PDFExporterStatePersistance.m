@@ -13,14 +13,14 @@ static void * const kUIViewPersistStateAssociatedStorageKey = (void *)&kUIViewPe
 
 @interface UIView (PDFExporterStatePersistancePrivate)
 
-@property (nonatomic) NSMutableArray *persistenceStates;
+@property (nonatomic) NSMutableArray<UIViewPersistenceState *> *persistenceStates;
 
 @end
 
 @implementation UIView (PDFExporterStatePersistance)
 
-- (NSMutableArray *)persistenceStates {
-    NSMutableArray *_persistenceStates = objc_getAssociatedObject(self, kUIViewPersistenceStatesAssociatedStorageKey);
+- (NSMutableArray<UIViewPersistenceState *> *)persistenceStates {
+    NSMutableArray<UIViewPersistenceState *> *_persistenceStates = objc_getAssociatedObject(self, kUIViewPersistenceStatesAssociatedStorageKey);
     if (!_persistenceStates) {
         _persistenceStates = [NSMutableArray new];
         self.persistenceStates = _persistenceStates;
@@ -28,7 +28,7 @@ static void * const kUIViewPersistStateAssociatedStorageKey = (void *)&kUIViewPe
     return _persistenceStates;
 }
 
-- (void)setPersistenceStates:(NSMutableArray *)persistenceStates {
+- (void)setPersistenceStates:(NSMutableArray<UIViewPersistenceState *> *)persistenceStates {
     objc_setAssociatedObject(self, kUIViewPersistenceStatesAssociatedStorageKey, persistenceStates, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 

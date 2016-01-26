@@ -6,6 +6,7 @@
 //
 
 #import "UITableView+PDFExporterDrawing.h"
+#import "UIView+PDFExporterPageInformation.h"
 #import "CGGeometry+Additions.h"
 
 @implementation UITableView (PDFExporterExtension)
@@ -50,7 +51,7 @@
     }
 }
 
-#pragma mark - PDFExpoterPageInformation
+#pragma mark - PDFExporterPageInformation
 
 - (CGPoint)renderingOffsetForPageRect:(CGRect)rect {
     CGPoint renderingOffset = CGPointZero;
@@ -74,13 +75,14 @@
     return renderingOffset;
 }
 
-- (CGRect)subviewRect:(UIView *)subview {
+- (CGRect)subviewRect:(UIView *)subview pageRect:(CGRect)rect {
     if ([subview isKindOfClass:[UITableViewCell class]] ||
         [subview isKindOfClass:[UITableViewHeaderFooterView class]]) {
-        CGRect subviewRect = CGRectOffsetWithCGPoint(subview.drawingFrame, CGPointMinus(self.contentOffset));
-        return subviewRect;
+        return CGPointEqualToPoint(self.contentOffset, CGPointZero) ? subview.drawingFrame : CGRectOffsetWithCGPoint(subview.drawingFrame, CGPointMinus(self.contentOffset));
+    } else if ([subview isKindOfClass:[UIScrollView class]]) {
+        return subview.drawingFrame; // hook for cells content view
     } else {
-        return [super subviewRect:subview];
+        return [super subviewRect:subview pageRect:rect];
     }
 }
 

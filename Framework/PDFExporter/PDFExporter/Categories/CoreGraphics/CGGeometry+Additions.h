@@ -14,7 +14,7 @@
 
 CF_ASSUME_NONNULL_BEGIN
 
-CG_INLINE CGPoint CGPointTransTranslate(CGPoint point, CGPoint delta)
+CG_INLINE CGPoint CGPointTranslate(CGPoint point, CGPoint delta)
 {
     CGPoint newPoint = point;
     newPoint.x += delta.x;
@@ -25,7 +25,7 @@ CG_INLINE CGPoint CGPointTransTranslate(CGPoint point, CGPoint delta)
 CG_INLINE CGRect CGRectOffsetWithCGPoint(CGRect rect, CGPoint point)
 {
     CGRect newRect = rect;
-    newRect.origin = CGPointTransTranslate(rect.origin, point);
+    newRect.origin = CGPointTranslate(rect.origin, point);
     return newRect;
 }
 

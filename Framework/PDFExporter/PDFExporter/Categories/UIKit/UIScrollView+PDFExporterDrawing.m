@@ -8,6 +8,7 @@
 #import "UIScrollView+PDFExporterDrawing.h"
 #import <objc/runtime.h>
 #import "UIView+PDFExporterStatePersistance.h"
+#import "UIView+PDFExporterPageInformation.h"
 
 static void * const kUIScrollViewDrawEntireContentSizeAssociatedStorageKey = (void *)&kUIScrollViewDrawEntireContentSizeAssociatedStorageKey;
 
@@ -69,6 +70,16 @@ static void * const kUIScrollViewDrawEntireContentSizeAssociatedStorageKey = (vo
     }
     UIScrollViewPersistenceState *scrollState = (UIScrollViewPersistenceState *)state;
     self.contentOffset = scrollState.contentOffset;
+}
+
+#pragma mark - PDFExporterPageInformation
+
+- (CGRect)subviewRect:(UIView *)subview pageRect:(CGRect)rect {
+    if ([subview isKindOfClass:[UITableViewCell class]]) {  // UITableView's cells are wrapped inside a UIScrollView
+        return [self.superview subviewRect:subview pageRect:rect];
+    } else {
+        return [super subviewRect:subview pageRect:rect];
+    }
 }
 
 @end
