@@ -16,6 +16,10 @@
     return YES;
 }
 
+- (BOOL)canLayoutSubview:(UIView *)subview intersection:(CGRect)intersection {
+    return CGRectGetHeight(intersection) == CGRectGetHeight(subview.drawingFrame);
+}
+
 - (CGPoint)renderingOffsetForPageRect:(CGRect)rect {
     CGPoint renderingOffset = CGPointZero;
     if (![self askSubviewsRenderingOffset]) {
@@ -23,9 +27,9 @@
     }
     for (UIView *subview in self.subviews) {
         if ([subview isDrawable]) {
-            CGRect intersection = [self subviewIntersection:subview pageRect:rect];
-            if (CGRectIsNull(intersection) ||                                               // skip subviews that are not visible,
-                CGRectGetHeight(intersection) == CGRectGetHeight(subview.drawingFrame)) {   // it is possible to draw them on a page or
+            CGRect intersection = [self subviewIntersection:subview layoutPageRect:rect];
+            if (CGRectIsNull(intersection) ||                                   // skip subviews that are not visible, or
+                [self canLayoutSubview:subview intersection:intersection]) {    // it is possible to draw them on current page
                 continue;
             }
             CGPoint subviewRenderingOffset = [subview renderingOffsetForPageRect:rect];
@@ -39,16 +43,15 @@
     return renderingOffset;
 }
 
-- (CGRect)subviewRect:(UIView *)subview pageRect:(CGRect)rect {
+- (CGRect)subviewRect:(UIView *)subview layoutPageRect:(CGRect)rect {
     CGRect subviewRect = subview.drawingFrame;
     subviewRect = [self.renderingDelegate view:self convertRectToContentView:subviewRect];
-    subviewRect = CGRectOffsetWithCGPoint(subviewRect, CGPointMinus(rect.origin));
     return subviewRect;
 }
 
-- (CGRect)subviewIntersection:(UIView *)subview pageRect:(CGRect)rect {
-    CGRect subviewRect = [self subviewRect:subview pageRect:rect];
-    return CGRectIntersection(subviewRect, CGRectBounds(rect));
+- (CGRect)subviewIntersection:(UIView *)subview layoutPageRect:(CGRect)rect {
+    CGRect subviewRect = [self subviewRect:subview layoutPageRect:rect];
+    return CGRectIntersection(subviewRect, rect);
 }
 
 @end

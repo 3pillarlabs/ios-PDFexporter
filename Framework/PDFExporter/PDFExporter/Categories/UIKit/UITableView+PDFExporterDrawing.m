@@ -38,6 +38,24 @@
     }
 }
 
+- (BOOL)canDrawSubview:(UIView *)subview intersection:(CGRect)intersection {
+    if ([subview isKindOfClass:[UIScrollView class]]) {
+        return YES;
+    } else {
+        return [super canDrawSubview:subview intersection:intersection];
+    }
+}
+
+- (CGRect)subviewRect:(UIView *)subview drawingPageRect:(CGRect)rect {
+    if ([subview isKindOfClass:[UIScrollView class]]) {
+        return subview.drawingFrame; // hook for cells content view
+    } else {
+        return [super subviewRect:subview drawingPageRect:rect];
+    }
+}
+
+#pragma mark - Private
+
 - (void)layoutHeadersAndFooters {
     for (NSUInteger section = 0; section < self.numberOfSections; ++section) {
         UIView *headerView = [self headerViewForSection:section];
@@ -52,6 +70,14 @@
 }
 
 #pragma mark - PDFExporterPageInformation
+
+- (BOOL)canLayoutSubview:(UIView *)subview intersection:(CGRect)intersection {
+    if ([subview isKindOfClass:[UIScrollView class]]) {
+        return NO;
+    } else {
+        return [super canLayoutSubview:subview intersection:intersection];
+    }
+}
 
 - (CGPoint)renderingOffsetForPageRect:(CGRect)rect {
     CGPoint renderingOffset = CGPointZero;
@@ -75,14 +101,16 @@
     return renderingOffset;
 }
 
-- (CGRect)subviewRect:(UIView *)subview pageRect:(CGRect)rect {
+- (CGRect)subviewRect:(UIView *)subview layoutPageRect:(CGRect)rect {
     if ([subview isKindOfClass:[UITableViewCell class]] ||
-        [subview isKindOfClass:[UITableViewHeaderFooterView class]]) {
-        return CGPointEqualToPoint(self.contentOffset, CGPointZero) ? subview.drawingFrame : CGRectOffsetWithCGPoint(subview.drawingFrame, CGPointMinus(self.contentOffset));
+        [subview isKindOfClass:[UITableViewHeaderFooterView class]]) {// ||
+        return subview.drawingFrame;
     } else if ([subview isKindOfClass:[UIScrollView class]]) {
-        return subview.drawingFrame; // hook for cells content view
+        CGRect scrollViewFrame = subview.drawingFrame;
+        scrollViewFrame.origin = self.contentOffset;
+        return scrollViewFrame;
     } else {
-        return [super subviewRect:subview pageRect:rect];
+        return [super subviewRect:subview layoutPageRect:rect];
     }
 }
 

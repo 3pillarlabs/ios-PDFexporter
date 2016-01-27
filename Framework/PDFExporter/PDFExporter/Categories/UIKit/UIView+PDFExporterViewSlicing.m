@@ -15,16 +15,17 @@ static void * const kUIViewRenderingDelegateAssociatedStorageKey = (void *)&kUIV
 @implementation UIView (PDFExporterViewSlicing)
 
 - (BOOL)shouldSliceSubviews {
-    NSNumber *sliceSubviewsNumber = objc_getAssociatedObject(self, kUIViewSliceSubviewsAssociatedStorageKey);
-    return [sliceSubviewsNumber boolValue];
+    return [self.renderingDelegate viewShouldSliceSubviews:self];
+//    NSNumber *sliceSubviewsNumber = objc_getAssociatedObject(self, kUIViewSliceSubviewsAssociatedStorageKey);
+//    return [sliceSubviewsNumber boolValue];
 }
 
 - (void)setSliceSubviews:(BOOL)sliceSubviews {
-    NSNumber *sliceSubviewsNumber = nil;
-    if (sliceSubviews) {
-        sliceSubviewsNumber = @(sliceSubviews);
-    }
-    objc_setAssociatedObject(self, kUIViewSliceSubviewsAssociatedStorageKey, sliceSubviewsNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+//    NSNumber *sliceSubviewsNumber = nil;
+//    if (sliceSubviews) {
+//        sliceSubviewsNumber = @(sliceSubviews);
+//    }
+//    objc_setAssociatedObject(self, kUIViewSliceSubviewsAssociatedStorageKey, sliceSubviewsNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (id<PDFRenderingDelegate>)renderingDelegate {

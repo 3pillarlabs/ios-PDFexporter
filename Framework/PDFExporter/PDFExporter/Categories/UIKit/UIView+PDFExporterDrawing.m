@@ -9,6 +9,7 @@
 #import "UIView+PDFExporterViewSlicing.h"
 #import "UIView+PDFExporterPageInformation.h"
 #import "UIView+PDFExporterStatePersistance.h"
+#import "CGGeometry+Additions.h"
 
 @implementation UIView (PDFExporterDrawing)
 
@@ -44,7 +45,7 @@
 
 - (void)drawViewWithinPageRect:(CGRect)rect {
     CGRect drawingFrame = self.drawingFrame;
-    drawingFrame.origin.y -= CGRectGetMinY(rect); // draw only what is left
+    drawingFrame.origin.y -= CGRectGetMinY(rect); // offset origin to current page
     UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:drawingFrame cornerRadius:self.layer.cornerRadius];
     
     [self drawBackgroundWithPath:path];
@@ -86,21 +87,28 @@
     CGContextTranslateCTM(context, self.drawingFrame.origin.x, self.drawingFrame.origin.y);
     for (UIView *subview in self.subviews) {
         if (![subview isDrawable]) {
+//            NSLog(@"On Page %@, will not draw view:%@\nreason: is not drawable", NSStringFromCGRect(rect), subview);
             continue;
         }
-        CGRect intersection = [self subviewIntersection:subview pageRect:rect];
+        CGRect intersection = [self subviewIntersection:subview drawingPageRect:rect];
         if (CGRectIsNull(intersection)) { // do not draw invisible views
+//            NSLog(@"On Page %@, will not draw view:%@\nreason: is not visible", NSStringFromCGRect(rect), subview);
             continue;
         }
-        if ([self.renderingDelegate viewCanRequestOffsetForDrawing:self] &&             // if can be drawn on the next page and
-            CGRectGetHeight(subview.drawingFrame) < CGRectGetHeight(rect) &&            // view can fit in the page and
-            ![self shouldSliceSubviews] &&                                              // it is allowed to move view and
-            CGRectGetHeight(subview.drawingFrame) != CGRectGetHeight(intersection)) {   // view cannot be drawn on this page
-            CGPoint offset = CGPointZero;
-            offset.y = CGRectGetHeight(intersection);
-            [self.renderingDelegate view:self requiresOffsetDrawing:offset];
+        if (![self shouldSliceSubviews] &&                                              // it is not allowed to slice view and
+            ![self canDrawSubview:subview intersection:intersection]) {   // view cannot be drawn on this page
+//            NSLog(@"On Page %@, will not draw view:%@\nreason: is not is not allowed to slice ", NSStringFromCGRect(rect), subview);
             continue;
         }
+//        if ([self.renderingDelegate viewCanRequestOffsetForDrawing:self] &&             // if can be drawn on the next page and
+//            CGRectGetHeight(subview.drawingFrame) < CGRectGetHeight(rect) &&            // view can fit in the page and
+//            ![self shouldSliceSubviews] &&                                              // it is allowed to move view and
+//            CGRectGetHeight(subview.drawingFrame) != CGRectGetHeight(intersection)) {   // view cannot be drawn on this page
+//            CGPoint offset = CGPointZero;
+//            offset.y = CGRectGetHeight(intersection);
+//            [self.renderingDelegate view:self requiresOffsetDrawing:offset];
+//            continue;
+//        }
         [subview drawViewWithinPageRect:rect];
     }
     CGContextRestoreGState(context);
@@ -118,6 +126,19 @@
     shapeLayer.lineWidth = self.layer.borderWidth * 2; // the stroke is draw half inside, half outside
     [shapeLayer renderInContext:context];
     CGContextRestoreGState(context);
+}
+
+- (BOOL)canDrawSubview:(UIView *)subview intersection:(CGRect)intersection {
+    return CGRectGetHeight(subview.drawingFrame) == CGRectGetHeight(intersection);
+}
+
+- (CGRect)subviewRect:(UIView *)subview drawingPageRect:(CGRect)rect {
+    return CGRectOffsetWithCGPoint([self.renderingDelegate view:self convertRectToContentView:subview.drawingFrame], CGPointMinus(rect.origin));
+}
+
+- (CGRect)subviewIntersection:(UIView *)subview drawingPageRect:(CGRect)rect {
+    CGRect subviewRect = [self subviewRect:subview drawingPageRect:rect];
+    return CGRectIntersection(subviewRect, CGRectBounds(rect));
 }
 
 @end

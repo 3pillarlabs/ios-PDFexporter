@@ -14,10 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 // set YES to UIView; set NO for the following basic views: UIButton, UIControl, UIImageView, UIInputView, UILabel, UICollectionReuseableView, UITableViewCell, UITableViewHeaderFooterView
 @property (nonatomic, readonly) BOOL askSubviewsRenderingOffset;
 
+- (BOOL)canLayoutSubview:(UIView *)subview intersection:(CGRect)intersection;
+
 - (CGPoint)renderingOffsetForPageRect:(CGRect)rect;
 
-- (CGRect)subviewRect:(UIView *)subview pageRect:(CGRect)rect;
-- (CGRect)subviewIntersection:(UIView *)subview pageRect:(CGRect)rect;
+- (CGRect)subviewRect:(UIView *)subview layoutPageRect:(CGRect)rect;
+- (CGRect)subviewIntersection:(UIView *)subview layoutPageRect:(CGRect)rect;
 
 @end
 

@@ -29,6 +29,14 @@ CG_INLINE CGRect CGRectOffsetWithCGPoint(CGRect rect, CGPoint point)
     return newRect;
 }
 
+CG_INLINE CGRect CGRectResizeWithOffset(CGRect rect, CGPoint offset)
+{
+    CGRect newRect = rect;
+    newRect.size.width -= offset.x;
+    newRect.size.height -= offset.y;
+    return newRect;
+}
+
 CG_INLINE CGRect CGRectBounds(CGRect rect)
 {
     CGRect newRect = CGRectZero;

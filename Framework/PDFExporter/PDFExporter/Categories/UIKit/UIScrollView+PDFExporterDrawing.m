@@ -74,11 +74,11 @@ static void * const kUIScrollViewDrawEntireContentSizeAssociatedStorageKey = (vo
 
 #pragma mark - PDFExporterPageInformation
 
-- (CGRect)subviewRect:(UIView *)subview pageRect:(CGRect)rect {
+- (CGRect)subviewRect:(UIView *)subview layoutPageRect:(CGRect)rect {
     if ([subview isKindOfClass:[UITableViewCell class]]) {  // UITableView's cells are wrapped inside a UIScrollView
-        return [self.superview subviewRect:subview pageRect:rect];
+        return [self.superview subviewRect:subview layoutPageRect:rect];
     } else {
-        return [super subviewRect:subview pageRect:rect];
+        return [super subviewRect:subview layoutPageRect:rect];
     }
 }
 

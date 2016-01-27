@@ -24,6 +24,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)drawSubviewsWithPath:(UIBezierPath *)path withinPageRect:(CGRect)rect;
 - (void)drawBorderWithPath:(UIBezierPath *)path;
 
+- (BOOL)canDrawSubview:(UIView *)subview intersection:(CGRect)intersection;
+
+- (CGRect)subviewRect:(UIView *)subview drawingPageRect:(CGRect)rect;
+- (CGRect)subviewIntersection:(UIView *)subview drawingPageRect:(CGRect)rect;
+
+
 @end
 
 NS_ASSUME_NONNULL_END
