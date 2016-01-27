@@ -90,7 +90,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 }
 
 - (CGRect)renderingRect {
-    return ([self isScalingContent]) ? CGRectScaleByFactor(self.contentRect, self.contentRectScale) : self.contentRect;
+    return ([self isScalingContent]) ? CGRectCeil(CGRectScaleByFactor(self.contentRect, self.contentRectScale)) : self.contentRect;
 }
 
 - (CGFloat)headerHeight {
@@ -295,13 +295,11 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
         }
         [self createPageRectWithRect:pageOffset offset:renderingOffset];
         self.internalNumberOfPages = pageIndex + 1;
-        
-        NSLog(@"%@", self.pageRects);
     }
 }
 
 - (void)createPageRectWithRect:(CGRect)rect offset:(CGPoint)offset {
-    CGRect pageRect = CGRectResizeWithOffset(rect, offset);
+    CGRect pageRect = CGRectResizeWithOffset(rect, CGPointMinus(offset));
     [self.pageRects addObject:[NSValue valueWithCGRect:pageRect]];
 }
 
@@ -309,20 +307,20 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     if ([self.pageRects haveObjectAtIndex:index]) {
         return [self.pageRects[index] CGRectValue];
     }
-    CGRect pageOffset = self.contentRect;
+    CGRect pageOffset = CGRectZero;
+    if ([self isScalingContent]) {
+        pageOffset.size = CGSizeCeil(CGSizeScaleByFactor(self.contentRect.size, self.contentRectScale));
+    } else {
+        pageOffset.size = self.contentRect.size;
+    }
     pageOffset.origin.x = 0.f;
     if ([self.pageRects haveObjectAtIndex:index - 1]) {
         CGRect previousPageRect = [self.pageRects[index - 1] CGRectValue];
         pageOffset.origin.y = CGRectGetMaxY(previousPageRect);
     } else {
-        pageOffset.origin.y = index * CGRectGetHeight(self.contentRect);
+        pageOffset.origin.y = index * CGRectGetHeight(pageOffset);
     }
-    if (![self isScalingContent]) {
-        return pageOffset;
-    }
-    CGRect scaledPageOffset = CGRectScaleByFactor(pageOffset, self.contentRectScale);
-    scaledPageOffset.origin.y = index * CGRectGetHeight(scaledPageOffset);
-    return scaledPageOffset;
+    return pageOffset;
 }
 
 #pragma mark - PDFRenderingDelegate

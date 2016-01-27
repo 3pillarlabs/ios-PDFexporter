@@ -32,8 +32,8 @@ CG_INLINE CGRect CGRectOffsetWithCGPoint(CGRect rect, CGPoint point)
 CG_INLINE CGRect CGRectResizeWithOffset(CGRect rect, CGPoint offset)
 {
     CGRect newRect = rect;
-    newRect.size.width -= offset.x;
-    newRect.size.height -= offset.y;
+    newRect.size.width += offset.x;
+    newRect.size.height += offset.y;
     return newRect;
 }
 
@@ -44,15 +44,39 @@ CG_INLINE CGRect CGRectBounds(CGRect rect)
     return newRect;
 }
 
+CG_INLINE CGPoint CGPointScaleByFactor(CGPoint point, CGFloat factor)
+{
+    CGPoint newPoint = point;
+    newPoint.x *= factor;
+    newPoint.y *= factor;
+    return newPoint;
+}
+
+CG_INLINE CGSize CGSizeScaleByFactor(CGSize size, CGFloat factor)
+{
+    CGSize newSize = size;
+    newSize.width *= factor;
+    newSize.height *= factor;
+    return newSize;
+}
+
 CG_INLINE CGRect CGRectScaleByFactor(CGRect rect, CGFloat factor)
 {
-    CGRect scaledRect = rect;
-    scaledRect.origin.x *= factor;
-    scaledRect.origin.y *= factor;
-    scaledRect.size.width *= factor;
-    scaledRect.size.height *= factor;
-    return CGRectMake(ceilf(scaledRect.origin.x), ceilf(scaledRect.origin.y),
-                      ceilf(scaledRect.size.width), ceilf(scaledRect.size.height));
+    CGRect scaledRect;
+    scaledRect.origin = CGPointScaleByFactor(rect.origin, factor);
+    scaledRect.size = CGSizeScaleByFactor(rect.size, factor);
+    return scaledRect;
+}
+
+CG_INLINE CGSize CGSizeCeil(CGSize size)
+{
+    return CGSizeMake(ceilf(size.width), ceilf(size.height));
+}
+
+CG_INLINE CGRect CGRectCeil(CGRect rect)
+{
+    return CGRectMake(ceilf(rect.origin.x), ceilf(rect.origin.y),
+                      ceilf(rect.size.width), ceilf(rect.size.height));
 }
 
 CG_INLINE CGPoint CGPointMinus(CGPoint point)
