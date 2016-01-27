@@ -11,9 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol PDFRenderingDelegate <NSObject>
 
-//- (void)view:(UIView *)view requiresOffsetDrawing:(CGPoint)offset;
 - (CGRect)view:(UIView *)view convertRectToContentView:(CGRect)rect;
-//- (BOOL)viewCanRequestOffsetForDrawing:(UIView *)view;
 - (BOOL)viewShouldSliceSubviews:(UIView *)view;
 
 @end

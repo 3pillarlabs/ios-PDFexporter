@@ -103,7 +103,7 @@
 
 - (CGRect)subviewRect:(UIView *)subview layoutPageRect:(CGRect)rect {
     if ([subview isKindOfClass:[UITableViewCell class]] ||
-        [subview isKindOfClass:[UITableViewHeaderFooterView class]]) {// ||
+        [subview isKindOfClass:[UITableViewHeaderFooterView class]]) {
         return subview.drawingFrame;
     } else if ([subview isKindOfClass:[UIScrollView class]]) {
         CGRect scrollViewFrame = subview.drawingFrame;

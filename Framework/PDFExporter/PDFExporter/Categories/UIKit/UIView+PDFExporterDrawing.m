@@ -87,28 +87,16 @@
     CGContextTranslateCTM(context, self.drawingFrame.origin.x, self.drawingFrame.origin.y);
     for (UIView *subview in self.subviews) {
         if (![subview isDrawable]) {
-//            NSLog(@"On Page %@, will not draw view:%@\nreason: is not drawable", NSStringFromCGRect(rect), subview);
             continue;
         }
         CGRect intersection = [self subviewIntersection:subview drawingPageRect:rect];
         if (CGRectIsNull(intersection)) { // do not draw invisible views
-//            NSLog(@"On Page %@, will not draw view:%@\nreason: is not visible", NSStringFromCGRect(rect), subview);
             continue;
         }
-        if (![self shouldSliceSubviews] &&                                              // it is not allowed to slice view and
-            ![self canDrawSubview:subview intersection:intersection]) {   // view cannot be drawn on this page
-//            NSLog(@"On Page %@, will not draw view:%@\nreason: is not is not allowed to slice ", NSStringFromCGRect(rect), subview);
+        if (![self shouldSliceSubviews] &&                              // it is not allowed to slice view and
+            ![self canDrawSubview:subview intersection:intersection]) { // view cannot be drawn on this page
             continue;
         }
-//        if ([self.renderingDelegate viewCanRequestOffsetForDrawing:self] &&             // if can be drawn on the next page and
-//            CGRectGetHeight(subview.drawingFrame) < CGRectGetHeight(rect) &&            // view can fit in the page and
-//            ![self shouldSliceSubviews] &&                                              // it is allowed to move view and
-//            CGRectGetHeight(subview.drawingFrame) != CGRectGetHeight(intersection)) {   // view cannot be drawn on this page
-//            CGPoint offset = CGPointZero;
-//            offset.y = CGRectGetHeight(intersection);
-//            [self.renderingDelegate view:self requiresOffsetDrawing:offset];
-//            continue;
-//        }
         [subview drawViewWithinPageRect:rect];
     }
     CGContextRestoreGState(context);

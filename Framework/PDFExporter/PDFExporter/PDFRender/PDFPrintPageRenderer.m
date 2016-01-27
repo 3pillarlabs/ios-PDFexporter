@@ -260,7 +260,6 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     viewFrame.origin = CGPointZero;
     self.footerView.frame = viewFrame;
     
-//    self.contentView.sliceSubviews = self.sliceViews;
     self.contentView.renderingDelegate = self;
 }
 
@@ -292,17 +291,12 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
             [self createPageRectWithRect:pageOffset offset:renderingOffset];
             ++pageIndex;
             pageOffset = [self scaledPageRectOffsetForIndex:pageIndex];
-//            pageOffset = CGRectOffsetWithCGPoint(pageOffset, CGPointMinus(renderingOffset));
             renderingOffset = CGPointZero;
         }
         [self createPageRectWithRect:pageOffset offset:renderingOffset];
         self.internalNumberOfPages = pageIndex + 1;
         
         NSLog(@"%@", self.pageRects);
-        
-        // reset offsets
-//        self.pageRenderingOffset = CGPointZero;
-//        self.renderingOffset = CGPointZero;
     }
 }
 
@@ -315,7 +309,6 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     if ([self.pageRects haveObjectAtIndex:index]) {
         return [self.pageRects[index] CGRectValue];
     }
-//    CGFloat pageHeightOffset =
     CGRect pageOffset = self.contentRect;
     pageOffset.origin.x = 0.f;
     if ([self.pageRects haveObjectAtIndex:index - 1]) {
@@ -324,9 +317,6 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     } else {
         pageOffset.origin.y = index * CGRectGetHeight(self.contentRect);
     }
-//    self.renderingOffset = CGPointTranslate(self.renderingOffset, self.pageRenderingOffset);
-//    self.pageRenderingOffset = CGPointZero;
-//    pageOffset = CGRectOffsetWithCGPoint(pageOffset, CGPointMinus(self.renderingOffset));
     if (![self isScalingContent]) {
         return pageOffset;
     }
@@ -337,23 +327,9 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 
 #pragma mark - PDFRenderingDelegate
 
-//- (void)view:(UIView *)view requiresOffsetDrawing:(CGPoint)offset {
-//#warning remove this function
-//    if ([self shouldSliceViews]) {
-//        return;
-//    }
-//    if (offset.y > self.renderingOffset.y) {
-//        self.renderingOffset = offset;
-//    }
-//}
-
 - (CGRect)view:(UIView *)view convertRectToContentView:(CGRect)rect {
     return [self.contentView convertRect:rect fromView:view];
 }
-
-//- (BOOL)viewCanRequestOffsetForDrawing:(UIView *)view {
-//    return ![self shouldSliceViews];
-//}
 
 - (BOOL)viewShouldSliceSubviews:(UIView *)view {
     return self.shouldSliceViews;

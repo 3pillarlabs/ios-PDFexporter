@@ -9,23 +9,12 @@
 #import <objc/runtime.h>
 #import "PDFWeakObjectContainer.h"
 
-static void * const kUIViewSliceSubviewsAssociatedStorageKey = (void *)&kUIViewSliceSubviewsAssociatedStorageKey;
 static void * const kUIViewRenderingDelegateAssociatedStorageKey = (void *)&kUIViewRenderingDelegateAssociatedStorageKey;
 
 @implementation UIView (PDFExporterViewSlicing)
 
 - (BOOL)shouldSliceSubviews {
     return [self.renderingDelegate viewShouldSliceSubviews:self];
-//    NSNumber *sliceSubviewsNumber = objc_getAssociatedObject(self, kUIViewSliceSubviewsAssociatedStorageKey);
-//    return [sliceSubviewsNumber boolValue];
-}
-
-- (void)setSliceSubviews:(BOOL)sliceSubviews {
-//    NSNumber *sliceSubviewsNumber = nil;
-//    if (sliceSubviews) {
-//        sliceSubviewsNumber = @(sliceSubviews);
-//    }
-//    objc_setAssociatedObject(self, kUIViewSliceSubviewsAssociatedStorageKey, sliceSubviewsNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (id<PDFRenderingDelegate>)renderingDelegate {
