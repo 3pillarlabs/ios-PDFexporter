@@ -121,7 +121,7 @@
 }
 
 - (CGRect)subviewRect:(UIView *)subview drawingPageRect:(CGRect)rect {
-    return CGRectOffsetWithCGPoint([self.renderingDelegate view:self convertRectToContentView:subview.drawingFrame], CGPointMinus(rect.origin));
+    return CGRectOffsetWithCGPoint([self.renderingDelegate view:self convertRectToRootView:subview.drawingFrame], CGPointMinus(rect.origin));
 }
 
 - (CGRect)subviewIntersection:(UIView *)subview drawingPageRect:(CGRect)rect {

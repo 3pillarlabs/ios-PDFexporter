@@ -261,6 +261,8 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     self.footerView.frame = viewFrame;
     
     self.contentView.renderingDelegate = self;
+    self.headerView.renderingDelegate = self;
+    self.footerView.renderingDelegate = self;
 }
 
 - (void)cleanContentAfterDrawing {
@@ -275,7 +277,6 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
         scrollView.drawEntireContentSize = NO;
     }
     self.footerView.persistState = NO;
-    self.contentView.renderingDelegate = nil;
 }
 
 - (void)computeNumberOfPages {
@@ -325,8 +326,16 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 
 #pragma mark - PDFRenderingDelegate
 
-- (CGRect)view:(UIView *)view convertRectToContentView:(CGRect)rect {
-    return [self.contentView convertRect:rect fromView:view];
+- (CGRect)view:(UIView *)view convertRectToRootView:(CGRect)rect {
+    UIView *rootView = nil;
+    if ([view isDescendantOfView:self.contentView]) {
+        rootView = self.contentView;
+    } else if ([view isDescendantOfView:self.headerView]) {
+        rootView = self.headerView;
+    } else if ([view isDescendantOfView:self.footerView]) {
+        rootView = self.footerView;
+    }
+    return [view convertRect:rect toView:rootView];
 }
 
 - (BOOL)viewShouldSliceSubviews:(UIView *)view {

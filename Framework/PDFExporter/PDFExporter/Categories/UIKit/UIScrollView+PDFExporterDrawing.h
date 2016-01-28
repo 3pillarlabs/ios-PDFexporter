@@ -5,7 +5,7 @@
 //  Copyright © 2016 3Pillar Global. All rights reserved.
 //
 
-#import "UIView+PDFExporterDrawing.h"
+#import <PDFExporter/UIView+PDFExporterDrawing.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIView (PDFExporterPageInformation)
 
-// set YES to UIView; set NO for the following basic views: UIButton, UIControl, UIImageView, UIInputView, UILabel, UICollectionReuseableView, UITableViewCell, UITableViewHeaderFooterView
+// set YES to UIView; set NO for the following basic views: UIButton, UIControl, UIImageView, UIInputView, UITextView, UILabel, UICollectionReuseableView, UITableViewCell, UITableViewHeaderFooterView
 @property (nonatomic, readonly) BOOL askSubviewsRenderingOffset;
 
 - (BOOL)canLayoutSubview:(UIView *)subview intersection:(CGRect)intersection;

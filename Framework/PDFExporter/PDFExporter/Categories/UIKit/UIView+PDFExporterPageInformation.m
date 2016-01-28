@@ -46,7 +46,7 @@
 
 - (CGRect)subviewRect:(UIView *)subview layoutPageRect:(CGRect)rect {
     CGRect subviewRect = subview.drawingFrame;
-    subviewRect = [self.renderingDelegate view:self convertRectToContentView:subviewRect];
+    subviewRect = [self.renderingDelegate view:self convertRectToRootView:subviewRect];
     return subviewRect;
 }
 
@@ -84,6 +84,14 @@
 @implementation UIInputView (PDFExporterPageInformationPrivate)
 
 - (BOOL)askSubviewsRenderingOffset {
+    return NO;
+}
+
+@end
+
+@implementation UITextView (PDFExporterPageInformationPrivate)
+
+- (BOOL)askSubviewsRenderingOffset{
     return NO;
 }
 

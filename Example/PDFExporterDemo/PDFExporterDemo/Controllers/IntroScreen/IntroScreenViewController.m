@@ -34,30 +34,17 @@ static NSString * const kPDFFileName = @"ExportedPDF.pdf";
     [super viewDidLoad];
     
     self.PDFRenderer = [PDFPrintPageRenderer new];
+    self.PDFRenderer.scaleContent = YES;
     self.PDFRenderer.contentView = self.textView;// self.tableView;
     self.PDFRenderer.pagingMask = PDFPagingOptionFooter;
-    self.textViewWidthConstraint.constant = CGRectGetWidth(self.PDFRenderer.contentRect);
+//    self.textViewWidthConstraint.constant = CGRectGetWidth(self.PDFRenderer.contentRect);
     
     UIView<PDFHeaderFooterPaging> *headerView = [[HeaderView alloc] initFromXib];
     self.PDFRenderer.headerView = headerView;
-    NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:headerView
-                                                                       attribute:NSLayoutAttributeWidth
-                                                                       relatedBy:NSLayoutRelationEqual
-                                                                          toItem:nil
-                                                                       attribute:NSLayoutAttributeNotAnAttribute
-                                                                      multiplier:1.f
-                                                                        constant:CGRectGetWidth(self.PDFRenderer.headerRect)];
-    [headerView addConstraint:widthConstraint];
-    UIView<PDFHeaderFooterPaging> *footerView = [[FooterView alloc] initFromXib];
+//    self.PDFRenderer.scaleHeader = YES;
+    FooterView *footerView = [[FooterView alloc] initFromXib];
     self.PDFRenderer.footerView = footerView;
-    widthConstraint = [NSLayoutConstraint constraintWithItem:footerView
-                                                   attribute:NSLayoutAttributeWidth
-                                                   relatedBy:NSLayoutRelationEqual
-                                                      toItem:nil
-                                                   attribute:NSLayoutAttributeNotAnAttribute
-                                                  multiplier:1.f
-                                                    constant:CGRectGetWidth(self.PDFRenderer.footerRect)];
-    [footerView addConstraint:widthConstraint];
+    footerView.drawingWidth = CGRectGetWidth(self.PDFRenderer.footerRect);
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
 }

@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol PDFRenderingDelegate <NSObject>
 
-- (CGRect)view:(UIView *)view convertRectToContentView:(CGRect)rect;
+- (CGRect)view:(UIView *)view convertRectToRootView:(CGRect)rect;
 - (BOOL)viewShouldSliceSubviews:(UIView *)view;
 
 @end
