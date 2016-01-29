@@ -79,6 +79,14 @@
     }
 }
 
+- (BOOL)shouldConsiderLayoutSubview:(UIView *)subview intersection:(CGRect)intersection {
+    if ([subview isKindOfClass:[UIScrollView class]]) {
+        return YES;
+    } else {
+        return [super canLayoutSubview:subview intersection:intersection];
+    }
+}
+
 - (CGPoint)renderingOffsetForPageRect:(CGRect)rect {
     CGPoint renderingOffset = CGPointZero;
     CGPoint contentOffset = CGPointZero;
