@@ -18,9 +18,9 @@ typedef NS_OPTIONS(NSUInteger, PDFPagingOptions) {
 
 @interface PDFPrintPageRenderer : UIPrintPageRenderer
 
-@property (nonatomic, nullable) UIView<PDFHeaderFooterPaging> *headerView; // if pagingMask && PDFPagingOptionHeader, headerView should implement protocol
+@property (nonatomic, nullable) UIView<PDFHeaderFooterPaging> *headerView; // if pagingMask && PDFPagingOptionHeader, headerView should implement the optional method from the protocol
 @property (nonatomic) UIView *contentView;
-@property (nonatomic, nullable) UIView<PDFHeaderFooterPaging> *footerView; // if pagingMask && PDFPagingOptionFooter, footerView should implement protocol
+@property (nonatomic, nullable) UIView<PDFHeaderFooterPaging> *footerView; // if pagingMask && PDFPagingOptionFooter, footerView should implement the optional method from the protocol
 @property (nonatomic) PDFPagingOptions pagingMask; // default is PDFPagingOptionNone
 
 @property (nonatomic) UIEdgeInsets paperInset; // default is {30, 30, 30, 30}
@@ -34,7 +34,7 @@ typedef NS_OPTIONS(NSUInteger, PDFPagingOptions) {
 @property (nonatomic, getter=isScalingContent) BOOL scaleContent;
 @property (nonatomic, getter=isScalingFooter) BOOL scaleFooter;
 
-@property (nonatomic, getter=shouldSliceViews) BOOL sliceViews;
+@property (nonatomic, getter=shouldSliceViews) BOOL sliceViews; // default is NO
 
 // Draws content. As any drawing method should be called only on main queue.
 - (NSData *)drawPagesToPDFData;

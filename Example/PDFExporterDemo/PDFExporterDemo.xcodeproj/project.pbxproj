@@ -16,6 +16,7 @@
 		FF0649611C2AC6F4000E4925 /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0649601C2AC6F4000E4925 /* HeaderView.m */; };
 		FF0649631C2AC6FE000E4925 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF0649621C2AC6FE000E4925 /* HeaderView.xib */; };
 		FF06496D1C2ADDCF000E4925 /* PaperType.m in Sources */ = {isa = PBXBuildFile; fileRef = FF06496C1C2ADDCF000E4925 /* PaperType.m */; };
+		FF5F118A1C5BABBA00FD0D92 /* WholeView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5F11891C5BABBA00FD0D92 /* WholeView.m */; };
 		FFB7CCC11C29A7D50051004B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB7CCC01C29A7D50051004B /* main.m */; };
 		FFB7CCC41C29A7D50051004B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB7CCC31C29A7D50051004B /* AppDelegate.m */; };
 		FFB7CCCA1C29A7D50051004B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFB7CCC81C29A7D50051004B /* Main.storyboard */; };
@@ -95,6 +96,8 @@
 		FF0649621C2AC6FE000E4925 /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
 		FF06496B1C2ADDCF000E4925 /* PaperType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaperType.h; sourceTree = "<group>"; };
 		FF06496C1C2ADDCF000E4925 /* PaperType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaperType.m; sourceTree = "<group>"; };
+		FF5F11881C5BABBA00FD0D92 /* WholeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WholeView.h; sourceTree = "<group>"; };
+		FF5F11891C5BABBA00FD0D92 /* WholeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WholeView.m; sourceTree = "<group>"; };
 		FFB7CCBC1C29A7D50051004B /* PDFExporterDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PDFExporterDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFB7CCC01C29A7D50051004B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FFB7CCC21C29A7D50051004B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -185,6 +188,8 @@
 				FF06495F1C2AC6F4000E4925 /* HeaderView.h */,
 				FF0649601C2AC6F4000E4925 /* HeaderView.m */,
 				FF0649621C2AC6FE000E4925 /* HeaderView.xib */,
+				FF5F11881C5BABBA00FD0D92 /* WholeView.h */,
+				FF5F11891C5BABBA00FD0D92 /* WholeView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -442,6 +447,7 @@
 				FFB7CCC41C29A7D50051004B /* AppDelegate.m in Sources */,
 				FFB7CCC11C29A7D50051004B /* main.m in Sources */,
 				FF06496D1C2ADDCF000E4925 /* PaperType.m in Sources */,
+				FF5F118A1C5BABBA00FD0D92 /* WholeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

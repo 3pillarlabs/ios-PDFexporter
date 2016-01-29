@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qc3-i4-68d">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qc3-i4-68d">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -26,18 +26,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OTM-0J-3lY" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="486"/>
                                         <subviews>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="0WT-wb-xdO">
-                                                <rect key="frame" x="225" y="100" width="150" height="128"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="128" id="hkR-Fr-eUx"/>
-                                                    <constraint firstAttribute="width" constant="150" id="oZ7-DC-8zX"/>
-                                                </constraints>
-                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
-                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k0S-rV-0hQ">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k0S-rV-0hQ">
                                                 <rect key="frame" x="190" y="16" width="221" height="22"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="Pet Statistics in">
@@ -85,7 +74,7 @@
                                                 </attributedString>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bhq-Qe-lJx" userLabel="Chart US Content View">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bhq-Qe-lJx" userLabel="Chart US Content View">
                                                 <rect key="frame" x="210" y="54" width="80" height="200"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mjn-0b-HwS" userLabel="Cat View">
@@ -127,7 +116,7 @@
                                                     <constraint firstAttribute="width" constant="80" id="uDa-Mj-jMa"/>
                                                 </constraints>
                                             </view>
-                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l9l-Wz-H0J" userLabel="Chart UK Content View">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l9l-Wz-H0J" userLabel="Chart UK Content View" customClass="WholeView">
                                                 <rect key="frame" x="210" y="270" width="80" height="200"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ito-MD-N4J" userLabel="Cat View">
@@ -169,7 +158,7 @@
                                                     <constraint firstItem="UE2-7U-C2M" firstAttribute="leading" secondItem="l9l-Wz-H0J" secondAttribute="leading" id="xdP-dk-mig"/>
                                                 </constraints>
                                             </view>
-                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wBI-Ci-M9Y" userLabel="Chart US Info View">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wBI-Ci-M9Y" userLabel="Chart US Info View">
                                                 <rect key="frame" x="310" y="84" width="152" height="140"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="US" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="48p-X6-guM">
@@ -259,7 +248,7 @@
                                                     <constraint firstItem="ACu-1k-muS" firstAttribute="leading" secondItem="7eh-Ws-uRZ" secondAttribute="leading" id="ybJ-iI-en8"/>
                                                 </constraints>
                                             </view>
-                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MdW-J8-JcP" userLabel="Chart UK Info View">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MdW-J8-JcP" userLabel="Chart UK Info View">
                                                 <rect key="frame" x="310" y="300" width="140" height="140"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UK" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y5U-OH-LT3">
@@ -360,8 +349,6 @@
                                             <constraint firstItem="bhq-Qe-lJx" firstAttribute="top" secondItem="k0S-rV-0hQ" secondAttribute="bottom" constant="16" id="JAt-Tl-sPS"/>
                                             <constraint firstItem="bhq-Qe-lJx" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="OTM-0J-3lY" secondAttribute="leading" constant="20" id="RcM-TC-mLp"/>
                                             <constraint firstAttribute="centerX" secondItem="bhq-Qe-lJx" secondAttribute="trailing" priority="751" constant="10" id="SmY-av-fX6"/>
-                                            <constraint firstItem="0WT-wb-xdO" firstAttribute="centerX" secondItem="OTM-0J-3lY" secondAttribute="centerX" id="TjP-XV-uzX"/>
-                                            <constraint firstItem="0WT-wb-xdO" firstAttribute="top" secondItem="OTM-0J-3lY" secondAttribute="top" constant="100" id="Xd3-hj-6hR"/>
                                             <constraint firstItem="MdW-J8-JcP" firstAttribute="centerY" secondItem="l9l-Wz-H0J" secondAttribute="centerY" id="bkT-jC-frI"/>
                                             <constraint firstItem="wBI-Ci-M9Y" firstAttribute="centerY" secondItem="bhq-Qe-lJx" secondAttribute="centerY" id="cAp-d6-T0S"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="wBI-Ci-M9Y" secondAttribute="trailing" constant="20" id="cpD-58-ZNZ"/>
@@ -379,14 +366,6 @@
                                     <constraint firstAttribute="trailing" secondItem="OTM-0J-3lY" secondAttribute="trailing" id="sSE-rB-lAy"/>
                                 </constraints>
                             </scrollView>
-                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fYX-L2-fee">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="472"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="XBQ-5y-qaH" id="QzQ-h5-OYa"/>
-                                    <outlet property="delegate" destination="XBQ-5y-qaH" id="P7D-8D-xXt"/>
-                                </connections>
-                            </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xcZ-by-xEO" userLabel="Bottom Bar View">
                                 <rect key="frame" x="0.0" y="472" width="600" height="64"/>
                                 <subviews>
@@ -425,14 +404,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="fYX-L2-fee" firstAttribute="leading" secondItem="8Hh-c6-Azh" secondAttribute="leading" id="6IL-CC-eNM"/>
                             <constraint firstAttribute="trailing" secondItem="xcZ-by-xEO" secondAttribute="trailing" id="8qj-rc-pZu"/>
                             <constraint firstItem="xcZ-by-xEO" firstAttribute="top" secondItem="dEV-Ir-yjk" secondAttribute="bottom" id="9E8-mW-Yht"/>
-                            <constraint firstAttribute="trailing" secondItem="fYX-L2-fee" secondAttribute="trailing" id="Csu-gT-c4X"/>
                             <constraint firstItem="dEV-Ir-yjk" firstAttribute="leading" secondItem="8Hh-c6-Azh" secondAttribute="leading" id="J76-w9-sE9"/>
                             <constraint firstAttribute="trailing" secondItem="dEV-Ir-yjk" secondAttribute="trailing" id="O9f-MI-Evu"/>
-                            <constraint firstItem="fYX-L2-fee" firstAttribute="top" secondItem="5VU-x6-Qg9" secondAttribute="bottom" id="Pv3-B8-FS0"/>
-                            <constraint firstItem="xcZ-by-xEO" firstAttribute="top" secondItem="fYX-L2-fee" secondAttribute="bottom" id="WrI-Qe-9ZF"/>
                             <constraint firstAttribute="bottomMargin" secondItem="xcZ-by-xEO" secondAttribute="bottom" id="XQf-6W-qY3"/>
                             <constraint firstItem="dEV-Ir-yjk" firstAttribute="top" secondItem="5VU-x6-Qg9" secondAttribute="bottom" id="dP0-ef-uaf"/>
                             <constraint firstItem="xcZ-by-xEO" firstAttribute="leading" secondItem="8Hh-c6-Azh" secondAttribute="leading" id="x6n-66-1aG"/>
@@ -441,9 +416,6 @@
                     <navigationItem key="navigationItem" title="Pets" id="jmB-g8-KDg"/>
                     <connections>
                         <outlet property="contentView" destination="OTM-0J-3lY" id="MiL-1H-a5M"/>
-                        <outlet property="tableView" destination="fYX-L2-fee" id="TpV-Yh-iOl"/>
-                        <outlet property="textView" destination="0WT-wb-xdO" id="8jd-RD-di7"/>
-                        <outlet property="textViewWidthConstraint" destination="oZ7-DC-8zX" id="HzX-t8-XzX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lnb-wD-aZj" userLabel="First Responder" sceneMemberID="firstResponder"/>

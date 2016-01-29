@@ -127,7 +127,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 }
 
 - (void)setHeaderHeight:(CGFloat)headerHeight {
-    // Do nothing here.
+    // Do nothing.
 }
 
 - (CGFloat)footerHeight {

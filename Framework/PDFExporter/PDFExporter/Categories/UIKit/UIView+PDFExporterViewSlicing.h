@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UIView (PDFExporterViewSlicing)
 
 // content views and subviews that do not fit on one page are sliced
-// a subview is a view just contains other views with no custom drawing
+// a content view is a view just contains other views with no custom drawing
 @property (nonatomic, readonly, getter=shouldSliceSubviews) BOOL sliceSubviews;
 // rendering delegate is the same within a view hierarchy
 @property (nonatomic, weak, nullable) id<PDFRenderingDelegate> renderingDelegate;

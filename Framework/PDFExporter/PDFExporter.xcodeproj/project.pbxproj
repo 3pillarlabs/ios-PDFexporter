@@ -21,7 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		FF2F463B1C3A96130048D8E8 /* UIScrollView+PDFExporterDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = FF2F46391C3A96130048D8E8 /* UIScrollView+PDFExporterDrawing.h */; };
+		FF2F463B1C3A96130048D8E8 /* UIScrollView+PDFExporterDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = FF2F46391C3A96130048D8E8 /* UIScrollView+PDFExporterDrawing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF2F463C1C3A96130048D8E8 /* UIScrollView+PDFExporterDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2F463A1C3A96130048D8E8 /* UIScrollView+PDFExporterDrawing.m */; };
 		FF2F463F1C3A99190048D8E8 /* UITableView+PDFExporterDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = FF2F463D1C3A99190048D8E8 /* UITableView+PDFExporterDrawing.h */; };
 		FF2F46401C3A99190048D8E8 /* UITableView+PDFExporterDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2F463E1C3A99190048D8E8 /* UITableView+PDFExporterDrawing.m */; };

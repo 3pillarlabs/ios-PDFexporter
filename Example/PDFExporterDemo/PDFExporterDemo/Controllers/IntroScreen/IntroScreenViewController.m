@@ -15,14 +15,9 @@
 
 static NSString * const kPDFFileName = @"ExportedPDF.pdf";
 
-@interface IntroScreenViewController () <SettingsViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface IntroScreenViewController () <SettingsViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UILabel *USLabel;
-@property (weak, nonatomic) IBOutlet UITextView *textView;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *textViewWidthConstraint;
 
 @property (nonatomic) PDFPrintPageRenderer *PDFRenderer;
 
@@ -35,18 +30,16 @@ static NSString * const kPDFFileName = @"ExportedPDF.pdf";
     
     self.PDFRenderer = [PDFPrintPageRenderer new];
     self.PDFRenderer.scaleContent = YES;
-    self.PDFRenderer.contentView = self.textView;// self.tableView;
+    self.PDFRenderer.sliceViews = YES; // comment you do not want to slice views
+    self.PDFRenderer.contentView = self.contentView;
     self.PDFRenderer.pagingMask = PDFPagingOptionFooter;
-//    self.textViewWidthConstraint.constant = CGRectGetWidth(self.PDFRenderer.contentRect);
     
     UIView<PDFHeaderFooterPaging> *headerView = [[HeaderView alloc] initFromXib];
     self.PDFRenderer.headerView = headerView;
-//    self.PDFRenderer.scaleHeader = YES;
+    self.PDFRenderer.scaleHeader = YES;
     FooterView *footerView = [[FooterView alloc] initFromXib];
     self.PDFRenderer.footerView = footerView;
     footerView.drawingWidth = CGRectGetWidth(self.PDFRenderer.footerRect);
-    
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
 }
 
 - (void)tapContentView:(id)sender {
@@ -71,32 +64,6 @@ static NSString * const kPDFFileName = @"ExportedPDF.pdf";
 - (IBAction)previewPDFButtonPressed:(UIButton *)sender {
     NSData *PDFData = [self generatePDF];
     [self presentViewController:[[PDFPreviewViewController alloc] initWithPDFData:PDFData] animated:YES completion:nil];
-}
-
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class]) forIndexPath:indexPath];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", indexPath];
-    cell.textLabel.numberOfLines = 0;
-    cell.textLabel.textAlignment = NSTextAlignmentCenter;
-    return cell;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [NSString stringWithFormat:@"%lu", (unsigned long)section];
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    return [NSString stringWithFormat:@"%lu", (unsigned long)section];
 }
 
 #pragma mark - SettingsViewControllerDelegate
