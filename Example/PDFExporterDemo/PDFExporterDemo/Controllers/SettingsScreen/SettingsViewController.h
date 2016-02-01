@@ -12,7 +12,7 @@
 @protocol SettingsViewControllerDelegate <NSObject>
 
 - (void)settingsViewController:(SettingsViewController *)settingsViewController didChangePaperSize:(CGSize)paperSize;
-- (void)settingsViewController:(SettingsViewController *)settingsViewController didChangePaperInsets:(UIEdgeInsets)paperInsets;
+- (void)settingsViewController:(SettingsViewController *)settingsViewController didChangePaperInset:(UIEdgeInsets)paperInset;
 
 @end
 

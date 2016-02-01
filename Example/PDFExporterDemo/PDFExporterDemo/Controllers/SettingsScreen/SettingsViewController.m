@@ -115,7 +115,7 @@
         edgeInsets.right = textField.text.floatValue;
     }
     self.contentPaperInset = edgeInsets;
-    [self.delegate settingsViewController:self didChangePaperInsets:self.contentPaperInset];
+    [self.delegate settingsViewController:self didChangePaperInset:self.contentPaperInset];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

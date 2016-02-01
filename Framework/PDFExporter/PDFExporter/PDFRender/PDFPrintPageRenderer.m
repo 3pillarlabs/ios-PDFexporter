@@ -20,7 +20,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 
 @interface NSArray (PDFPrintPageRendererPrivate)
 
-- (BOOL)haveObjectAtIndex:(NSUInteger)index;
+- (BOOL)hasObjectAtIndex:(NSUInteger)index;
 
 @end
 
@@ -305,7 +305,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 }
 
 - (CGRect)scaledPageRectOffsetForIndex:(NSUInteger)index {
-    if ([self.pageRects haveObjectAtIndex:index]) {
+    if ([self.pageRects hasObjectAtIndex:index]) {
         return [self.pageRects[index] CGRectValue];
     }
     CGRect pageOffset = CGRectZero;
@@ -315,7 +315,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
         pageOffset.size = self.contentRect.size;
     }
     pageOffset.origin.x = 0.f;
-    if ([self.pageRects haveObjectAtIndex:index - 1]) {
+    if ([self.pageRects hasObjectAtIndex:index - 1]) {
         CGRect previousPageRect = [self.pageRects[index - 1] CGRectValue];
         pageOffset.origin.y = CGRectGetMaxY(previousPageRect);
     } else {
@@ -346,7 +346,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 
 @implementation NSArray (PDFPrintPageRendererPrivate)
 
-- (BOOL)haveObjectAtIndex:(NSUInteger)index {
+- (BOOL)hasObjectAtIndex:(NSUInteger)index {
     return index < self.count;
 }
 

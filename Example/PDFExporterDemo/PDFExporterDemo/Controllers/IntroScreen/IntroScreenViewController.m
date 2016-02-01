@@ -18,6 +18,8 @@ static NSString * const kPDFFileName = @"ExportedPDF.pdf";
 @interface IntroScreenViewController () <SettingsViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
+@property (nonatomic) FooterView *footerView;
+@property (nonatomic) HeaderView *headerView;
 
 @property (nonatomic) PDFPrintPageRenderer *PDFRenderer;
 
@@ -34,12 +36,12 @@ static NSString * const kPDFFileName = @"ExportedPDF.pdf";
     self.PDFRenderer.contentView = self.contentView;
     self.PDFRenderer.pagingMask = PDFPagingOptionFooter;
     
-    UIView<PDFHeaderFooterPaging> *headerView = [[HeaderView alloc] initFromXib];
-    self.PDFRenderer.headerView = headerView;
+    self.headerView = [[HeaderView alloc] initFromXib];
+    self.PDFRenderer.headerView = self.headerView;
     self.PDFRenderer.scaleHeader = YES;
-    FooterView *footerView = [[FooterView alloc] initFromXib];
-    self.PDFRenderer.footerView = footerView;
-    footerView.drawingWidth = CGRectGetWidth(self.PDFRenderer.footerRect);
+    self.footerView = [[FooterView alloc] initFromXib];
+    self.PDFRenderer.footerView = self.footerView;
+    self.footerView.drawingWidth = CGRectGetWidth(self.PDFRenderer.footerRect);
 }
 
 - (void)tapContentView:(id)sender {
@@ -70,10 +72,11 @@ static NSString * const kPDFFileName = @"ExportedPDF.pdf";
 
 - (void)settingsViewController:(SettingsViewController *)settingsViewController didChangePaperSize:(CGSize)paperSize {
     self.PDFRenderer.paperSize = paperSize;
+    self.footerView.drawingWidth = CGRectGetWidth(self.PDFRenderer.footerRect);
 }
 
-- (void)settingsViewController:(SettingsViewController *)settingsViewController didChangePaperInsets:(UIEdgeInsets)paperInsets {
-    self.PDFRenderer.paperInset = paperInsets;
+- (void)settingsViewController:(SettingsViewController *)settingsViewController didChangePaperInset:(UIEdgeInsets)paperInset {
+    self.PDFRenderer.paperInset = paperInset;
 }
 
 #pragma mark - Private
