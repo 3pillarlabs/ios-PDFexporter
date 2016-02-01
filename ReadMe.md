@@ -10,6 +10,16 @@ PDFExporter is available in iOS 8.0 and later.
 
 Add framework as a subproject in your working project. Link your application against the framework. Add the framework to the list of 'Embedded Binaries' from the project's General tab.
 
+## PDFExporter 2
+
+What's New:
+
+- Paging for footer or header;
+- Ability to choose between scaled content or the one which is provided;
+- Ability to choose to slice views or not;
+- More options to customize drawing, layout to not slice views or preserve state of views;
+- Support for UITableView;
+
 ## Usage
 
 Basic usage is to configure renderer and ask him to perform the drawing.
