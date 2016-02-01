@@ -32,7 +32,7 @@ static NSString * const kPDFFileName = @"ExportedPDF.pdf";
     
     self.PDFRenderer = [PDFPrintPageRenderer new];
     self.PDFRenderer.scaleContent = YES;
-    self.PDFRenderer.sliceViews = YES; // comment you do not want to slice views
+    self.PDFRenderer.sliceViews = YES;
     self.PDFRenderer.contentView = self.contentView;
     self.PDFRenderer.pagingMask = PDFPagingOptionFooter;
     
