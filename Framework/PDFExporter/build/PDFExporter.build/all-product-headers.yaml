@@ -1,0 +1,53 @@
+{
+  'version': 0,
+  'case-sensitive': 'false',
+  'roots': [
+    {
+      'type': 'directory',
+      'name': "/Users/andrei.neag/Library/Developer/Xcode/DerivedData/PDFExporterDemo-bzptrcuveylutmaachkohexgmlnn/Build/Products/Debug-iphonesimulator/PDFExporter.framework/Headers",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "PDFExporter-Swift.h",
+          'external-contents': "/Users/andrei.neag/Library/Developer/Xcode/DerivedData/PDFExporterDemo-bzptrcuveylutmaachkohexgmlnn/Build/Products/Debug-iphonesimulator/PDFExporter.framework/Headers/PDFExporter-Swift.h"
+        },
+        {
+          'type': 'file',
+          'name': "PDFExporter.h",
+          'external-contents': "/Users/andrei.neag/Git_repos/ATG/3PillarLabs/PDF exporter/Framework/PDFExporter/PDFExporter/PDFExporter.h"
+        },
+        {
+          'type': 'file',
+          'name': "PDFHeaderFooterPaging.h",
+          'external-contents': "/Users/andrei.neag/Git_repos/ATG/3PillarLabs/PDF exporter/Framework/PDFExporter/PDFExporter/PDFRender/PDFHeaderFooterPaging.h"
+        },
+        {
+          'type': 'file',
+          'name': "PDFPaperSizes.h",
+          'external-contents': "/Users/andrei.neag/Git_repos/ATG/3PillarLabs/PDF exporter/Framework/PDFExporter/PDFExporter/PDFRender/PDFPaperSizes.h"
+        },
+        {
+          'type': 'file',
+          'name': "PDFPrintPageRenderer.h",
+          'external-contents': "/Users/andrei.neag/Git_repos/ATG/3PillarLabs/PDF exporter/Framework/PDFExporter/PDFExporter/PDFRender/PDFPrintPageRenderer.h"
+        },
+        {
+          'type': 'file',
+          'name': "UIView+SubclassExtension.h",
+          'external-contents': "/Users/andrei.neag/Git_repos/ATG/3PillarLabs/PDF exporter/Framework/PDFExporter/PDFExporter/Categories/UIKit/UIView+SubclassExtension.h"
+        }
+      ]
+    },
+    {
+      'type': 'directory',
+      'name': "/Users/andrei.neag/Library/Developer/Xcode/DerivedData/PDFExporterDemo-bzptrcuveylutmaachkohexgmlnn/Build/Products/Debug-iphonesimulator/PDFExporter.framework/Modules",
+      'contents': [
+        {
+          'type': 'file',
+          'name': "module.modulemap",
+          'external-contents': "/Users/andrei.neag/Git_repos/ATG/3PillarLabs/PDF exporter/Framework/PDFExporter/build/PDFExporter.build/Debug-iphonesimulator/PDFExporter.build/module.modulemap"
+        }
+      ]
+    }
+  ]
+}
