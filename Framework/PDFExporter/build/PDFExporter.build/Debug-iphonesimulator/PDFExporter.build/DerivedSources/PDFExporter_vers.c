@@ -1,1 +1,0 @@
- const unsigned char PDFExporterVersionString[] __attribute__ ((used)) = "@(#)PROGRAM:PDFExporter  PROJECT:PDFExporter-1" "\n"; const double PDFExporterVersionNumber __attribute__ ((used)) = (double)1.;
