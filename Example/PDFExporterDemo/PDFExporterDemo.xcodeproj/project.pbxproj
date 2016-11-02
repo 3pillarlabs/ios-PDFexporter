@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C600BCE81CF741CE002F75A6 /* PDFExporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB7CD0A1C29ACC20051004B /* PDFExporter.framework */; };
+		C600BCE91CF741CE002F75A6 /* PDFExporter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFB7CD0A1C29ACC20051004B /* PDFExporter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF0649511C2AA350000E4925 /* IntroScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF06494B1C2AA350000E4925 /* IntroScreenViewController.m */; };
 		FF0649531C2AA350000E4925 /* PDFPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF06494F1C2AA350000E4925 /* PDFPreviewViewController.m */; };
 		FF0649541C2AA350000E4925 /* PDFPreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF0649501C2AA350000E4925 /* PDFPreviewViewController.xib */; };
@@ -24,11 +26,16 @@
 		FFB7CCCF1C29A7D50051004B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFB7CCCD1C29A7D50051004B /* LaunchScreen.storyboard */; };
 		FFB7CCDA1C29A7D50051004B /* PDFExporterDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB7CCD91C29A7D50051004B /* PDFExporterDemoTests.m */; };
 		FFB7CCE51C29A7D50051004B /* PDFExporterDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB7CCE41C29A7D50051004B /* PDFExporterDemoUITests.m */; };
-		FFB7CD121C29ACF20051004B /* PDFExporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB7CD0A1C29ACC20051004B /* PDFExporter.framework */; };
-		FFB7CD131C29ACF20051004B /* PDFExporter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFB7CD0A1C29ACC20051004B /* PDFExporter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C600BCEA1CF741CE002F75A6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FFB7CD031C29ACC20051004B /* PDFExporter.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FFB7CC6E1C29A5370051004B;
+			remoteInfo = PDFExporter;
+		};
 		FFB7CCD61C29A7D50051004B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FFB7CCB41C29A7D50051004B /* Project object */;
@@ -57,23 +64,16 @@
 			remoteGlobalIDString = FFB7CC791C29A5370051004B;
 			remoteInfo = PDFExporterTests;
 		};
-		FFB7CD141C29ACF30051004B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FFB7CD031C29ACC20051004B /* PDFExporter.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FFB7CC6E1C29A5370051004B;
-			remoteInfo = PDFExporter;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		FFB7CD161C29ACF30051004B /* Embed Frameworks */ = {
+		C600BCEC1CF741CE002F75A6 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FFB7CD131C29ACF20051004B /* PDFExporter.framework in Embed Frameworks */,
+				C600BCE91CF741CE002F75A6 /* PDFExporter.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,7 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFB7CD121C29ACF20051004B /* PDFExporter.framework in Frameworks */,
+				C600BCE81CF741CE002F75A6 /* PDFExporter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,12 +286,12 @@
 				FFB7CCB81C29A7D50051004B /* Sources */,
 				FFB7CCB91C29A7D50051004B /* Frameworks */,
 				FFB7CCBA1C29A7D50051004B /* Resources */,
-				FFB7CD161C29ACF30051004B /* Embed Frameworks */,
+				C600BCEC1CF741CE002F75A6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				FFB7CD151C29ACF30051004B /* PBXTargetDependency */,
+				C600BCEB1CF741CE002F75A6 /* PBXTargetDependency */,
 			);
 			name = PDFExporterDemo;
 			productName = PDFExporterDemo;
@@ -470,6 +470,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		C600BCEB1CF741CE002F75A6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PDFExporter;
+			targetProxy = C600BCEA1CF741CE002F75A6 /* PBXContainerItemProxy */;
+		};
 		FFB7CCD71C29A7D50051004B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FFB7CCBB1C29A7D50051004B /* PDFExporterDemo */;
@@ -479,11 +484,6 @@
 			isa = PBXTargetDependency;
 			target = FFB7CCBB1C29A7D50051004B /* PDFExporterDemo */;
 			targetProxy = FFB7CCE11C29A7D50051004B /* PBXContainerItemProxy */;
-		};
-		FFB7CD151C29ACF30051004B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PDFExporter;
-			targetProxy = FFB7CD141C29ACF30051004B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
