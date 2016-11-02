@@ -46,6 +46,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 - (instancetype)init {
     if (self = [super init]) {
         self.paperSize = PDFPaperSizeUSLetter;
+        self.pageOrientation = PDFPageOrientationPortrait;
         self.paperInset = kDefaultPaperInsets;
         self.pagingMask = PDFPagingOptionNone;
     }
@@ -77,7 +78,15 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 
 - (CGRect)paperRect {
     CGRect paperRect = CGRectZero;
-    paperRect.size = self.paperSize;
+    switch (self.pageOrientation) {
+        case PDFPageOrientationLandscape:
+            paperRect.size = CGSizeMake(self.paperSize.height, self.paperSize.width);
+            break;
+        case PDFPageOrientationPortrait:
+        default:
+            paperRect.size = self.paperSize;
+            break;
+    }
     return paperRect;
 }
 

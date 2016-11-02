@@ -16,15 +16,21 @@ typedef NS_OPTIONS(NSUInteger, PDFPagingOptions) {
     PDFPagingOptionHeader = 1 << 1
 };
 
+typedef NS_ENUM(NSUInteger, PDFPageOrientation) {
+    PDFPageOrientationPortrait,
+    PDFPageOrientationLandscape
+};
+
 @interface PDFPrintPageRenderer : UIPrintPageRenderer
 
 @property (nonatomic, nullable) UIView<PDFHeaderFooterPaging> *headerView; // if pagingMask && PDFPagingOptionHeader, headerView should implement the optional method from the protocol
 @property (nonatomic) UIView *contentView;
 @property (nonatomic, nullable) UIView<PDFHeaderFooterPaging> *footerView; // if pagingMask && PDFPagingOptionFooter, footerView should implement the optional method from the protocol
 @property (nonatomic) PDFPagingOptions pagingMask; // default is PDFPagingOptionNone
+@property (nonatomic) PDFPageOrientation pageOrientation; // default is PDFPageOrientationPortrait
 
 @property (nonatomic) UIEdgeInsets paperInset; // default is {30, 30, 30, 30}
-@property (nonatomic) CGSize paperSize; // default is PDFPaperSizeUSLetter
+@property (nonatomic) CGSize paperSize; // default is PDFPaperSizeUSLetter, size should be provided for portrait orientation
 @property (nonatomic, readonly) CGRect headerRect;
 @property (nonatomic, readonly) CGRect contentRect;
 @property (nonatomic, readonly) CGRect footerRect;
