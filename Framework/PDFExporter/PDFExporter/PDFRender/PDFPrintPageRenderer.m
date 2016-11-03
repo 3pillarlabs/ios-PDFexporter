@@ -55,6 +55,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 }
 
 - (void)drawPages:(CGRect)inBounds {
+    [self layoutViews];
     [self computeGeometry];
     [self prepareContentForDrawing];
     [self computeNumberOfPages];
@@ -242,6 +243,12 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     self.contentRectScale = self.contentView.bounds.size.width / self.contentRect.size.width;
 }
 
+- (void)layoutViews {
+    [self.headerView layoutIfNeeded];
+    [self.contentView layoutIfNeeded];
+    [self.footerView layoutIfNeeded];
+}
+
 - (void)prepareContentForDrawing {
     self.headerView.persistState = YES;
     self.contentView.persistState = YES;
@@ -256,9 +263,6 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     [self.contentView prepareForDrawingWithPageSize:scaledPageRect.size];
     [self.footerView prepareForDrawingWithPageSize:self.footerView.bounds.size];
     
-    [self.headerView layoutIfNeeded];
-    [self.contentView layoutIfNeeded];
-    [self.footerView layoutIfNeeded];
     CGRect viewFrame = self.headerView.frame;
     viewFrame.origin = CGPointZero;
     self.headerView.frame = viewFrame;
@@ -290,7 +294,9 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 
 - (void)computeNumberOfPages {
     if ([self shouldSliceViews]) {
-        self.internalNumberOfPages = ceilf(CGRectGetHeight(self.contentView.drawingFrame) / CGRectGetHeight(self.renderingRect));
+        NSUInteger renderingHeight = MAX(CGRectGetHeight(self.renderingRect), 1);
+        self.internalNumberOfPages = ceilf(CGRectGetHeight(self.contentView.drawingFrame) / renderingHeight);
+        self.internalNumberOfPages = MAX(self.internalNumberOfPages, 1);
     } else {
         self.pageRects = [NSMutableArray new];
         NSUInteger pageIndex = 0;
