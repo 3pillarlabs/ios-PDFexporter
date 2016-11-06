@@ -57,8 +57,8 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 - (void)drawPages:(CGRect)inBounds {
     [self layoutViews];
     [self computeGeometry];
-    [self prepareContentForDrawing];
     [self computeNumberOfPages];
+    [self prepareContentForDrawing];
 	for (NSInteger pageNumber = 0; pageNumber < self.numberOfPages; pageNumber++) {
 		UIGraphicsBeginPDFPage();
 		[self drawPageAtIndex:pageNumber inRect:self.printableRect];

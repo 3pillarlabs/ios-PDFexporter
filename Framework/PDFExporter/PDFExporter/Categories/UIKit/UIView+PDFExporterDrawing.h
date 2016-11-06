@@ -29,7 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (CGRect)subviewRect:(UIView *)subview drawingPageRect:(CGRect)rect;
 - (CGRect)subviewIntersection:(UIView *)subview drawingPageRect:(CGRect)rect;
 
-
 @end
 
 NS_ASSUME_NONNULL_END

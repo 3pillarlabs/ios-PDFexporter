@@ -11,6 +11,12 @@
 
 @implementation UITableView (PDFExporterExtension)
 
+- (CGRect)drawingFrame {
+    CGRect drawingFrame = self.frame;
+    drawingFrame.size = self.contentSize;
+    return drawingFrame;
+}
+
 - (void)drawViewWithinPageRect:(CGRect)rect {
     CGRect drawingFrame = self.drawingFrame;
     UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:drawingFrame cornerRadius:self.layer.cornerRadius];

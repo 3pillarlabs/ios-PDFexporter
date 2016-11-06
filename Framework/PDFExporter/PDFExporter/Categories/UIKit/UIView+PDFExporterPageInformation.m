@@ -38,9 +38,11 @@
             }
             CGPoint subviewRenderingOffset = [subview renderingOffsetForPageRect:rect];
             CGFloat subviewYOffset = (subviewRenderingOffset.y) ? fminf(CGRectGetHeight(intersection), subviewRenderingOffset.y) : CGRectGetHeight(intersection);
-            if (CGRectGetHeight(rect) == subviewYOffset ||                              // views that has equal or greater height than the page will not be moved to the next page
-                [self shouldConsiderLayoutSubview:subview intersection:intersection]) { // test again, required special cases like table cells
+            if (CGRectGetHeight(rect) == subviewYOffset) { // views that has equal or greater height than the page will not be moved to the next page
                 continue;
+            }
+            if ([self shouldConsiderLayoutSubview:subview intersection:intersection] == NO) { // test again, required special cases like table cells
+                subviewYOffset = CGRectGetHeight(intersection);
             }
             renderingOffset.y = fmaxf(renderingOffset.y, subviewYOffset);
         }
