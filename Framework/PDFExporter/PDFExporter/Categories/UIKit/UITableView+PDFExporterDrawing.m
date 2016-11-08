@@ -7,6 +7,7 @@
 
 #import "UITableView+PDFExporterDrawing.h"
 #import "UIView+PDFExporterPageInformation.h"
+#import "DispatchQueueExtension.h"
 #import "CGGeometry+Additions.h"
 
 @implementation UITableView (PDFExporterExtension)
@@ -37,9 +38,14 @@
         offset.y = yCoordinate;
         self.contentOffset = offset;
         CGRect frame = self.frame;
-        [self layoutIfNeeded];
+        PDFExporter_dispatch_sync_main_queue(^{
+            [self layoutIfNeeded];
+        });
         self.frame = frame;
-        [self layoutHeadersAndFooters];
+        PDFExporter_dispatch_sync_main_queue(^{
+            [self layoutHeadersAndFooters];
+        });
+        
         [super drawSubviewsWithPath:path withinPageRect:rect];
     }
 }
@@ -104,9 +110,13 @@
         contentOffset.y = yCoordinate;
         self.contentOffset = contentOffset;
         CGRect frame = self.frame;
-        [self layoutIfNeeded];
+        PDFExporter_dispatch_sync_main_queue(^{
+            [self layoutIfNeeded];
+        });
         self.frame = frame;
-        [self layoutHeadersAndFooters];
+        PDFExporter_dispatch_sync_main_queue(^{
+            [self layoutHeadersAndFooters];
+        });
         
         // ask subviews their rendering offset
         CGPoint subviewRenderingOffset = [super renderingOffsetForPageRect:rect];

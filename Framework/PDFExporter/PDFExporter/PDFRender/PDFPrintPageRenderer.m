@@ -14,7 +14,9 @@
 #import "UIView+PDFExporterPageInformation.h"
 #import "UIView+PDFExporterStatePersistance.h"
 #import "UIScrollView+PDFExporterDrawing.h"
+#import "DispatchQueueExtension.h"
 #import "CGGeometry+Additions.h"
+#import "PDFMemoryCleanerObject.h"
 
 static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 
@@ -58,20 +60,26 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     [self layoutViews];
     [self computeGeometry];
     [self computeNumberOfPages];
-    [self prepareContentForDrawing];
+    PDFMemoryCleanerObject __attribute__((unused)) *drawing = [PDFMemoryCleanerObject memoryCleanerWithConstructBlock:^{
+        [self prepareContentForDrawing];
+    } deallocationBlock:^{
+        [self cleanContentAfterDrawing];
+    }];
 	for (NSInteger pageNumber = 0; pageNumber < self.numberOfPages; pageNumber++) {
 		UIGraphicsBeginPDFPage();
 		[self drawPageAtIndex:pageNumber inRect:self.printableRect];
 	}
-    [self cleanContentAfterDrawing];
 }
 
 - (NSData *)drawPagesToPDFData {
 	NSMutableData *pdfData = [NSMutableData data];
-	UIGraphicsBeginPDFContextToData(pdfData, self.paperRect, nil);
+    PDFMemoryCleanerObject __attribute__((unused)) *drawing = [PDFMemoryCleanerObject memoryCleanerWithConstructBlock:^{
+        UIGraphicsBeginPDFContextToData(pdfData, self.paperRect, nil);
+    } deallocationBlock:^{
+        UIGraphicsEndPDFContext();
+    }];
 	CGRect bounds = UIGraphicsGetPDFContextBounds();
 	[self drawPages:bounds];
-	UIGraphicsEndPDFContext();
 	return pdfData;
 }
 
@@ -244,9 +252,11 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 }
 
 - (void)layoutViews {
-    [self.headerView layoutIfNeeded];
-    [self.contentView layoutIfNeeded];
-    [self.footerView layoutIfNeeded];
+    PDFExporter_dispatch_sync_main_queue(^{
+        [self.headerView layoutIfNeeded];
+        [self.contentView layoutIfNeeded];
+        [self.footerView layoutIfNeeded];
+    });
 }
 
 - (void)prepareContentForDrawing {
