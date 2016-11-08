@@ -1,14 +1,11 @@
 //
-//  DispatchQueueExtension.h
+//  PDFDispatchQueueExtension.m
 //  PDFExporter
 //
 //  Copyright © 2016 3Pillar Global. All rights reserved.
 //
 
-#ifndef DispatchQueueExtension_h
-#define DispatchQueueExtension_h
-
-#import <Foundation/Foundation.h>
+#import "PDFDispatchQueueExtension.h"
 
 void PDFExporter_dispatch_sync_main_queue(void (^block)(void)) {
     if ([NSThread isMainThread]) {
@@ -17,6 +14,3 @@ void PDFExporter_dispatch_sync_main_queue(void (^block)(void)) {
         dispatch_sync(dispatch_get_main_queue(), block);
     }
 }
-
-
-#endif /* DispatchQueueExtension_h */

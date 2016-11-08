@@ -21,9 +21,10 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		FF0AE6081DD2042C00726A42 /* DispatchQueueExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0AE6071DD203D600726A42 /* DispatchQueueExtension.h */; };
+		FF0AE6081DD2042C00726A42 /* PDFDispatchQueueExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0AE6071DD203D600726A42 /* PDFDispatchQueueExtension.h */; };
 		FF0AE60B1DD2057900726A42 /* PDFMemoryCleanerObject.h in Headers */ = {isa = PBXBuildFile; fileRef = FF0AE6091DD2057900726A42 /* PDFMemoryCleanerObject.h */; };
 		FF0AE60C1DD2057900726A42 /* PDFMemoryCleanerObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0AE60A1DD2057900726A42 /* PDFMemoryCleanerObject.m */; };
+		FF0AE6111DD2099B00726A42 /* PDFDispatchQueueExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = FF0AE6101DD2099B00726A42 /* PDFDispatchQueueExtension.m */; };
 		FF2F463B1C3A96130048D8E8 /* UIScrollView+PDFExporterDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = FF2F46391C3A96130048D8E8 /* UIScrollView+PDFExporterDrawing.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF2F463C1C3A96130048D8E8 /* UIScrollView+PDFExporterDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2F463A1C3A96130048D8E8 /* UIScrollView+PDFExporterDrawing.m */; };
 		FF2F463F1C3A99190048D8E8 /* UITableView+PDFExporterDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = FF2F463D1C3A99190048D8E8 /* UITableView+PDFExporterDrawing.h */; };
@@ -65,9 +66,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		FF0AE6071DD203D600726A42 /* DispatchQueueExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DispatchQueueExtension.h; sourceTree = "<group>"; };
+		FF0AE6071DD203D600726A42 /* PDFDispatchQueueExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PDFDispatchQueueExtension.h; sourceTree = "<group>"; };
 		FF0AE6091DD2057900726A42 /* PDFMemoryCleanerObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFMemoryCleanerObject.h; sourceTree = "<group>"; };
 		FF0AE60A1DD2057900726A42 /* PDFMemoryCleanerObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFMemoryCleanerObject.m; sourceTree = "<group>"; };
+		FF0AE6101DD2099B00726A42 /* PDFDispatchQueueExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFDispatchQueueExtension.m; sourceTree = "<group>"; };
 		FF2F46391C3A96130048D8E8 /* UIScrollView+PDFExporterDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+PDFExporterDrawing.h"; sourceTree = "<group>"; };
 		FF2F463A1C3A96130048D8E8 /* UIScrollView+PDFExporterDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+PDFExporterDrawing.m"; sourceTree = "<group>"; };
 		FF2F463D1C3A99190048D8E8 /* UITableView+PDFExporterDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+PDFExporterDrawing.h"; sourceTree = "<group>"; };
@@ -123,7 +125,8 @@
 		FF0AE6061DD203C200726A42 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				FF0AE6071DD203D600726A42 /* DispatchQueueExtension.h */,
+				FF0AE6071DD203D600726A42 /* PDFDispatchQueueExtension.h */,
+				FF0AE6101DD2099B00726A42 /* PDFDispatchQueueExtension.m */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -250,7 +253,7 @@
 				FF5F96261C5774D5000BDEE4 /* UIView+PDFExporterViewSlicing.h in Headers */,
 				FF4A5B5B1C5A1E56008C43B1 /* UITextView+PDFExporterDrawing.h in Headers */,
 				FF5F961E1C577013000BDEE4 /* PDFRenderingDelegate.h in Headers */,
-				FF0AE6081DD2042C00726A42 /* DispatchQueueExtension.h in Headers */,
+				FF0AE6081DD2042C00726A42 /* PDFDispatchQueueExtension.h in Headers */,
 				FFB7CCAB1C29A79F0051004B /* UIView+PDFExporterDrawing.h in Headers */,
 				FFB691691DCF64A2008DFF91 /* PDFImageView.h in Headers */,
 				FF7A16411C317B0B0073001D /* PDFPaperSizes.h in Headers */,
@@ -387,6 +390,7 @@
 				FFB7CCAC1C29A79F0051004B /* UIView+PDFExporterDrawing.m in Sources */,
 				FF7A16421C317B0B0073001D /* PDFPaperSizes.m in Sources */,
 				FF2F463C1C3A96130048D8E8 /* UIScrollView+PDFExporterDrawing.m in Sources */,
+				FF0AE6111DD2099B00726A42 /* PDFDispatchQueueExtension.m in Sources */,
 				FF7A16441C317B0B0073001D /* PDFPrintPageRenderer.m in Sources */,
 				FF649BAA1C3D00000022A311 /* UIView+PDFExporterStatePersistance.m in Sources */,
 				FF5F96271C5774D5000BDEE4 /* UIView+PDFExporterViewSlicing.m in Sources */,

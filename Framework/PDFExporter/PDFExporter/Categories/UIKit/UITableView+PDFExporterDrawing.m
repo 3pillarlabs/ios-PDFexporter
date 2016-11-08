@@ -7,7 +7,7 @@
 
 #import "UITableView+PDFExporterDrawing.h"
 #import "UIView+PDFExporterPageInformation.h"
-#import "DispatchQueueExtension.h"
+#import "PDFDispatchQueueExtension.h"
 #import "CGGeometry+Additions.h"
 
 @implementation UITableView (PDFExporterExtension)

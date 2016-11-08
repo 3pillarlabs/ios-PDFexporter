@@ -14,7 +14,7 @@
 #import "UIView+PDFExporterPageInformation.h"
 #import "UIView+PDFExporterStatePersistance.h"
 #import "UIScrollView+PDFExporterDrawing.h"
-#import "DispatchQueueExtension.h"
+#import "PDFDispatchQueueExtension.h"
 #import "CGGeometry+Additions.h"
 #import "PDFMemoryCleanerObject.h"
 
