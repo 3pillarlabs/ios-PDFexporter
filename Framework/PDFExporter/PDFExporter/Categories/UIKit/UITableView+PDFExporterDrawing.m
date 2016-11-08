@@ -36,13 +36,11 @@
          yCoordinate < CGRectGetMaxY(rect);
          yCoordinate += CGRectGetHeight(self.bounds)) {
         offset.y = yCoordinate;
-        self.contentOffset = offset;
-        CGRect frame = self.frame;
         PDFExporter_dispatch_sync_main_queue(^{
+            self.contentOffset = offset;
+            CGRect frame = self.frame;
             [self layoutIfNeeded];
-        });
-        self.frame = frame;
-        PDFExporter_dispatch_sync_main_queue(^{
+            self.frame = frame;
             [self layoutHeadersAndFooters];
         });
         
@@ -108,13 +106,11 @@
         
         // prepare view for rect section
         contentOffset.y = yCoordinate;
-        self.contentOffset = contentOffset;
-        CGRect frame = self.frame;
         PDFExporter_dispatch_sync_main_queue(^{
+            self.contentOffset = contentOffset;
+            CGRect frame = self.frame;
             [self layoutIfNeeded];
-        });
-        self.frame = frame;
-        PDFExporter_dispatch_sync_main_queue(^{
+            self.frame = frame;
             [self layoutHeadersAndFooters];
         });
         
