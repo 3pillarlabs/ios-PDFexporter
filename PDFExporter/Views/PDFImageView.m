@@ -79,8 +79,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)loadImage {
     CGPDFDocumentRelease(self.imageDocument);
     
-    NSString *fileExtension = [self.PDFFileName pathExtension];
-    NSAssert([fileExtension length] == 0 || ([fileExtension length] > 0 && [[fileExtension lowercaseString] compare:@"pdf"] == NSOrderedSame), @"Only PDF files are supported.");
+    //NSString *fileExtension = [self.PDFFileName pathExtension];
+    //NSAssert([fileExtension length] == 0 || ([fileExtension length] > 0 && [[fileExtension lowercaseString] compare:@"pdf"] == NSOrderedSame), @"Only PDF files are supported.");
     if ([self.PDFFileName length] > 0) {
         NSString *PDFFile = [self.PDFFileName stringByDeletingPathExtension];
         NSURL *PDFDocumentURL = [self.bundle URLForResource:PDFFile withExtension:@"pdf"];
