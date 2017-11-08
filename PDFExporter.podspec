@@ -9,5 +9,5 @@ Pod::Spec.new do |s|
   s.author             = { "Bogdan Todea" => "bogdan.todea@3pillarglobal.com" }
   s.platform     = :ios, "9.0"
   s.source       = { :git => "https://github.com/3pillarlabs/ios-PDFexporter.git", :tag => "#{s.version}" }
-  s.source_files  = "Sources", "Sources/**/*.{h,m}"
+  s.source_files  = "PDFExporter", "PDFExporter/**/*.{h,m}"
 end
