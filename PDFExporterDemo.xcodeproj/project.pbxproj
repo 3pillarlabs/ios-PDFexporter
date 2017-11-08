@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C600BCE81CF741CE002F75A6 /* PDFExporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB7CD0A1C29ACC20051004B /* PDFExporter.framework */; };
-		C600BCE91CF741CE002F75A6 /* PDFExporter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFB7CD0A1C29ACC20051004B /* PDFExporter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF0649511C2AA350000E4925 /* IntroScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF06494B1C2AA350000E4925 /* IntroScreenViewController.m */; };
 		FF0649531C2AA350000E4925 /* PDFPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF06494F1C2AA350000E4925 /* PDFPreviewViewController.m */; };
 		FF0649541C2AA350000E4925 /* PDFPreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF0649501C2AA350000E4925 /* PDFPreviewViewController.xib */; };
@@ -28,13 +26,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C600BCEA1CF741CE002F75A6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FFB7CD031C29ACC20051004B /* PDFExporter.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FFB7CC6E1C29A5370051004B;
-			remoteInfo = PDFExporter;
-		};
 		FFB7CCD61C29A7D50051004B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FFB7CCB41C29A7D50051004B /* Project object */;
@@ -49,20 +40,6 @@
 			remoteGlobalIDString = FFB7CCBB1C29A7D50051004B;
 			remoteInfo = PDFExporterDemo;
 		};
-		FFB7CD091C29ACC20051004B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FFB7CD031C29ACC20051004B /* PDFExporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FFB7CC6F1C29A5370051004B;
-			remoteInfo = PDFExporter;
-		};
-		FFB7CD0B1C29ACC20051004B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FFB7CD031C29ACC20051004B /* PDFExporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FFB7CC791C29A5370051004B;
-			remoteInfo = PDFExporterTests;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -72,7 +49,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C600BCE91CF741CE002F75A6 /* PDFExporter.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -109,7 +85,6 @@
 		FFB7CCE01C29A7D50051004B /* PDFExporterDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PDFExporterDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFB7CCE41C29A7D50051004B /* PDFExporterDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PDFExporterDemoUITests.m; sourceTree = "<group>"; };
 		FFB7CCE61C29A7D50051004B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FFB7CD031C29ACC20051004B /* PDFExporter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PDFExporter.xcodeproj; path = ../../Framework/PDFExporter/PDFExporter.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +92,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C600BCE81CF741CE002F75A6 /* PDFExporter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,7 +179,6 @@
 				FFB7CCD81C29A7D50051004B /* PDFExporterDemoTests */,
 				FFB7CCE31C29A7D50051004B /* PDFExporterDemoUITests */,
 				FFB7CCBD1C29A7D50051004B /* Products */,
-				FFB7CD031C29ACC20051004B /* PDFExporter.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -262,15 +235,6 @@
 			path = PDFExporterDemoUITests;
 			sourceTree = "<group>";
 		};
-		FFB7CD041C29ACC20051004B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				FFB7CD0A1C29ACC20051004B /* PDFExporter.framework */,
-				FFB7CD0C1C29ACC20051004B /* PDFExporterTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -286,7 +250,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				C600BCEB1CF741CE002F75A6 /* PBXTargetDependency */,
 			);
 			name = PDFExporterDemo;
 			productName = PDFExporterDemo;
@@ -335,7 +298,7 @@
 		FFB7CCB41C29A7D50051004B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "3Pillar Global";
 				TargetAttributes = {
 					FFB7CCBB1C29A7D50051004B = {
@@ -367,12 +330,6 @@
 			mainGroup = FFB7CCB31C29A7D50051004B;
 			productRefGroup = FFB7CCBD1C29A7D50051004B /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = FFB7CD041C29ACC20051004B /* Products */;
-					ProjectRef = FFB7CD031C29ACC20051004B /* PDFExporter.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				FFB7CCBB1C29A7D50051004B /* PDFExporterDemo */,
@@ -381,23 +338,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		FFB7CD0A1C29ACC20051004B /* PDFExporter.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = PDFExporter.framework;
-			remoteRef = FFB7CD091C29ACC20051004B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FFB7CD0C1C29ACC20051004B /* PDFExporterTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = PDFExporterTests.xctest;
-			remoteRef = FFB7CD0B1C29ACC20051004B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		FFB7CCBA1C29A7D50051004B /* Resources */ = {
@@ -464,11 +404,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		C600BCEB1CF741CE002F75A6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PDFExporter;
-			targetProxy = C600BCEA1CF741CE002F75A6 /* PBXContainerItemProxy */;
-		};
 		FFB7CCD71C29A7D50051004B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FFB7CCBB1C29A7D50051004B /* PDFExporterDemo */;
@@ -509,13 +444,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -537,7 +480,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -553,13 +496,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -575,7 +526,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -588,7 +539,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = PDFExporterDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.3PillarGlobal.PDFExporterDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -600,7 +551,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = PDFExporterDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.3PillarGlobal.PDFExporterDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
