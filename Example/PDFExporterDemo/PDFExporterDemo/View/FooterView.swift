@@ -9,7 +9,7 @@
 import UIKit
 import PDFExporter
 
-class FooterView: UIView, PDFHeaderFooterPaging {
+class FooterView: UIView {
     class func instanceFromNib() -> UIView? {
         guard let footerView =  UINib(nibName: "FooterView",
                                       bundle: nil).instantiate(withOwner: nil, options: nil).first as? FooterView
