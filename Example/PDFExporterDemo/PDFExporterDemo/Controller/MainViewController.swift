@@ -42,7 +42,7 @@ class MainViewController: UIViewController {
 
     private func generatePDFData() -> Data {
         let pdfData = pdfRenderer.drawPagesToPDFData()
-        if let pdfURL = Utils.getDocumentsDirectory()?.appendingPathComponent(Constants.pdfDefaultName) {
+        if let pdfURL = Utils.getPdfFileUrl() {
             do {
                 try pdfData.write(to: pdfURL)
             } catch {}

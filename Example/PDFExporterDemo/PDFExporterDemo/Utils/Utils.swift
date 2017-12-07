@@ -15,6 +15,10 @@ struct Utils {
         return path.first
     }
 
+    static func getPdfFileUrl() -> URL? {
+        return Utils.getDocumentsDirectory()?.appendingPathComponent(Constants.pdfDefaultName)
+    }
+
     static func allPaperTypes() -> [PaperType] {
         var allPaperTypes = [PaperType]()
         var paperType = PaperType(name: "US Letter", size: PDFPaperSizeUSLetter)

@@ -39,6 +39,9 @@ class PreviewPDFViewController: UIViewController {
     }
 
     @IBAction func shareButtonPressed(_ sender: Any) {
-        //TODO
+        if let fileURL = Utils.getPdfFileUrl() {
+            let activityVC = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
+            present(activityVC, animated: true, completion: nil)
+        }
     }
 }
