@@ -18,6 +18,8 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
 
         pdfRenderer.contentView = contentView
+//        pdfRenderer.headerView = HeaderView.instanceFromNib()
+//        pdfRenderer.footerView = FooterView.instanceFromNib()
     }
 
     // MARK: - Navigation
@@ -26,8 +28,11 @@ class MainViewController: UIViewController {
         guard let navigationController = segue.destination as? UINavigationController else { return }
         guard let settingsController = navigationController.viewControllers.first as? SettingsViewController
             else { return }
+        settingsController.contentPaperInsets = pdfRenderer.paperInset
+        settingsController.paperSize = pdfRenderer.paperSize
         settingsController.delegate = self
     }
+
     @IBAction func previewButtonPressed(_ sender: UIButton) {
         let previewPdfVC = PreviewPDFViewController(pdfData: generatePDFData())
         present(previewPdfVC, animated: true)
@@ -49,10 +54,14 @@ class MainViewController: UIViewController {
 extension MainViewController: SettingsViewControllerDelegate {
     func settingsViewController(settingsVC: SettingsViewController, didChange paperSize: CGSize?) {
         guard let paperSize = paperSize else { return }
+
+        pdfRenderer.paperSize = paperSize
     }
 
     func settingsViewController(settingsVC: SettingsViewController, didChange paperInsets: UIEdgeInsets?) {
         guard let paperInsets = paperInsets else { return }
+
+        pdfRenderer.paperInset = paperInsets
     }
 }
 

@@ -31,4 +31,14 @@ class PreviewPDFViewController: UIViewController {
             webView.load(pdfData, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: url)
         }
     }
+
+    // MARK: - Actions
+
+    @IBAction func closeButtonPressed(_ sender: Any) {
+        dismiss(animated: true)
+    }
+
+    @IBAction func shareButtonPressed(_ sender: Any) {
+        //TODO
+    }
 }

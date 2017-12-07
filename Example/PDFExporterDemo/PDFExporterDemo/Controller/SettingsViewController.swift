@@ -19,7 +19,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate, UIPickerVie
     var contentPaperInsets: UIEdgeInsets?
     var paperSize: CGSize?
 
-    private var paperTypes = [String]()
+    private var paperTypes: [PaperType] = Utils.allPaperTypes()
 
     @IBOutlet weak var paperTypePickerView: UIPickerView!
     @IBOutlet weak var topTextField: UITextField!
@@ -30,6 +30,13 @@ class SettingsViewController: UIViewController, UITextFieldDelegate, UIPickerVie
     override func viewDidLoad() {
         super.viewDidLoad()
 
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        setupTextFieldValues()
+        setupPickerView()
     }
 
     // MARK: - UITextFieldDelegate
@@ -46,6 +53,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate, UIPickerVie
         } else if textField == rightTextField {
             edgeInsets?.right = CGFloat(Float(text) ?? 0.0)
         }
+        contentPaperInsets = edgeInsets
         delegate?.settingsViewController(settingsVC: self, didChange: contentPaperInsets)
     }
 
@@ -68,11 +76,31 @@ class SettingsViewController: UIViewController, UITextFieldDelegate, UIPickerVie
     // MARK: - UIPickerViewDelegate
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return paperTypes[row]
+        return paperTypes[row].name
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         guard row < paperTypes.count else { return }
-        delegate?.settingsViewController(settingsVC: self, didChange: CGSize.zero)
+        delegate?.settingsViewController(settingsVC: self, didChange: paperTypes[row].size)
+    }
+
+    // MARK: - Private
+
+    private func setupTextFieldValues() {
+        topTextField.text = String(format: "%.2f", contentPaperInsets?.top ?? 0.0)
+        bottomTextField.text = String(format: "%.2f", contentPaperInsets?.bottom ?? 0.0)
+        leftTextField.text = String(format: "%.2f", contentPaperInsets?.left ?? 0.0)
+        rightTextField.text = String(format: "%.2f", contentPaperInsets?.right ?? 0.0)
+    }
+
+    private func setupPickerView() {
+        // set picker to current row
+        paperTypePickerView.delegate = self
+        paperTypePickerView.dataSource = self
+
+        if let paperSize = paperSize,
+            let currentPaperTypeIndex = paperTypes.index(where: {$0.size.equalTo(paperSize)}) {
+            paperTypePickerView.selectRow(currentPaperTypeIndex, inComponent: 0, animated: false)
+        }
     }
 }

@@ -23,9 +23,33 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="viX-WG-eEc">
                     <rect key="frame" x="0.0" y="603" width="375" height="64"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gOJ-eW-cnx">
+                            <rect key="frame" x="8" y="8" width="179.5" height="48"/>
+                            <state key="normal" title="Close"/>
+                            <connections>
+                                <action selector="closeButtonPressed:" destination="-1" eventType="touchUpInside" id="QYf-pv-nCQ"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="isw-AE-lYL">
+                            <rect key="frame" x="187.5" y="8" width="179.5" height="48"/>
+                            <state key="normal" title="Share"/>
+                            <connections>
+                                <action selector="shareButtonPressed:" destination="-1" eventType="touchUpInside" id="d2J-UJ-n2o"/>
+                            </connections>
+                        </button>
+                    </subviews>
                     <color key="backgroundColor" red="1" green="0.86672632760000001" blue="0.80559468190000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="gOJ-eW-cnx" secondAttribute="bottom" constant="8" id="EO7-v1-1SS"/>
+                        <constraint firstItem="gOJ-eW-cnx" firstAttribute="width" secondItem="isw-AE-lYL" secondAttribute="width" id="Gtg-Zi-gbx"/>
                         <constraint firstAttribute="height" constant="64" id="NZA-0D-vNi"/>
+                        <constraint firstItem="isw-AE-lYL" firstAttribute="bottom" secondItem="gOJ-eW-cnx" secondAttribute="bottom" id="VcX-hh-npm"/>
+                        <constraint firstItem="gOJ-eW-cnx" firstAttribute="top" secondItem="viX-WG-eEc" secondAttribute="top" constant="8" id="bhf-ZE-oOl"/>
+                        <constraint firstItem="isw-AE-lYL" firstAttribute="top" secondItem="gOJ-eW-cnx" secondAttribute="top" id="eIR-sa-VJl"/>
+                        <constraint firstAttribute="trailing" secondItem="isw-AE-lYL" secondAttribute="trailing" constant="8" id="rtp-3k-Pwl"/>
+                        <constraint firstItem="gOJ-eW-cnx" firstAttribute="leading" secondItem="viX-WG-eEc" secondAttribute="leading" constant="8" id="tDp-QQ-Y5b"/>
+                        <constraint firstItem="isw-AE-lYL" firstAttribute="leading" secondItem="gOJ-eW-cnx" secondAttribute="trailing" id="y4t-Nc-4TP"/>
                     </constraints>
                 </view>
                 <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d2f-rP-Kcl">
