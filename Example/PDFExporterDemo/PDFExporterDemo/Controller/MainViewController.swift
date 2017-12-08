@@ -9,13 +9,42 @@
 import UIKit
 import PDFExporter
 
+extension UIStoryboard {
+    static var main: UIStoryboard {
+        return UIStoryboard(name: "Main", bundle: nil)
+    }
+}
+
 class MainViewController: UIViewController {
     @IBOutlet weak var contentView: UIView!
 
     private let pdfRenderer: PDFPrintPageRenderer = PDFPrintPageRenderer()
 
+    var currentViewController: UIViewController?
+
+    lazy var graphsVC: UIViewController? = {
+        let graphsVC =
+            UIStoryboard.main.instantiateViewController(withIdentifier: "GraphsViewController") as? GraphsViewController
+        return graphsVC
+    }()
+
+    lazy var tableVC: UIViewController? = {
+        let tableVC =
+            UIStoryboard.main.instantiateViewController(withIdentifier: "TableViewController") as? TableViewController
+        return tableVC
+    }()
+
+    lazy var elementsVC: UIViewController? = {
+        let elementsVC =
+            UIStoryboard.main.instantiateViewController(withIdentifier: "UIElementsViewController")
+                as? UIElementsViewController
+        return elementsVC
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        displayCurrentTab(0)
 
         pdfRenderer.contentView = contentView
 //        pdfRenderer.headerView = HeaderView.instanceFromNib()
@@ -38,6 +67,14 @@ class MainViewController: UIViewController {
         present(previewPdfVC, animated: true)
     }
 
+    @IBAction func tabSwitched(_ sender: UISegmentedControl) {
+        currentViewController?.view.removeFromSuperview()
+        currentViewController?.removeFromParentViewController()
+
+        displayCurrentTab(sender.selectedSegmentIndex)
+    }
+
+
     // MARK: - Private
 
     private func generatePDFData() -> Data {
@@ -48,6 +85,26 @@ class MainViewController: UIViewController {
             } catch {}
         }
         return pdfData
+    }
+
+    private func displayCurrentTab(_ tabIndex: Int) {
+        if let viewController = viewControllerForSelectedSegmentIndex(tabIndex) {
+            addChild(viewController: viewController, within: contentView)
+            currentViewController = viewController
+        }
+    }
+
+    private func viewControllerForSelectedSegmentIndex(_ index: Int) -> UIViewController? {
+        switch index {
+        case 0:
+            return graphsVC
+        case 1:
+            return tableVC
+        case 2:
+            return elementsVC
+        default:
+            return nil
+        }
     }
 }
 
