@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import PDFExporter
 
-class HeaderView: UIView {
-    class func instanceFromNib() -> UIView? {
+class HeaderView: UIView, PDFHeaderFooterPaging {
+    class func instanceFromNib() -> HeaderView? {
         guard let headerView =  UINib(nibName: "HeaderView",
                                       bundle: nil).instantiate(withOwner: nil, options: nil).first as? HeaderView
             else { return nil }
         return headerView
     }
+
+    func updatePageNumber(_ pageNumber: UInt, totalPages: UInt) {}
 }

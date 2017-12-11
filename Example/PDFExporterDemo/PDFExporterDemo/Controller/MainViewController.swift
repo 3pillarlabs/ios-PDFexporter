@@ -47,8 +47,9 @@ class MainViewController: UIViewController {
         displayCurrentTab(0)
 
         pdfRenderer.contentView = contentView
-//        pdfRenderer.headerView = HeaderView.instanceFromNib()
-//        pdfRenderer.footerView = FooterView.instanceFromNib()
+        pdfRenderer.headerView = HeaderView.instanceFromNib()
+        pdfRenderer.footerView = FooterView.instanceFromNib()
+        pdfRenderer.pagingMask = .footer
     }
 
     // MARK: - Navigation

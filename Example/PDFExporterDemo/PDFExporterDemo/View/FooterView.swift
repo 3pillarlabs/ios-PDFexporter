@@ -9,11 +9,17 @@
 import UIKit
 import PDFExporter
 
-class FooterView: UIView {
-    class func instanceFromNib() -> UIView? {
+class FooterView: UIView, PDFHeaderFooterPaging {
+    @IBOutlet weak var pageLabel: UILabel!
+
+    class func instanceFromNib() -> FooterView? {
         guard let footerView =  UINib(nibName: "FooterView",
                                       bundle: nil).instantiate(withOwner: nil, options: nil).first as? FooterView
             else { return nil }
         return footerView
+    }
+
+    func updatePageNumber(_ pageNumber: UInt, totalPages: UInt) {
+         pageLabel.text = "\(pageNumber)/\(totalPages)"
     }
 }
