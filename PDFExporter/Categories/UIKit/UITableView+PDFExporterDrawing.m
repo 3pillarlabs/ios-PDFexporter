@@ -108,7 +108,7 @@
     }
 }
 
-- (void)setFrameForContentOffset:(CGPoint)contentOffset {
+- (void)updateContentOffset:(CGPoint)contentOffset {
     PDFExporter_dispatch_sync_main_queue(^{
         self.contentOffset = contentOffset;
         CGRect frame = self.frame;
@@ -126,7 +126,7 @@
 
         contentOffset.y = yCoordinate;
 
-        [self setFrameForContentOffset:contentOffset];
+        [self updateContentOffset:contentOffset];
         block();
     }
 }
