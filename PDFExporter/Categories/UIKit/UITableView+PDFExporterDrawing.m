@@ -31,7 +31,7 @@
 }
 
 - (void)drawSubviewsWithPath:(UIBezierPath *)path withinPageRect:(CGRect)rect {
-    [self computeOffsetForRect:rect additionalCode:^{
+    [self scrollContentForRect:rect usingBlock:^{
         [super drawSubviewsWithPath:path withinPageRect:rect];
     }];
 }
@@ -87,7 +87,7 @@
 
 - (CGPoint)renderingOffsetForPageRect:(CGRect)rect {
     __block CGPoint renderingOffset = CGPointZero;
-    [self computeOffsetForRect:rect additionalCode:^{
+    [self scrollContentForRect:rect usingBlock:^{
         CGPoint subviewRenderingOffset = [super renderingOffsetForPageRect:rect];
         renderingOffset.y = fmaxf(renderingOffset.y, subviewRenderingOffset.y);
     }];
@@ -118,7 +118,7 @@
     });
 }
 
-- (void)computeOffsetForRect:(CGRect)rect additionalCode:(void (^)(void))additionalCode {
+- (void)scrollContentForRect:(CGRect)rect usingBlock:(void (NS_NOESCAPE ^)(void))block {
     CGPoint contentOffset = CGPointZero;
     for (CGFloat yCoordinate = CGRectGetMinY(rect);
          yCoordinate < CGRectGetMaxY(rect);
@@ -127,7 +127,7 @@
         contentOffset.y = yCoordinate;
 
         [self setFrameForContentOffset:contentOffset];
-        additionalCode();
+        block();
     }
 }
 
