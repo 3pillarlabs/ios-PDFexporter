@@ -7,7 +7,9 @@
 
 #import "UITableView+PDFExporterDrawing.h"
 #import "UIView+PDFExporterPageInformation.h"
+#import "UIView+PDFExporterStatePersistance.h"
 #import "PDFDispatchQueueExtension.h"
+#import "PDFMemoryCleanerObject.h"
 #import "CGGeometry+Additions.h"
 
 @implementation UITableView (PDFExporterExtension)
@@ -38,9 +40,7 @@
         offset.y = yCoordinate;
         PDFExporter_dispatch_sync_main_queue(^{
             self.contentOffset = offset;
-            CGRect frame = self.frame;
             [self layoutIfNeeded];
-            self.frame = frame;
             [self layoutHeadersAndFooters];
         });
         
@@ -100,6 +100,11 @@
 - (CGPoint)renderingOffsetForPageRect:(CGRect)rect {
     CGPoint renderingOffset = CGPointZero;
     CGPoint contentOffset = CGPointZero;
+    PDFMemoryCleanerObject __attribute__((unused)) *layout = [PDFMemoryCleanerObject memoryCleanerWithConstructBlock:^{
+        [self saveState];
+    } deallocationBlock:^{
+        [self restoreState];
+    }];
     for (CGFloat yCoordinate = CGRectGetMinY(rect);
          yCoordinate < CGRectGetMaxY(rect);
          yCoordinate += CGRectGetHeight(self.bounds)) {
@@ -108,9 +113,7 @@
         contentOffset.y = yCoordinate;
         PDFExporter_dispatch_sync_main_queue(^{
             self.contentOffset = contentOffset;
-            CGRect frame = self.frame;
             [self layoutIfNeeded];
-            self.frame = frame;
             [self layoutHeadersAndFooters];
         });
         
