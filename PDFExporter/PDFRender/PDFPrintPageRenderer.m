@@ -58,6 +58,11 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 
 - (void)drawPages:(CGRect)inBounds {
     [self layoutViews];
+    PDFMemoryCleanerObject __attribute__((unused)) *layout = [PDFMemoryCleanerObject memoryCleanerWithConstructBlock:^{
+        [self preparePersistance];
+    } deallocationBlock:^{
+        [self cleanPersistance];
+    }];
     [self computeGeometry];
     [self computeNumberOfPages];
     PDFMemoryCleanerObject __attribute__((unused)) *drawing = [PDFMemoryCleanerObject memoryCleanerWithConstructBlock:^{
@@ -259,7 +264,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     });
 }
 
-- (void)prepareContentForDrawing {
+- (void)preparePersistance {
     self.headerView.persistState = YES;
     self.contentView.persistState = YES;
     if ([self.contentView isKindOfClass:[UIScrollView class]]) {
@@ -267,7 +272,9 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
         scrollView.drawEntireContentSize = YES;
     }
     self.footerView.persistState = YES;
-    
+}
+
+- (void)prepareContentForDrawing {
     [self.headerView prepareForDrawingWithPageSize:self.headerView.bounds.size];
     CGRect scaledPageRect = [self scaledPageRectOffsetForIndex:0];
     [self.contentView prepareForDrawingWithPageSize:scaledPageRect.size];
@@ -288,11 +295,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     self.footerView.renderingDelegate = self;
 }
 
-- (void)cleanContentAfterDrawing {
-    [self.headerView cleanAfterDrawing];
-    [self.contentView cleanAfterDrawing];
-    [self.footerView cleanAfterDrawing];
-    
+- (void)cleanPersistance {
     self.headerView.persistState = NO;
     self.contentView.persistState = NO;
     if ([self.contentView isKindOfClass:[UIScrollView class]]) {
@@ -300,6 +303,12 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
         scrollView.drawEntireContentSize = NO;
     }
     self.footerView.persistState = NO;
+}
+
+- (void)cleanContentAfterDrawing {
+    [self.headerView cleanAfterDrawing];
+    [self.contentView cleanAfterDrawing];
+    [self.footerView cleanAfterDrawing];
 }
 
 - (void)computeNumberOfPages {
