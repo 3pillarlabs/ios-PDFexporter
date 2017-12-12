@@ -31,6 +31,7 @@
 		FF2F46401C3A99190048D8E8 /* UITableView+PDFExporterDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = FF2F463E1C3A99190048D8E8 /* UITableView+PDFExporterDrawing.m */; };
 		FF4A5B5B1C5A1E56008C43B1 /* UITextView+PDFExporterDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = FF4A5B591C5A1E56008C43B1 /* UITextView+PDFExporterDrawing.h */; };
 		FF4A5B5C1C5A1E56008C43B1 /* UITextView+PDFExporterDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = FF4A5B5A1C5A1E56008C43B1 /* UITextView+PDFExporterDrawing.m */; };
+		FF5257781FDFE39500E90827 /* CGFloat+Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = FF5257771FDFDC9F00E90827 /* CGFloat+Additions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF5F961E1C577013000BDEE4 /* PDFRenderingDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = FF5F961D1C577013000BDEE4 /* PDFRenderingDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF5F96221C577324000BDEE4 /* PDFWeakObjectContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = FF5F96201C577324000BDEE4 /* PDFWeakObjectContainer.h */; };
 		FF5F96231C577324000BDEE4 /* PDFWeakObjectContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5F96211C577324000BDEE4 /* PDFWeakObjectContainer.m */; };
@@ -76,6 +77,7 @@
 		FF2F463E1C3A99190048D8E8 /* UITableView+PDFExporterDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+PDFExporterDrawing.m"; sourceTree = "<group>"; };
 		FF4A5B591C5A1E56008C43B1 /* UITextView+PDFExporterDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+PDFExporterDrawing.h"; sourceTree = "<group>"; };
 		FF4A5B5A1C5A1E56008C43B1 /* UITextView+PDFExporterDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+PDFExporterDrawing.m"; sourceTree = "<group>"; };
+		FF5257771FDFDC9F00E90827 /* CGFloat+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CGFloat+Additions.h"; sourceTree = "<group>"; };
 		FF5F961D1C577013000BDEE4 /* PDFRenderingDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFRenderingDelegate.h; sourceTree = "<group>"; };
 		FF5F96201C577324000BDEE4 /* PDFWeakObjectContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFWeakObjectContainer.h; sourceTree = "<group>"; };
 		FF5F96211C577324000BDEE4 /* PDFWeakObjectContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFWeakObjectContainer.m; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				FFB7CC8B1C29A79E0051004B /* CGGeometry+Additions.h */,
+				FF5257771FDFDC9F00E90827 /* CGFloat+Additions.h */,
 			);
 			path = CoreGraphics;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				FF2F463F1C3A99190048D8E8 /* UITableView+PDFExporterDrawing.h in Headers */,
 				FF2F463B1C3A96130048D8E8 /* UIScrollView+PDFExporterDrawing.h in Headers */,
 				FF7A16401C317B0B0073001D /* PDFHeaderFooterPaging.h in Headers */,
+				FF5257781FDFE39500E90827 /* CGFloat+Additions.h in Headers */,
 				FFB7CCA01C29A79E0051004B /* CGGeometry+Additions.h in Headers */,
 				FF5F96221C577324000BDEE4 /* PDFWeakObjectContainer.h in Headers */,
 				FFB7CC731C29A5370051004B /* PDFExporter.h in Headers */,

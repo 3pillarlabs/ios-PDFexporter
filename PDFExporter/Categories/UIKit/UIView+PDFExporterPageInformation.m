@@ -9,6 +9,7 @@
 #import "UIView+PDFExporterViewSlicing.h"
 #import "UIView+PDFExporterDrawing.h"
 #import "CGGeometry+Additions.h"
+#import "CGFloat+Additions.h"
 
 @implementation UIView (PDFExporterPageInformation)
 
@@ -17,11 +18,11 @@
 }
 
 - (BOOL)canLayoutSubview:(UIView *)subview intersection:(CGRect)intersection {
-    return CGRectGetHeight(intersection) == CGRectGetHeight(subview.drawingFrame);
+    return CGFloatIsEqual(CGRectGetHeight(intersection), CGRectGetHeight(subview.drawingFrame));
 }
 
 - (BOOL)shouldConsiderLayoutSubview:(UIView *)subview intersection:(CGRect)intersection {
-    return CGRectGetHeight(intersection) == CGRectGetHeight(subview.drawingFrame);
+    return CGFloatIsEqual(CGRectGetHeight(intersection), CGRectGetHeight(subview.drawingFrame));
 }
 
 - (CGPoint)renderingOffsetForPageRect:(CGRect)rect {
@@ -38,7 +39,7 @@
             }
             CGPoint subviewRenderingOffset = [subview renderingOffsetForPageRect:rect];
             CGFloat subviewYOffset = (subviewRenderingOffset.y) ? fminf(CGRectGetHeight(intersection), subviewRenderingOffset.y) : CGRectGetHeight(intersection);
-            if (CGRectGetHeight(rect) == subviewYOffset) { // views that has equal or greater height than the page will not be moved to the next page
+            if (CGFloatIsEqual(CGRectGetHeight(rect), subviewYOffset)) { // views that has equal or greater height than the page will not be moved to the next page
                 continue;
             }
             if ([self shouldConsiderLayoutSubview:subview intersection:intersection] == NO) { // test again, required special cases like table cells

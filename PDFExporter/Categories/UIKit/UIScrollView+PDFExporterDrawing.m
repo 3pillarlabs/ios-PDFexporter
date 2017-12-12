@@ -35,6 +35,9 @@ static void * const kUIScrollViewDrawEntireContentSizeAssociatedStorageKey = (vo
 
 - (BOOL)isDrawingEntireContentSize {
     NSNumber *drawEntireContentSizeNumber = objc_getAssociatedObject(self, kUIScrollViewDrawEntireContentSizeAssociatedStorageKey);
+    if (drawEntireContentSizeNumber == nil) {
+        return YES;
+    }
     return [drawEntireContentSizeNumber boolValue];
 }
 

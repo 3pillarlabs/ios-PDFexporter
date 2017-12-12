@@ -33,6 +33,11 @@
 }
 
 - (void)drawSubviewsWithPath:(UIBezierPath *)path withinPageRect:(CGRect)rect {
+    PDFMemoryCleanerObject __attribute__((unused)) *layout = [PDFMemoryCleanerObject memoryCleanerWithConstructBlock:^{
+        [self saveState];
+    } deallocationBlock:^{
+        [self restoreState];
+    }];
     [self scrollContentForRect:rect usingBlock:^{
         [super drawSubviewsWithPath:path withinPageRect:rect];
     }];
