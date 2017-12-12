@@ -7,8 +7,17 @@
 //
 
 import UIKit
+import PDFExporter
+
+class GraphScrollView: UIScrollView {
+    override func canDrawSubview(_ subview: UIView, intersection: CGRect) -> Bool {
+        return CGFloatIsEqual(subview.frame.height, intersection.height)
+    }
+}
 
 class GraphsViewController: UIViewController {
+    @IBOutlet weak var textView: UITextView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

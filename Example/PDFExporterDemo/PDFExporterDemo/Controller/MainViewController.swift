@@ -64,6 +64,8 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func previewButtonPressed(_ sender: UIButton) {
+        updateFooterWidth()
+        updateHeaderWidth()
         let previewPdfVC = PreviewPDFViewController(pdfData: generatePDFData())
         present(previewPdfVC, animated: true)
     }
@@ -92,6 +94,8 @@ class MainViewController: UIViewController {
         if let viewController = viewControllerForSelectedSegmentIndex(tabIndex) {
             addChild(viewController: viewController, within: contentView)
             currentViewController = viewController
+            pdfRenderer.contentView = viewController.view
+            pdfRenderer.shouldSliceViews = currentViewController is GraphsViewController
         }
     }
 
@@ -106,6 +110,20 @@ class MainViewController: UIViewController {
         default:
             return nil
         }
+    }
+
+    private func updateFooterWidth() {
+        guard var frame = pdfRenderer.footerView?.frame else { return }
+
+        frame.size.width = pdfRenderer.footerRect.width
+        pdfRenderer.footerView?.frame = frame
+    }
+
+    private func updateHeaderWidth() {
+        guard var frame = pdfRenderer.headerView?.frame else { return }
+
+        frame.size.width = pdfRenderer.headerRect.width
+        pdfRenderer.headerView?.frame = frame
     }
 }
 
