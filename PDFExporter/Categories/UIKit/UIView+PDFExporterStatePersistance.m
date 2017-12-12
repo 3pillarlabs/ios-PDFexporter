@@ -34,6 +34,9 @@ static void * const kUIViewPersistStateAssociatedStorageKey = (void *)&kUIViewPe
 
 - (BOOL)shouldPersistState {
     NSNumber *persistStateNumber = objc_getAssociatedObject(self, kUIViewPersistStateAssociatedStorageKey);
+    if (persistStateNumber == nil) {
+        return YES;
+    }
     return [persistStateNumber boolValue];
 }
 

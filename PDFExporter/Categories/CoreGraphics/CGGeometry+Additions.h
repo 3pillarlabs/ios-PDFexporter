@@ -89,5 +89,4 @@ CG_INLINE CGPoint CGPointMinus(CGPoint point)
 
 CF_ASSUME_NONNULL_END
 
-
 #endif /* CGGeometry_Additions_h */
