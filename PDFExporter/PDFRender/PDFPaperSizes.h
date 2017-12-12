@@ -62,9 +62,35 @@ CG_EXTERN CGSize const PDFPaperSizeNewsTabloid;
 CG_EXTERN CGSize const PDFPaperSizeNewsRhenish;
 
 // Utilities
+/**
+ Converts a papper inch into a point on the page from pdf document.
+
+ @param inches the physical measument of paper.
+ @return the digital measurement of paper.
+ */
 CG_EXTERN CGFloat PDFPaperConvertInchToPoint(CGFloat inches);
-CG_EXTERN CGFloat PDFPaperConvertMMToPoint(CGFloat milimeters);
+/**
+ Converts a papper inch into a point on the page from pdf document.
+
+ @param milimeters the physical measument of paper.
+ @return the digital measurement of paper.
+ */
+CG_EXTERN CGFloat PDFPaperConvertMMToPoint(CGFloat millimeters);
+/**
+ Create a paper size by providing the width and height in milimeters.
+
+ @param widthUsingMM paper's width in millimeters.
+ @param heightUsingMM paper's height in millimeters.
+ @return paper's size as CGSize.
+ */
 CG_EXTERN CGSize PDFPaperSizeMakeUsingMM(CGFloat widthUsingMM, CGFloat heightUsingMM);
+/**
+ Create a paper size by providing the width and height using inches.
+
+ @param widthUsingInch paper's width using inch.
+ @param heightUsingInch paper's height using inch.
+ @return paper's size as CGSize.
+ */
 CG_EXTERN CGSize PDFPaperSizeMakeUsingInch(CGFloat widthUsingInch, CGFloat heightUsingInch);
 
 CF_ASSUME_NONNULL_END

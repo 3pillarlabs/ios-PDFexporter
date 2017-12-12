@@ -66,9 +66,9 @@ CGFloat PDFPaperConvertInchToPoint(CGFloat inches)
     return ceilf(inches * 72);
 }
 
-CGFloat PDFPaperConvertMMToPoint(CGFloat milimeters)
+CGFloat PDFPaperConvertMMToPoint(CGFloat millimeters)
 {
-    CGFloat inches = _PDFPaperConvertMMToInch(milimeters);
+    CGFloat inches = _PDFPaperConvertMMToInch(millimeters);
     return PDFPaperConvertInchToPoint(inches);
 }
 
