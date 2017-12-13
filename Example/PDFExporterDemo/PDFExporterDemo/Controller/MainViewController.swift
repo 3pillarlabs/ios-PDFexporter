@@ -79,7 +79,7 @@ class MainViewController: UIViewController {
     @IBAction func previewButtonPressed(_ sender: UIButton) {
         updateFooterWidth()
         updateHeaderWidth()
-        let previewPdfVC = PreviewPDFViewController(pdfData: generatePDFData())
+        let previewPdfVC = PreviewPDFViewController(pdfRenderer: pdfRenderer)
         present(previewPdfVC, animated: true)
     }
 
@@ -92,16 +92,6 @@ class MainViewController: UIViewController {
 
 
     // MARK: - Private
-
-    private func generatePDFData() -> Data {
-        let pdfData = pdfRenderer.drawPagesToPDFData()
-        if let pdfURL = Utils.getPdfFileUrl() {
-            do {
-                try pdfData.write(to: pdfURL)
-            } catch {}
-        }
-        return pdfData
-    }
 
     private func displayCurrentTab(_ tabIndex: Int) {
         if let viewController = viewControllerForSelectedSegmentIndex(tabIndex) {

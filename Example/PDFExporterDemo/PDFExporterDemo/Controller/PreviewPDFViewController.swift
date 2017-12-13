@@ -8,16 +8,18 @@
 
 import UIKit
 import WebKit
+import PDFExporter
 
 class PreviewPDFViewController: UIViewController {
 
     @IBOutlet weak var webView: WKWebView!
 
-    private var pdfData: Data!
+    private weak var pdfRenderer: PDFPrintPageRenderer!
+    private var pdfData: Data?
 
-    init(pdfData: Data, nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil) {
+    init(pdfRenderer: PDFPrintPageRenderer, nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        self.pdfData = pdfData
+        self.pdfRenderer = pdfRenderer
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -27,8 +29,14 @@ class PreviewPDFViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let url = NSURL().absoluteURL {
-            webView.load(pdfData, mimeType: "application/pdf", characterEncodingName: "UTF-8", baseURL: url)
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            self?.pdfData = self?.generatePDFData()
+            DispatchQueue.main.async {
+                if let url = NSURL().absoluteURL, let pdfData = self?.pdfData {
+                    self?.webView.load(pdfData, mimeType: "application/pdf", characterEncodingName: "UTF-8",
+                                       baseURL: url)
+                }
+            }
         }
     }
 
@@ -43,5 +51,15 @@ class PreviewPDFViewController: UIViewController {
             let activityVC = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
             present(activityVC, animated: true, completion: nil)
         }
+    }
+
+    private func generatePDFData() -> Data {
+        let pdfData = pdfRenderer.drawPagesToPDFData()
+        if let pdfURL = Utils.getPdfFileUrl() {
+            do {
+                try pdfData.write(to: pdfURL)
+            } catch {}
+        }
+        return pdfData
     }
 }
