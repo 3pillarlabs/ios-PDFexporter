@@ -8,7 +8,9 @@
 #import "UITableView+PDFExporterDrawing.h"
 #import "UIView+PDFExporterStatePersistance.h"
 #import "UIView+PDFExporterPageInformation.h"
+#import "UIView+PDFExporterStatePersistance.h"
 #import "PDFDispatchQueueExtension.h"
+#import "PDFMemoryCleanerObject.h"
 #import "CGGeometry+Additions.h"
 #import "PDFMemoryCleanerObject.h"
 
@@ -93,6 +95,11 @@
 }
 
 - (CGPoint)renderingOffsetForPageRect:(CGRect)rect {
+    PDFMemoryCleanerObject __attribute__((unused)) *layout = [PDFMemoryCleanerObject memoryCleanerWithConstructBlock:^{
+        [self saveState];
+    } deallocationBlock:^{
+        [self restoreState];
+    }];
     __block CGPoint renderingOffset = CGPointZero;
     [self scrollContentForRect:rect usingBlock:^{
         CGPoint subviewRenderingOffset = [super renderingOffsetForPageRect:rect];
@@ -118,9 +125,7 @@
 - (void)updateContentOffset:(CGPoint)contentOffset {
     PDFExporter_dispatch_sync_main_queue(^{
         self.contentOffset = contentOffset;
-        CGRect frame = self.frame;
         [self layoutIfNeeded];
-        self.frame = frame;
         [self layoutHeadersAndFooters];
     });
 }
