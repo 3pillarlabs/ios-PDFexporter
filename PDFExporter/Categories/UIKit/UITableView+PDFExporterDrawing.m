@@ -6,9 +6,11 @@
 //
 
 #import "UITableView+PDFExporterDrawing.h"
+#import "UIView+PDFExporterStatePersistance.h"
 #import "UIView+PDFExporterPageInformation.h"
 #import "PDFDispatchQueueExtension.h"
 #import "CGGeometry+Additions.h"
+#import "PDFMemoryCleanerObject.h"
 
 @implementation UITableView (PDFExporterExtension)
 
@@ -31,6 +33,11 @@
 }
 
 - (void)drawSubviewsWithPath:(UIBezierPath *)path withinPageRect:(CGRect)rect {
+    PDFMemoryCleanerObject __attribute__((unused)) *layout = [PDFMemoryCleanerObject memoryCleanerWithConstructBlock:^{
+        [self saveState];
+    } deallocationBlock:^{
+        [self restoreState];
+    }];
     [self scrollContentForRect:rect usingBlock:^{
         [super drawSubviewsWithPath:path withinPageRect:rect];
     }];
