@@ -150,10 +150,6 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
                       self.footerHeight);;
 }
 
-- (void)setHeaderHeight:(CGFloat)headerHeight {
-    // Do nothing.
-}
-
 - (CGFloat)footerHeight {
     if (!self.footerView) {
         return 0.f;
@@ -165,10 +161,6 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     } else {
         return CGRectGetHeight(self.footerView.drawingFrame);
     }
-}
-
-- (void)setFooterHeight:(CGFloat)footerHeight {
-    // Do nothing.
 }
 
 #pragma mark - Overriden
