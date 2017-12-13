@@ -10,6 +10,7 @@
 #import "UIView+PDFExporterPageInformation.h"
 #import "UIView+PDFExporterStatePersistance.h"
 #import "CGGeometry+Additions.h"
+#import "CGFloat+Additions.h"
 
 @implementation UIView (PDFExporterDrawing)
 
@@ -117,11 +118,12 @@
 }
 
 - (BOOL)canDrawSubview:(UIView *)subview intersection:(CGRect)intersection {
-    return CGRectGetHeight(subview.drawingFrame) == CGRectGetHeight(intersection);
+    return CGFloatIsEqual(CGRectGetHeight(subview.drawingFrame), CGRectGetHeight(intersection));
 }
 
 - (CGRect)subviewRect:(UIView *)subview drawingPageRect:(CGRect)rect {
-    return CGRectOffsetWithCGPoint([self.renderingDelegate view:self convertRectToRootView:subview.drawingFrame], CGPointMinus(rect.origin));
+    return CGRectOffsetWithCGPoint([self.renderingDelegate view:self convertRectToRootView:subview.drawingFrame],
+                                   CGPointMinus(rect.origin));
 }
 
 - (CGRect)subviewIntersection:(UIView *)subview drawingPageRect:(CGRect)rect {

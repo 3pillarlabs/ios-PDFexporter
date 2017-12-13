@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIScrollView (PDFExporterDrawing)
 
-@property (nonatomic, getter=isDrawingEntireContentSize) BOOL drawEntireContentSize;
+@property (nonatomic, getter=isDrawingEntireContentSize) BOOL drawEntireContentSize; // default value is NO
 
 @end
 
