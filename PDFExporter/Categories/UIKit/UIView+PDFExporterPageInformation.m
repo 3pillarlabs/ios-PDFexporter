@@ -10,6 +10,7 @@
 #import "UIView+PDFExporterDrawing.h"
 #import "CGGeometry+Additions.h"
 #import "CGFloat+Additions.h"
+#import "PDFRenderingDelegate.h"
 
 @implementation UIView (PDFExporterPageInformation)
 
@@ -33,16 +34,18 @@
     for (UIView *subview in self.subviews) {
         if ([subview isDrawable]) {
             CGRect intersection = [self subviewIntersection:subview layoutPageRect:rect];
-            if (CGRectIsNull(intersection) ||                                   // skip subviews that are not visible, or
-                [self canLayoutSubview:subview intersection:intersection]) {    // it is possible to draw them on current page
-                continue;
+            if (CGRectIsNull(intersection) ||                                   // skip subviews that are not visible,
+                [self canLayoutSubview:subview intersection:intersection]) {    // or it is possible to draw them
+                continue;                                                       // on current page
             }
             CGPoint subviewRenderingOffset = [subview renderingOffsetForPageRect:rect];
-            CGFloat subviewYOffset = (subviewRenderingOffset.y) ? fminf(CGRectGetHeight(intersection), subviewRenderingOffset.y) : CGRectGetHeight(intersection);
-            if (CGFloatIsEqual(CGRectGetHeight(rect), subviewYOffset)) { // views that has equal or greater height than the page will not be moved to the next page
-                continue;
+            CGFloat subviewYOffset = (subviewRenderingOffset.y) ?
+            fminf(CGRectGetHeight(intersection), subviewRenderingOffset.y) : CGRectGetHeight(intersection);
+            if (CGFloatIsEqual(CGRectGetHeight(rect), subviewYOffset)) { // views that has equal or greater height than
+                continue;                                                // the page will not be moved to the next page
             }
-            if ([self shouldConsiderLayoutSubview:subview intersection:intersection] == NO) { // test again, required special cases like table cells
+            // test again, required for special cases like table cells
+            if ([self shouldConsiderLayoutSubview:subview intersection:intersection] == NO) {
                 subviewYOffset = CGRectGetHeight(intersection);
             }
             renderingOffset.y = fmaxf(renderingOffset.y, subviewYOffset);
@@ -98,7 +101,7 @@
 
 @implementation UITextView (PDFExporterPageInformationPrivate)
 
-- (BOOL)askSubviewsRenderingOffset{
+- (BOOL)askSubviewsRenderingOffset {
     return NO;
 }
 

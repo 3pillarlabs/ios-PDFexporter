@@ -7,21 +7,9 @@
 
 #import "UIScrollView+PDFExporterDrawing.h"
 #import <objc/runtime.h>
-#import "UIView+PDFExporterStatePersistance.h"
-#import "UIView+PDFExporterPageInformation.h"
 
-static void * const kUIScrollViewDrawEntireContentSizeAssociatedStorageKey = (void *)&kUIScrollViewDrawEntireContentSizeAssociatedStorageKey;
-
-@interface UIScrollViewPersistenceState : UIViewPersistenceState
-
-@property (nonatomic) CGPoint contentOffset;
-
-@end
-
-@implementation UIScrollViewPersistenceState
-
-@end
-
+static void * const kUIScrollViewDrawEntireContentSizeAssociatedStorageKey =
+(void *)&kUIScrollViewDrawEntireContentSizeAssociatedStorageKey;
 
 @implementation UIScrollView (PDFExporterDrawing)
 
@@ -34,7 +22,8 @@ static void * const kUIScrollViewDrawEntireContentSizeAssociatedStorageKey = (vo
 }
 
 - (BOOL)isDrawingEntireContentSize {
-    NSNumber *drawEntireContentSizeNumber = objc_getAssociatedObject(self, kUIScrollViewDrawEntireContentSizeAssociatedStorageKey);
+    NSNumber *drawEntireContentSizeNumber =
+    objc_getAssociatedObject(self, kUIScrollViewDrawEntireContentSizeAssociatedStorageKey);
     return [drawEntireContentSizeNumber boolValue];
 }
 
@@ -43,43 +32,8 @@ static void * const kUIScrollViewDrawEntireContentSizeAssociatedStorageKey = (vo
     if (drawEntireContentSize) {
         drawEntireContentSizeNumber = @(drawEntireContentSize);
     }
-    objc_setAssociatedObject(self, kUIScrollViewDrawEntireContentSizeAssociatedStorageKey, drawEntireContentSizeNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-#pragma mark - StatePersistanceSubclassing
-
-- (Class)stateClass {
-    return [UIScrollViewPersistenceState class];
-}
-
-- (void)configureState:(UIViewPersistenceState *)state {
-    [super configureState:state];
-    
-    if (!self.drawEntireContentSize) {
-        return;
-    }
-    UIScrollViewPersistenceState *scrollState = (UIScrollViewPersistenceState *)state;
-    scrollState.contentOffset = self.contentOffset;
-}
-
-- (void)performRestoreWithState:(UIViewPersistenceState *)state {
-    [super performRestoreWithState:state];
-    
-    if (!self.drawEntireContentSize) {
-        return;
-    }
-    UIScrollViewPersistenceState *scrollState = (UIScrollViewPersistenceState *)state;
-    self.contentOffset = scrollState.contentOffset;
-}
-
-#pragma mark - PDFExporterPageInformation
-
-- (CGRect)subviewRect:(UIView *)subview layoutPageRect:(CGRect)rect {
-    if ([subview isKindOfClass:[UITableViewCell class]]) {  // UITableView's cells are wrapped inside a UIScrollView
-        return [self.superview subviewRect:subview layoutPageRect:rect];
-    } else {
-        return [super subviewRect:subview layoutPageRect:rect];
-    }
+    objc_setAssociatedObject(self, kUIScrollViewDrawEntireContentSizeAssociatedStorageKey, drawEntireContentSizeNumber,
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

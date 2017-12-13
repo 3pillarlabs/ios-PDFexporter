@@ -7,6 +7,10 @@
 
 #import <PDFExporter/UIView+PDFExporterDrawing.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UITextView (PDFExporterDrawing)
 
 @end
+
+NS_ASSUME_NONNULL_END
