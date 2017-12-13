@@ -108,7 +108,8 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 }
 
 - (CGRect)renderingRect {
-    return ([self isScalingContent]) ? CGRectCeil(CGRectScaleByFactor(self.contentRect, self.contentRectScale)) : self.contentRect;
+    return ([self isScalingContent]) ?
+    CGRectCeil(CGRectScaleByFactor(self.contentRect, self.contentRectScale)) : self.contentRect;
 }
 
 - (CGFloat)headerHeight {
@@ -177,7 +178,8 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     [super drawHeaderForPageAtIndex:pageIndex inRect:headerRect];
     
     if ((self.pagingMask & PDFPagingOptionHeader) == PDFPagingOptionHeader) {
-        NSAssert([self.headerView respondsToSelector:@selector(updatePageNumber:totalPages:)], @"Header view doesn't implement selector (updatePageNumber:totalPages:).");
+        NSAssert([self.headerView respondsToSelector:@selector(updatePageNumber:totalPages:)],
+                 @"Header view doesn't implement selector (updatePageNumber:totalPages:).");
         [self.headerView updatePageNumber:pageIndex totalPages:self.numberOfPages];
     }
     
@@ -202,7 +204,8 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     [super drawFooterForPageAtIndex:pageIndex inRect:footerRect];
     
     if ((self.pagingMask & PDFPagingOptionFooter) == PDFPagingOptionFooter) {
-        NSAssert([self.footerView respondsToSelector:@selector(updatePageNumber:totalPages:)], @"Footer view doesn't implement selector (updatePageNumber:totalPages:).");
+        NSAssert([self.footerView respondsToSelector:@selector(updatePageNumber:totalPages:)],
+                 @"Footer view doesn't implement selector (updatePageNumber:totalPages:).");
         [self.footerView updatePageNumber:(pageIndex + 1) totalPages:self.numberOfPages];
     }
     
@@ -268,11 +271,10 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     }
     self.footerView.persistState = YES;
     
-    [self.headerView prepareForDrawingWithPageSize:self.headerView.bounds.size];
-    CGRect scaledPageRect = [self scaledPageRectOffsetForIndex:0];
-    [self.contentView prepareForDrawingWithPageSize:scaledPageRect.size];
-    [self.footerView prepareForDrawingWithPageSize:self.footerView.bounds.size];
-    
+    [self.headerView prepareForDrawing];
+    [self.contentView prepareForDrawing];
+    [self.footerView prepareForDrawing];
+
     CGRect viewFrame = self.headerView.frame;
     viewFrame.origin = CGPointZero;
     self.headerView.frame = viewFrame;

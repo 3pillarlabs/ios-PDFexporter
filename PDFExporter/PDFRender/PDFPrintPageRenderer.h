@@ -10,12 +10,25 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ Paging option to receive page number and total number of pages of the pdf.
+
+ - PDFPagingOptionNone: callbacks are not send on either the header or footer.
+ - PDFPagingOptionFooter: callbacks are sent to the footer.
+ - PDFPagingOptionHeader: callbacks are sent to the header.
+ */
 typedef NS_OPTIONS(NSUInteger, PDFPagingOptions) {
     PDFPagingOptionNone = 0,
     PDFPagingOptionFooter = 1 << 0,
     PDFPagingOptionHeader = 1 << 1
 };
 
+/**
+ The page orientation.
+
+ - PDFPageOrientationPortrait: portrait orientation of the page.
+ - PDFPageOrientationLandscape: landscape orientation of the page.
+ */
 typedef NS_ENUM(NSUInteger, PDFPageOrientation) {
     PDFPageOrientationPortrait,
     PDFPageOrientationLandscape
@@ -23,27 +36,86 @@ typedef NS_ENUM(NSUInteger, PDFPageOrientation) {
 
 @interface PDFPrintPageRenderer : UIPrintPageRenderer
 
-@property (nonatomic, nullable) UIView<PDFHeaderFooterPaging> *headerView; // if pagingMask && PDFPagingOptionHeader, headerView should implement the optional method from the protocol
+/**
+ If pagingMask contains PDFPagingOptionHeader, the view will used as header for each page.
+ The view may implement PDFHeaderFooterPaging to display the page number.
+ */
+@property (nonatomic, nullable) UIView<PDFHeaderFooterPaging> *headerView;
+/**
+ The the view will drawn on the pdf. Depending on the view and the settings(paperSize, paperInset),
+ the pdf might have more than 1 more page.
+ */
 @property (nonatomic) UIView *contentView;
-@property (nonatomic, nullable) UIView<PDFHeaderFooterPaging> *footerView; // if pagingMask && PDFPagingOptionFooter, footerView should implement the optional method from the protocol
-@property (nonatomic) PDFPagingOptions pagingMask; // default is PDFPagingOptionNone
-@property (nonatomic) PDFPageOrientation pageOrientation; // default is PDFPageOrientationPortrait
+/**
+ If pagingMask contains PDFPagingOptionFooter, the view will used as footer for each page.
+ The view may implement PDFHeaderFooterPaging to display the page number.
+ */
+@property (nonatomic, nullable) UIView<PDFHeaderFooterPaging> *footerView;
+/**
+ A mask which tells the renderer on which view to call paging methods if PDFHeaderFooterPaging is implemented.
+ Default value is PDFPagingOptionNone.
+ */
+@property (nonatomic) PDFPagingOptions pagingMask;
+/**
+ Change the page orientation of pdf.
+ Default is PDFPageOrientationPortrait.
+ */
+@property (nonatomic) PDFPageOrientation pageOrientation;
 
-@property (nonatomic) UIEdgeInsets paperInset; // default is {30, 30, 30, 30}
-@property (nonatomic) CGSize paperSize; // default is PDFPaperSizeUSLetter, size should be provided for portrait orientation
+/**
+ The insets of content (header, contentView's data and footer) on page.
+ Default is {30, 30, 30, 30}.
+ */
+@property (nonatomic) UIEdgeInsets paperInset;
+/**
+ The paper's size.
+ Default is PDFPaperSizeUSLetter.
+ */
+@property (nonatomic) CGSize paperSize;
+/**
+ The computed rect of header on each page.
+ */
 @property (nonatomic, readonly) CGRect headerRect;
+/**
+ The computed rect of content on each page.
+ */
 @property (nonatomic, readonly) CGRect contentRect;
+/**
+ The computed rect of footer on each page.
+ */
 @property (nonatomic, readonly) CGRect footerRect;
 
 // By default nothing is scaled, i.e. properties are set to NO.
+/**
+ Scale the content of the header.
+ Default value is NO.
+ */
 @property (nonatomic, getter=isScalingHeader) BOOL scaleHeader;
+/**
+ Scale the content provided by contentView on each page.
+ Default value is NO.
+ */
 @property (nonatomic, getter=isScalingContent) BOOL scaleContent;
+/**
+ Scale the content of the footer.
+ Default value is NO.
+ */
 @property (nonatomic, getter=isScalingFooter) BOOL scaleFooter;
 
-@property (nonatomic, getter=shouldSliceViews) BOOL sliceViews; // default is NO
+/**
+ Slice the subviews of contentView between pages.
+ Default value is NO.
+ */
+@property (nonatomic, getter=shouldSliceViews) BOOL sliceViews;
 
-// Draws content. Drawing may be performed on any queue. View's layout will be synchronized on main queue when and if needed.
-// Method may be wrapped within an operation which may be cancelled.
+/**
+ Draws content. Drawing may be performed on any queue.
+ View's layout will be synchronized on main queue when and if needed.
+
+ Method may be wrapped within an operation which may be cancelled.
+
+ @return the pdf as NSData.
+ */
 - (NSData *)drawPagesToPDFData;
 
 @end

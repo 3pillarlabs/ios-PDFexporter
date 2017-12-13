@@ -7,9 +7,11 @@
 
 #import "UIView+PDFExporterViewSlicing.h"
 #import <objc/runtime.h>
+#import "PDFRenderingDelegate.h"
 #import "PDFWeakObjectContainer.h"
 
-static void * const kUIViewRenderingDelegateAssociatedStorageKey = (void *)&kUIViewRenderingDelegateAssociatedStorageKey;
+static void * const kUIViewRenderingDelegateAssociatedStorageKey =
+(void *)&kUIViewRenderingDelegateAssociatedStorageKey;
 
 @implementation UIView (PDFExporterViewSlicing)
 
@@ -38,7 +40,8 @@ static void * const kUIViewRenderingDelegateAssociatedStorageKey = (void *)&kUIV
         newContainer = [PDFWeakObjectContainer new];
         newContainer.weakObject = renderingDelegate;
     }
-    objc_setAssociatedObject(self, kUIViewRenderingDelegateAssociatedStorageKey, newContainer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, kUIViewRenderingDelegateAssociatedStorageKey, newContainer,
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

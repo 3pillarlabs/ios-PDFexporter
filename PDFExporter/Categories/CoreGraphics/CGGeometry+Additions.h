@@ -14,6 +14,13 @@
 
 CF_ASSUME_NONNULL_BEGIN
 
+/**
+ Translates the point.
+
+ @param point The point.
+ @param delta The offset.
+ @return The new translated point.
+ */
 CG_INLINE CGPoint CGPointTranslate(CGPoint point, CGPoint delta)
 {
     CGPoint newPoint = point;
@@ -22,6 +29,13 @@ CG_INLINE CGPoint CGPointTranslate(CGPoint point, CGPoint delta)
     return newPoint;
 }
 
+/**
+ Translates the origin of rect with provided offset point.
+
+ @param rect The rect source.
+ @param point The offset.
+ @return The new rect with translated origin.
+ */
 CG_INLINE CGRect CGRectOffsetWithCGPoint(CGRect rect, CGPoint point)
 {
     CGRect newRect = rect;
@@ -29,6 +43,13 @@ CG_INLINE CGRect CGRectOffsetWithCGPoint(CGRect rect, CGPoint point)
     return newRect;
 }
 
+/**
+ Resizes the rect with offset without changing the origin.
+
+ @param rect The rect.
+ @param offset The offset resize the
+ @return The new rect with resized size.
+ */
 CG_INLINE CGRect CGRectResizeWithOffset(CGRect rect, CGPoint offset)
 {
     CGRect newRect = rect;
@@ -37,6 +58,12 @@ CG_INLINE CGRect CGRectResizeWithOffset(CGRect rect, CGPoint offset)
     return newRect;
 }
 
+/**
+ The bounds of the rect.
+
+ @param rect The rect source.
+ @return The rectangle with origin as CGPoinZero.
+ */
 CG_INLINE CGRect CGRectBounds(CGRect rect)
 {
     CGRect newRect = CGRectZero;
@@ -44,22 +71,37 @@ CG_INLINE CGRect CGRectBounds(CGRect rect)
     return newRect;
 }
 
+/**
+ Scales point's x and y with provided factor.
+
+ @param point The point to scale.
+ @param factor The factor to apply on scale.
+ @return The scaled point.
+ */
 CG_INLINE CGPoint CGPointScaleByFactor(CGPoint point, CGFloat factor)
 {
-    CGPoint newPoint = point;
-    newPoint.x *= factor;
-    newPoint.y *= factor;
-    return newPoint;
+    return CGPointMake(point.x * factor, point.y * factor);
 }
 
+/**
+ Scales size's width and height with provided factor.
+
+ @param size The size to scale.
+ @param factor The factor to apply on scale.
+ @return The scaled size.
+ */
 CG_INLINE CGSize CGSizeScaleByFactor(CGSize size, CGFloat factor)
 {
-    CGSize newSize = size;
-    newSize.width *= factor;
-    newSize.height *= factor;
-    return newSize;
+    return CGSizeMake(size.width * factor, size.height * factor);
 }
 
+/**
+ Scale rectangle's properties with provided factor,
+
+ @param rect The rect to scale.
+ @param factor The factor to apply on scale.
+ @return The scaled rect.
+ */
 CG_INLINE CGRect CGRectScaleByFactor(CGRect rect, CGFloat factor)
 {
     CGRect scaledRect;
@@ -68,23 +110,38 @@ CG_INLINE CGRect CGRectScaleByFactor(CGRect rect, CGFloat factor)
     return scaledRect;
 }
 
+/**
+ Ceil size's width and height.
+
+ @param size The size to ceil.
+ @return The size with ceiled values.
+ */
 CG_INLINE CGSize CGSizeCeil(CGSize size)
 {
     return CGSizeMake(ceilf(size.width), ceilf(size.height));
 }
 
+/**
+ Ceil rectangle's properties.
+
+ @param rect The rect to ceil.
+ @return The rect with ceiled values.
+ */
 CG_INLINE CGRect CGRectCeil(CGRect rect)
 {
     return CGRectMake(ceilf(rect.origin.x), ceilf(rect.origin.y),
                       ceilf(rect.size.width), ceilf(rect.size.height));
 }
 
+/**
+ Applies minus the x and t.
+
+ @param point The point to update
+ @return The minus point.
+ */
 CG_INLINE CGPoint CGPointMinus(CGPoint point)
 {
-    CGPoint minusPoint;
-    minusPoint.x = -point.x;
-    minusPoint.y = -point.y;
-    return minusPoint;
+    return CGPointMake(-point.x, -point.y);
 }
 
 CF_ASSUME_NONNULL_END

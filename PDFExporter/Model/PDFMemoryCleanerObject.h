@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface PDFMemoryCleanerObject : NSObject
 
 - (instancetype)initWithConstructBlock:(void (^)(void))constructBlock
@@ -17,3 +19,5 @@
                               deallocationBlock:(void (^)(void))deallocationBlock;
 
 @end
+
+NS_ASSUME_NONNULL_END
