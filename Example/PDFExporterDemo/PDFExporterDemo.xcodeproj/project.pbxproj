@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D16110341FE027ED001F9618 /* ReportTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16110321FE027ED001F9618 /* ReportTableViewCell.swift */; };
+		D16110351FE027ED001F9618 /* ReportTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D16110331FE027ED001F9618 /* ReportTableViewCell.xib */; };
+		D161103A1FE11A8C001F9618 /* TextEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16110391FE11A8C001F9618 /* TextEditViewController.swift */; };
+		D161103E1FE122D7001F9618 /* CustomViewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D161103D1FE122D7001F9618 /* CustomViewsViewController.swift */; };
 		D1637F2F1FD92FDD00283253 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1637F2E1FD92FDD00283253 /* AppDelegate.swift */; };
 		D1637F311FD92FDD00283253 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1637F301FD92FDD00283253 /* MainViewController.swift */; };
 		D1637F361FD92FDD00283253 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D1637F351FD92FDD00283253 /* Assets.xcassets */; };
@@ -28,6 +32,10 @@
 		D1B74E231FDA89C40081657D /* UIViewController+ApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B74E221FDA89C40081657D /* UIViewController+ApplicationExtension.swift */; };
 		D1B74E271FDA8C230081657D /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B74E261FDA8C230081657D /* TableViewController.swift */; };
 		D1B74E291FDA906D0081657D /* UIElementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B74E281FDA906D0081657D /* UIElementsViewController.swift */; };
+		D1DECCF61FE12A9A001B11FB /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1DECCF31FE12A90001B11FB /* Charts.framework */; };
+		D1DECCF71FE12A9A001B11FB /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D1DECCF31FE12A90001B11FB /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D1DECCFD1FE12CC3001B11FB /* BarChartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1DECCFB1FE12CC3001B11FB /* BarChartViewController.xib */; };
+		D1DECCFE1FE12CC3001B11FB /* BarChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DECCFC1FE12CC3001B11FB /* BarChartViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +60,27 @@
 			remoteGlobalIDString = FFB7CC6E1C29A5370051004B;
 			remoteInfo = PDFExporter;
 		};
+		D1DECCF21FE12A90001B11FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1DECCED1FE12A8F001B11FB /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 65AD9E95D9ED4DC0BD73A743;
+			remoteInfo = Charts;
+		};
+		D1DECCF41FE12A90001B11FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1DECCED1FE12A8F001B11FB /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CBBC58C6CE1EBEE9852CE41;
+			remoteInfo = ChartsTests;
+		};
+		D1DECCF81FE12A9A001B11FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1DECCED1FE12A8F001B11FB /* Charts.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A58A4ED274A941CA248EA921;
+			remoteInfo = Charts;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -62,6 +91,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				D1637F501FD9319B00283253 /* PDFExporter.framework in Embed Frameworks */,
+				D1DECCF71FE12A9A001B11FB /* Charts.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,6 +99,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D16110321FE027ED001F9618 /* ReportTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportTableViewCell.swift; sourceTree = "<group>"; };
+		D16110331FE027ED001F9618 /* ReportTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportTableViewCell.xib; sourceTree = "<group>"; };
+		D16110391FE11A8C001F9618 /* TextEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditViewController.swift; sourceTree = "<group>"; };
+		D161103D1FE122D7001F9618 /* CustomViewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewsViewController.swift; sourceTree = "<group>"; };
 		D1637F2B1FD92FDD00283253 /* PDFExporterDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PDFExporterDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1637F2E1FD92FDD00283253 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1637F301FD92FDD00283253 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +125,9 @@
 		D1B74E221FDA89C40081657D /* UIViewController+ApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ApplicationExtension.swift"; sourceTree = "<group>"; };
 		D1B74E261FDA8C230081657D /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		D1B74E281FDA906D0081657D /* UIElementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIElementsViewController.swift; sourceTree = "<group>"; };
+		D1DECCED1FE12A8F001B11FB /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../../../../Downloads/Charts-master/Charts.xcodeproj"; sourceTree = "<group>"; };
+		D1DECCFB1FE12CC3001B11FB /* BarChartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BarChartViewController.xib; path = ../../../../../../Desktop/BarChartViewController.xib; sourceTree = "<group>"; };
+		D1DECCFC1FE12CC3001B11FB /* BarChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BarChartViewController.swift; path = ../../../../../../Desktop/BarChartViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +136,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1637F4F1FD9319B00283253 /* PDFExporter.framework in Frameworks */,
+				D1DECCF61FE12A9A001B11FB /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				D1637F451FD9313700283253 /* PDFExporter.xcodeproj */,
+				D1DECCED1FE12A8F001B11FB /* Charts.xcodeproj */,
 				D1637F2D1FD92FDD00283253 /* PDFExporterDemo */,
 				D1637F2C1FD92FDD00283253 /* Products */,
 			);
@@ -140,12 +179,16 @@
 		D1637F411FD9306100283253 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D1DECCFC1FE12CC3001B11FB /* BarChartViewController.swift */,
+				D1DECCFB1FE12CC3001B11FB /* BarChartViewController.xib */,
 				D1637F301FD92FDD00283253 /* MainViewController.swift */,
 				D1637F571FD9347600283253 /* SettingsViewController.swift */,
 				D1637F5E1FD94C6D00283253 /* PreviewPDFViewController.swift */,
 				D1637F5F1FD94C6D00283253 /* PreviewPDFViewController.xib */,
 				D1B74E1D1FDA884B0081657D /* GraphsViewController.swift */,
 				D1B74E261FDA8C230081657D /* TableViewController.swift */,
+				D16110391FE11A8C001F9618 /* TextEditViewController.swift */,
+				D161103D1FE122D7001F9618 /* CustomViewsViewController.swift */,
 				D1B74E281FDA906D0081657D /* UIElementsViewController.swift */,
 			);
 			path = Controller;
@@ -160,6 +203,8 @@
 				D1637F841FD96B5100283253 /* HeaderView.xib */,
 				D1637F821FD96B3C00283253 /* FooterView.swift */,
 				D1637F861FD96B5B00283253 /* FooterView.xib */,
+				D16110321FE027ED001F9618 /* ReportTableViewCell.swift */,
+				D16110331FE027ED001F9618 /* ReportTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -198,6 +243,15 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
+		D1DECCEE1FE12A8F001B11FB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D1DECCF31FE12A90001B11FB /* Charts.framework */,
+				D1DECCF51FE12A90001B11FB /* ChartsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -214,6 +268,7 @@
 			);
 			dependencies = (
 				D1637F521FD9319B00283253 /* PBXTargetDependency */,
+				D1DECCF91FE12A9A001B11FB /* PBXTargetDependency */,
 			);
 			name = PDFExporterDemo;
 			productName = PDFExporterDemo;
@@ -249,6 +304,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = D1DECCEE1FE12A8F001B11FB /* Products */;
+					ProjectRef = D1DECCED1FE12A8F001B11FB /* Charts.xcodeproj */;
+				},
+				{
 					ProductGroup = D1637F461FD9313700283253 /* Products */;
 					ProjectRef = D1637F451FD9313700283253 /* PDFExporter.xcodeproj */;
 				},
@@ -275,6 +334,20 @@
 			remoteRef = D1637F4D1FD9313700283253 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		D1DECCF31FE12A90001B11FB /* Charts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Charts.framework;
+			remoteRef = D1DECCF21FE12A90001B11FB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D1DECCF51FE12A90001B11FB /* ChartsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ChartsTests.xctest;
+			remoteRef = D1DECCF41FE12A90001B11FB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -283,11 +356,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1637F611FD94C6D00283253 /* PreviewPDFViewController.xib in Resources */,
+				D1DECCFD1FE12CC3001B11FB /* BarChartViewController.xib in Resources */,
 				D1637F871FD96B5B00283253 /* FooterView.xib in Resources */,
 				D1637F851FD96B5100283253 /* HeaderView.xib in Resources */,
 				D1637F561FD9336F00283253 /* Main.storyboard in Resources */,
 				D1637F391FD92FDD00283253 /* LaunchScreen.storyboard in Resources */,
 				D1637F361FD92FDD00283253 /* Assets.xcassets in Resources */,
+				D16110351FE027ED001F9618 /* ReportTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,15 +374,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1637F5D1FD949BE00283253 /* Utils.swift in Sources */,
+				D161103A1FE11A8C001F9618 /* TextEditViewController.swift in Sources */,
 				D1637F311FD92FDD00283253 /* MainViewController.swift in Sources */,
 				D1637F601FD94C6D00283253 /* PreviewPDFViewController.swift in Sources */,
 				D1637F2F1FD92FDD00283253 /* AppDelegate.swift in Sources */,
 				D1637F581FD9347600283253 /* SettingsViewController.swift in Sources */,
+				D16110341FE027ED001F9618 /* ReportTableViewCell.swift in Sources */,
 				D1B74E291FDA906D0081657D /* UIElementsViewController.swift in Sources */,
 				D1637F8A1FD977FC00283253 /* PaperType.swift in Sources */,
 				D1637F831FD96B3C00283253 /* FooterView.swift in Sources */,
+				D1DECCFE1FE12CC3001B11FB /* BarChartViewController.swift in Sources */,
 				D1B74E271FDA8C230081657D /* TableViewController.swift in Sources */,
 				D1B74E1E1FDA884B0081657D /* GraphsViewController.swift in Sources */,
+				D161103E1FE122D7001F9618 /* CustomViewsViewController.swift in Sources */,
 				D1B74E231FDA89C40081657D /* UIViewController+ApplicationExtension.swift in Sources */,
 				D1637F5B1FD949B000283253 /* Constants.swift in Sources */,
 				D1637F7F1FD96B2600283253 /* HeaderView.swift in Sources */,
@@ -321,6 +400,11 @@
 			isa = PBXTargetDependency;
 			name = PDFExporter;
 			targetProxy = D1637F511FD9319B00283253 /* PBXContainerItemProxy */;
+		};
+		D1DECCF91FE12A9A001B11FB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Charts;
+			targetProxy = D1DECCF81FE12A9A001B11FB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -454,7 +538,9 @@
 		D1637F3E1FD92FDD00283253 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = PDFExporterDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.PDFExporterDemo;
@@ -467,7 +553,9 @@
 		D1637F3F1FD92FDD00283253 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = PDFExporterDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.PDFExporterDemo;

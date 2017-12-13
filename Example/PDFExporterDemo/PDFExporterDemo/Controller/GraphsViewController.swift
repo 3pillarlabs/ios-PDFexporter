@@ -15,12 +15,10 @@ class GraphScrollView: UIScrollView {
     }
 }
 
-class GraphsViewController: UIViewController {
-    @IBOutlet weak var textView: UITextView!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+class GraphsViewController: UIViewController, PDFControllerProtocol {
+    var contentView: UIView {
+        return view
     }
+    
+    @IBOutlet weak var textView: UITextView!
 }

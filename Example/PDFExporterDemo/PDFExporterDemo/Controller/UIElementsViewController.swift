@@ -8,4 +8,8 @@
 
 import UIKit
 
-class UIElementsViewController: UIViewController {}
+class UIElementsViewController: UIViewController, PDFControllerProtocol {
+    var contentView: UIView {
+        return view
+    }
+}

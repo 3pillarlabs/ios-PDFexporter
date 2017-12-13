@@ -16,8 +16,7 @@ extension UIStoryboard {
 }
 
 class MainViewController: UIViewController {
-    @IBOutlet weak var contentView: UIView!
-
+    @IBOutlet weak var containerView: UIView!
     private let pdfRenderer: PDFPrintPageRenderer = PDFPrintPageRenderer()
 
     var currentViewController: UIViewController?
@@ -36,9 +35,21 @@ class MainViewController: UIViewController {
 
     lazy var elementsVC: UIViewController? = {
         let elementsVC =
-            UIStoryboard.main.instantiateViewController(withIdentifier: "UIElementsViewController")
-                as? UIElementsViewController
+            UIStoryboard.main.instantiateViewController(withIdentifier: "CustomViewsViewController")
+                as? CustomViewsViewController
         return elementsVC
+    }()
+
+    lazy var textEditVC: UIViewController? = {
+        let textEditVC =
+            UIStoryboard.main.instantiateViewController(withIdentifier: "TextEditViewController")
+                as? TextEditViewController
+        return textEditVC
+    }()
+
+    lazy var chartVC: UIViewController? = {
+        let chartVC = BarChartViewController()
+        return chartVC
     }()
 
     override func viewDidLoad() {
@@ -46,7 +57,9 @@ class MainViewController: UIViewController {
 
         displayCurrentTab(0)
 
-        pdfRenderer.contentView = contentView
+        if let pdfController = currentViewController as? PDFControllerProtocol {
+            pdfRenderer.contentView = pdfController.contentView
+        }
         pdfRenderer.headerView = HeaderView.instanceFromNib()
         pdfRenderer.footerView = FooterView.instanceFromNib()
         pdfRenderer.pagingMask = .footer
@@ -92,10 +105,11 @@ class MainViewController: UIViewController {
 
     private func displayCurrentTab(_ tabIndex: Int) {
         if let viewController = viewControllerForSelectedSegmentIndex(tabIndex) {
-            addChild(viewController: viewController, within: contentView)
+            addChild(viewController: viewController, within: containerView)
             currentViewController = viewController
-            pdfRenderer.contentView = viewController.view
-            pdfRenderer.shouldSliceViews = currentViewController is GraphsViewController
+            if let pdfController = currentViewController as? PDFControllerProtocol {
+                pdfRenderer.contentView = pdfController.contentView
+            }
         }
     }
 
@@ -106,7 +120,9 @@ class MainViewController: UIViewController {
         case 1:
             return tableVC
         case 2:
-            return elementsVC
+            return textEditVC
+        case 3:
+            return chartVC
         default:
             return nil
         }

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol PDFControllerProtocol {
+    var contentView: UIView { get }
+}
+
 extension UIViewController {
     func addChild(viewController: UIViewController, within subview: UIView? = nil) {
         let container: UIView = subview ?? view
