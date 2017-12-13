@@ -11,6 +11,7 @@
 #import "UIView+PDFExporterStatePersistance.h"
 #import "CGGeometry+Additions.h"
 #import "CGFloat+Additions.h"
+#import "PDFRenderingDelegate.h"
 
 @implementation UIView (PDFExporterDrawing)
 
@@ -28,10 +29,10 @@
 
 #pragma mark - Drawing Setup
 
-- (void)prepareForDrawingWithPageSize:(CGSize)size {
+- (void)prepareForDrawing {
     [self saveState];
     for (UIView *view in self.subviews) {
-        [view prepareForDrawingWithPageSize:size];
+        [view prepareForDrawing];
     }
 }
 

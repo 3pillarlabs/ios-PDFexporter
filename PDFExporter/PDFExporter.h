@@ -24,5 +24,11 @@ FOUNDATION_EXPORT const unsigned char PDFExporterVersionString[];
 #import <PDFExporter/UIView+PDFExporterViewSlicing.h>
 #import <PDFExporter/UIView+PDFExporterPageInformation.h>
 #import <PDFExporter/UIView+PDFExporterStatePersistance.h>
+#import <PDFExporter/UIView+PDFExporterStatePersistanceSubclassing.h>
+#import <PDFExporter/UIScrollView+PDFExporterPageInformation.h>
+#import <PDFExporter/UIScrollView+PDFExporterStatePersistanceSubclassing.h>
+#import <PDFExporter/UITextView+PDFExporterDrawing.h>
+#import <PDFExporter/UIViewPersistenceState.h>
+#import <PDFExporter/UIScrollViewPersistenceState.h>
 #import <PDFExporter/UIScrollView+PDFExporterDrawing.h>
 #import <PDFExporter/CGFloat+Additions.h>

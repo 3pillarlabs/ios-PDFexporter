@@ -7,8 +7,11 @@
 
 #import "UIView+PDFExporterStatePersistance.h"
 #import <objc/runtime.h>
+#import "UIViewPersistenceState.h"
+#import "UIView+PDFExporterStatePersistanceSubclassing.h"
 
-static void * const kUIViewPersistenceStatesAssociatedStorageKey = (void *)&kUIViewPersistenceStatesAssociatedStorageKey;
+static void * const kUIViewPersistenceStatesAssociatedStorageKey =
+(void *)&kUIViewPersistenceStatesAssociatedStorageKey;
 static void * const kUIViewPersistStateAssociatedStorageKey = (void *)&kUIViewPersistStateAssociatedStorageKey;
 
 @interface UIView (PDFExporterStatePersistancePrivate)
@@ -20,7 +23,8 @@ static void * const kUIViewPersistStateAssociatedStorageKey = (void *)&kUIViewPe
 @implementation UIView (PDFExporterStatePersistance)
 
 - (NSMutableArray<UIViewPersistenceState *> *)persistenceStates {
-    NSMutableArray<UIViewPersistenceState *> *_persistenceStates = objc_getAssociatedObject(self, kUIViewPersistenceStatesAssociatedStorageKey);
+    NSMutableArray<UIViewPersistenceState *> *_persistenceStates =
+    objc_getAssociatedObject(self, kUIViewPersistenceStatesAssociatedStorageKey);
     if (!_persistenceStates) {
         _persistenceStates = [NSMutableArray new];
         self.persistenceStates = _persistenceStates;
@@ -29,7 +33,8 @@ static void * const kUIViewPersistStateAssociatedStorageKey = (void *)&kUIViewPe
 }
 
 - (void)setPersistenceStates:(NSMutableArray<UIViewPersistenceState *> *)persistenceStates {
-    objc_setAssociatedObject(self, kUIViewPersistenceStatesAssociatedStorageKey, persistenceStates, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, kUIViewPersistenceStatesAssociatedStorageKey, persistenceStates,
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (BOOL)shouldPersistState {
@@ -42,10 +47,9 @@ static void * const kUIViewPersistStateAssociatedStorageKey = (void *)&kUIViewPe
     if (persistState) {
         persistStateNumber = @(persistState);
     }
-    objc_setAssociatedObject(self, kUIViewPersistStateAssociatedStorageKey, persistStateNumber, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, kUIViewPersistStateAssociatedStorageKey, persistStateNumber,
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
-
-#pragma mark - Public Interface
 
 - (void)saveState {
     if (![self shouldPersistState]) {
@@ -64,23 +68,5 @@ static void * const kUIViewPersistStateAssociatedStorageKey = (void *)&kUIViewPe
     [self performRestoreWithState:state];
     [self.persistenceStates removeLastObject];
 }
-
-#pragma mark - StatePersistanceSubclassing
-
-- (Class)stateClass {
-    return [UIViewPersistenceState class];
-}
-
-- (void)configureState:(UIViewPersistenceState *)state {
-    state.frame = self.frame;
-}
-
-- (void)performRestoreWithState:(UIViewPersistenceState *)state {
-    self.frame = state.frame;
-}
-
-@end
-
-@implementation UIViewPersistenceState
 
 @end
