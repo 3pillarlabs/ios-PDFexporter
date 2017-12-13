@@ -31,21 +31,9 @@
 }
 
 - (void)drawSubviewsWithPath:(UIBezierPath *)path withinPageRect:(CGRect)rect {
-    CGPoint offset = CGPointZero;
-    for (CGFloat yCoordinate = CGRectGetMinY(rect);
-         yCoordinate < CGRectGetMaxY(rect);
-         yCoordinate += CGRectGetHeight(self.bounds)) {
-        offset.y = yCoordinate;
-        PDFExporter_dispatch_sync_main_queue(^{
-            self.contentOffset = offset;
-            CGRect frame = self.frame;
-            [self layoutIfNeeded];
-            self.frame = frame;
-            [self layoutHeadersAndFooters];
-        });
-        
+    [self scrollContentForRect:rect usingBlock:^{
         [super drawSubviewsWithPath:path withinPageRect:rect];
-    }
+    }];
 }
 
 - (BOOL)canDrawSubview:(UIView *)subview intersection:(CGRect)intersection {
@@ -98,26 +86,12 @@
 }
 
 - (CGPoint)renderingOffsetForPageRect:(CGRect)rect {
-    CGPoint renderingOffset = CGPointZero;
-    CGPoint contentOffset = CGPointZero;
-    for (CGFloat yCoordinate = CGRectGetMinY(rect);
-         yCoordinate < CGRectGetMaxY(rect);
-         yCoordinate += CGRectGetHeight(self.bounds)) {
-        
-        // prepare view for rect section
-        contentOffset.y = yCoordinate;
-        PDFExporter_dispatch_sync_main_queue(^{
-            self.contentOffset = contentOffset;
-            CGRect frame = self.frame;
-            [self layoutIfNeeded];
-            self.frame = frame;
-            [self layoutHeadersAndFooters];
-        });
-        
-        // ask subviews their rendering offset
+    __block CGPoint renderingOffset = CGPointZero;
+    [self scrollContentForRect:rect usingBlock:^{
         CGPoint subviewRenderingOffset = [super renderingOffsetForPageRect:rect];
         renderingOffset.y = fmaxf(renderingOffset.y, subviewRenderingOffset.y);
-    }
+    }];
+
     return renderingOffset;
 }
 
@@ -131,6 +105,29 @@
         return scrollViewFrame;
     } else {
         return [super subviewRect:subview layoutPageRect:rect];
+    }
+}
+
+- (void)updateContentOffset:(CGPoint)contentOffset {
+    PDFExporter_dispatch_sync_main_queue(^{
+        self.contentOffset = contentOffset;
+        CGRect frame = self.frame;
+        [self layoutIfNeeded];
+        self.frame = frame;
+        [self layoutHeadersAndFooters];
+    });
+}
+
+- (void)scrollContentForRect:(CGRect)rect usingBlock:(void (NS_NOESCAPE ^)(void))block {
+    CGPoint contentOffset = CGPointZero;
+    for (CGFloat yCoordinate = CGRectGetMinY(rect);
+         yCoordinate < CGRectGetMaxY(rect);
+         yCoordinate += CGRectGetHeight(self.bounds)) {
+
+        contentOffset.y = yCoordinate;
+
+        [self updateContentOffset:contentOffset];
+        block();
     }
 }
 
