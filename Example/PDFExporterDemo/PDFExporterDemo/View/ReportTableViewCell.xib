@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -37,15 +37,15 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="3PG_Logo" translatesAutoresizingMaskIntoConstraints="NO" id="o4d-Lk-9L6">
-                        <rect key="frame" x="12" y="11" width="44" height="44"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="3PG_Logo" translatesAutoresizingMaskIntoConstraints="NO" id="o4d-Lk-9L6">
+                        <rect key="frame" x="12" y="11" width="44" height="17"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="o4d-Lk-9L6" secondAttribute="height" multiplier="1:1" id="7AG-jB-stE"/>
+                            <constraint firstAttribute="width" secondItem="o4d-Lk-9L6" secondAttribute="height" multiplier="442:171" id="7AG-jB-stE"/>
                             <constraint firstAttribute="width" constant="44" id="7gb-DE-uEL"/>
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wiQ-cC-XFH">
-                        <rect key="frame" x="12" y="82" width="44" height="20"/>
+                        <rect key="frame" x="12" y="55" width="44" height="20"/>
                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="tOR-pf-7Uo"/>
@@ -58,7 +58,7 @@
                         <textInputTraits key="textInputTraits"/>
                     </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tag" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HOq-dT-qdO">
-                        <rect key="frame" x="12" y="63" width="44" height="16"/>
+                        <rect key="frame" x="12" y="36" width="44" height="16"/>
                         <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="10"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,16 +18,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="3PG_Logo" translatesAutoresizingMaskIntoConstraints="NO" id="FZd-QO-SUz">
-                    <rect key="frame" x="0.0" y="14" width="100" height="41"/>
+                    <rect key="frame" x="0.0" y="15" width="100" height="39"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="4GW-L9-Sj0"/>
+                        <constraint firstAttribute="width" secondItem="FZd-QO-SUz" secondAttribute="height" multiplier="442:171" id="d1k-qh-rJs"/>
                     </constraints>
                 </imageView>
             </subviews>
             <constraints>
                 <constraint firstItem="FZd-QO-SUz" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="1XT-Aa-IFQ"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="leading" secondItem="FZd-QO-SUz" secondAttribute="leading" id="h4a-16-U5X"/>
-                <constraint firstItem="FZd-QO-SUz" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="14" id="wdm-oA-IGE"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
