@@ -10,9 +10,7 @@
 #import "UIView+PDFExporterPageInformation.h"
 #import "UIView+PDFExporterStatePersistance.h"
 #import "PDFDispatchQueueExtension.h"
-#import "PDFMemoryCleanerObject.h"
 #import "CGGeometry+Additions.h"
-#import "PDFMemoryCleanerObject.h"
 
 @implementation UITableView (PDFExporterExtension)
 
@@ -28,18 +26,15 @@
     
     [self drawBackgroundWithPath:path];
     [self drawContentWithPath:path];
+    [self saveState];
     [self drawSubviewsWithPath:path withinPageRect:rect];
+    [self restoreState];
     if (self.layer.borderWidth != 0) {
         [self drawBorderWithPath:path];
     }
 }
 
 - (void)drawSubviewsWithPath:(UIBezierPath *)path withinPageRect:(CGRect)rect {
-    PDFMemoryCleanerObject __attribute__((unused)) *layout = [PDFMemoryCleanerObject memoryCleanerWithConstructBlock:^{
-        [self saveState];
-    } deallocationBlock:^{
-        [self restoreState];
-    }];
     [self scrollContentForRect:rect usingBlock:^{
         [super drawSubviewsWithPath:path withinPageRect:rect];
     }];
@@ -95,16 +90,13 @@
 }
 
 - (CGPoint)renderingOffsetForPageRect:(CGRect)rect {
-    PDFMemoryCleanerObject __attribute__((unused)) *layout = [PDFMemoryCleanerObject memoryCleanerWithConstructBlock:^{
-        [self saveState];
-    } deallocationBlock:^{
-        [self restoreState];
-    }];
     __block CGPoint renderingOffset = CGPointZero;
+    [self saveState];
     [self scrollContentForRect:rect usingBlock:^{
         CGPoint subviewRenderingOffset = [super renderingOffsetForPageRect:rect];
         renderingOffset.y = fmaxf(renderingOffset.y, subviewRenderingOffset.y);
     }];
+    [self restoreState];
 
     return renderingOffset;
 }

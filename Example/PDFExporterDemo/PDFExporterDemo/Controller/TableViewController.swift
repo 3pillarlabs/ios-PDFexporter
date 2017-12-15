@@ -24,7 +24,7 @@ class TableViewController: UITableViewController, PDFControllerProtocol {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 500
+        return 10//500
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

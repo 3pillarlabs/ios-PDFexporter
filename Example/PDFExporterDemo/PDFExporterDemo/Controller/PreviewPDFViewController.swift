@@ -17,7 +17,6 @@ class PreviewPDFViewController: UIViewController {
     
     private weak var pdfRenderer: PDFPrintPageRenderer!
     private var webView: WKWebView!
-    private var pdfData: Data?
 
     init(pdfRenderer: PDFPrintPageRenderer, nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -34,26 +33,16 @@ class PreviewPDFViewController: UIViewController {
         webView = WKWebView(frame: webViewContainer.bounds)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         webViewContainer.addSubview(webView)
-
-//        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-//            self?.pdfData = self?.generatePDFData()
-//            DispatchQueue.main.async {
-//                if let url = NSURL().absoluteURL, let pdfData = self?.pdfData {
-//                    self?.webView.load(pdfData, mimeType: "application/pdf", characterEncodingName: "UTF-8",
-//                                       baseURL: url)
-//                }
-//            }
-//        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
 
-        pdfData = generatePDFData()
-        if let url = NSURL().absoluteURL, let pdfData = pdfData {
-            webView.load(pdfData, mimeType: "application/pdf", characterEncodingName: "UTF-8",
-                         baseURL: url)
+        let pdfData = generatePDFData()
+        if let url = pdfData.1 {
+            webView.loadFileURL(url, allowingReadAccessTo: url)
+            print(url)
         }
         activityIndicator.stopAnimating()
     }
@@ -71,13 +60,14 @@ class PreviewPDFViewController: UIViewController {
         }
     }
 
-    private func generatePDFData() -> Data {
+    private func generatePDFData() -> (Data, URL?) {
         let pdfData = pdfRenderer.drawPagesToPDFData()
         if let pdfURL = Utils.getPdfFileUrl() {
             do {
                 try pdfData.write(to: pdfURL)
+                return (pdfData, pdfURL)
             } catch {}
         }
-        return pdfData
+        return (pdfData, nil)
     }
 }
