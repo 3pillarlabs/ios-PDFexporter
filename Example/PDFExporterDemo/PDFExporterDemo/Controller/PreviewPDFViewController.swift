@@ -12,9 +12,11 @@ import PDFExporter
 
 class PreviewPDFViewController: UIViewController {
 
-    @IBOutlet weak var webView: WKWebView!
-
+    @IBOutlet weak var webViewContainer: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     private weak var pdfRenderer: PDFPrintPageRenderer!
+    private var webView: WKWebView!
     private var pdfData: Data?
 
     init(pdfRenderer: PDFPrintPageRenderer, nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil) {
@@ -29,15 +31,31 @@ class PreviewPDFViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            self?.pdfData = self?.generatePDFData()
-            DispatchQueue.main.async {
-                if let url = NSURL().absoluteURL, let pdfData = self?.pdfData {
-                    self?.webView.load(pdfData, mimeType: "application/pdf", characterEncodingName: "UTF-8",
-                                       baseURL: url)
-                }
-            }
+        webView = WKWebView(frame: webViewContainer.bounds)
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        webViewContainer.addSubview(webView)
+
+//        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+//            self?.pdfData = self?.generatePDFData()
+//            DispatchQueue.main.async {
+//                if let url = NSURL().absoluteURL, let pdfData = self?.pdfData {
+//                    self?.webView.load(pdfData, mimeType: "application/pdf", characterEncodingName: "UTF-8",
+//                                       baseURL: url)
+//                }
+//            }
+//        }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+
+        pdfData = generatePDFData()
+        if let url = NSURL().absoluteURL, let pdfData = pdfData {
+            webView.load(pdfData, mimeType: "application/pdf", characterEncodingName: "UTF-8",
+                         baseURL: url)
         }
+        activityIndicator.stopAnimating()
     }
 
     // MARK: - Actions
