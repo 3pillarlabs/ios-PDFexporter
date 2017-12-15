@@ -31,4 +31,5 @@ FOUNDATION_EXPORT const unsigned char PDFExporterVersionString[];
 #import <PDFExporter/UIViewPersistenceState.h>
 #import <PDFExporter/UIScrollViewPersistenceState.h>
 #import <PDFExporter/UIScrollView+PDFExporterDrawing.h>
+#import <PDFExporter/UITableView+PDFExporterDrawing.h>
 #import <PDFExporter/CGFloat+Additions.h>
