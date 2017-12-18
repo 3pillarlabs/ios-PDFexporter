@@ -11,7 +11,7 @@ PDFExporter is available in iOS 9.0 and later.
 
 Available in iOS 9.0 and later. 
 
-CocoaPods Installation
+#### CocoaPods Installation
 
 - Run Terminal
 
