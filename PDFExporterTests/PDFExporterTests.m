@@ -6,6 +6,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "PDFPrintPageRenderer.h"
 
 @interface PDFExporterTests : XCTestCase
 

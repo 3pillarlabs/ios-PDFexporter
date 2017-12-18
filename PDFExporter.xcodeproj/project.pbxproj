@@ -60,6 +60,8 @@
 		FFE6B4491FE148B00033B733 /* UIScrollView+PDFExporterPageInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE6B4471FE148B00033B733 /* UIScrollView+PDFExporterPageInformation.m */; };
 		FFE6B44C1FE1493B0033B733 /* UIScrollViewPersistenceState.h in Headers */ = {isa = PBXBuildFile; fileRef = FFE6B44A1FE1493B0033B733 /* UIScrollViewPersistenceState.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FFE6B44D1FE1493B0033B733 /* UIScrollViewPersistenceState.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE6B44B1FE1493B0033B733 /* UIScrollViewPersistenceState.m */; };
+		FFFB41971FE80302002BC7E9 /* UIViewRenderingOffsetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FFFB41961FE80302002BC7E9 /* UIViewRenderingOffsetTests.m */; };
+		FFFB41991FE80388002BC7E9 /* PDFPrintPageRenderer+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = FFFB41981FE80388002BC7E9 /* PDFPrintPageRenderer+Private.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +117,8 @@
 		FFE6B4471FE148B00033B733 /* UIScrollView+PDFExporterPageInformation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+PDFExporterPageInformation.m"; sourceTree = "<group>"; };
 		FFE6B44A1FE1493B0033B733 /* UIScrollViewPersistenceState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIScrollViewPersistenceState.h; sourceTree = "<group>"; };
 		FFE6B44B1FE1493B0033B733 /* UIScrollViewPersistenceState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIScrollViewPersistenceState.m; sourceTree = "<group>"; };
+		FFFB41961FE80302002BC7E9 /* UIViewRenderingOffsetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIViewRenderingOffsetTests.m; sourceTree = "<group>"; };
+		FFFB41981FE80388002BC7E9 /* PDFPrintPageRenderer+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PDFPrintPageRenderer+Private.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +162,7 @@
 				FF7A163D1C317B0B0073001D /* PDFPaperSizes.m */,
 				FF7A163E1C317B0B0073001D /* PDFPrintPageRenderer.h */,
 				FF7A163F1C317B0B0073001D /* PDFPrintPageRenderer.m */,
+				FFFB41981FE80388002BC7E9 /* PDFPrintPageRenderer+Private.h */,
 			);
 			path = PDFRender;
 			sourceTree = "<group>";
@@ -207,6 +212,7 @@
 			children = (
 				FFB7CC7E1C29A5370051004B /* PDFExporterTests.m */,
 				FFB7CC801C29A5370051004B /* Info.plist */,
+				FFFB41961FE80302002BC7E9 /* UIViewRenderingOffsetTests.m */,
 			);
 			path = PDFExporterTests;
 			sourceTree = "<group>";
@@ -264,6 +270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF5F96261C5774D5000BDEE4 /* UIView+PDFExporterViewSlicing.h in Headers */,
+				FFFB41991FE80388002BC7E9 /* PDFPrintPageRenderer+Private.h in Headers */,
 				FF4A5B5B1C5A1E56008C43B1 /* UITextView+PDFExporterDrawing.h in Headers */,
 				FF5F961E1C577013000BDEE4 /* PDFRenderingDelegate.h in Headers */,
 				FFB7CCAB1C29A79F0051004B /* UIView+PDFExporterDrawing.h in Headers */,
@@ -426,6 +433,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFFB41971FE80302002BC7E9 /* UIViewRenderingOffsetTests.m in Sources */,
 				FFB7CC7F1C29A5370051004B /* PDFExporterTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

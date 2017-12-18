@@ -85,6 +85,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (CGRect)subviewRect:(UIView *)subview drawingPageRect:(CGRect)rect;
 /**
+ Compute intersection of drawing frame and the provided page rect.
+
+ @param rect The page rect.
+ @return The intersection rect.
+ */
+- (CGRect)intersectionRectForDrawingPageRect:(CGRect)rect;
+/**
  Computes the intersection between drawing rect and the bounds for page's rect.
 
  @param subview The subview to render.

@@ -28,31 +28,43 @@
 
 - (CGPoint)renderingOffsetForPageRect:(CGRect)rect {
     CGPoint renderingOffset = CGPointZero;
-    if (![self askSubviewsRenderingOffset]) {
-        return renderingOffset;
+    CGRect intersection = [self intersectionRectForDrawingPageRect:rect];
+    CGFloat intersectionHeight = CGRectGetHeight(intersection);
+    if (CGFloatIsEqual(intersectionHeight, CGRectGetHeight(self.drawingFrame)) ||
+        CGFloatIsEqual(intersectionHeight, CGRectGetHeight(rect))) {
+        return CGPointZero;
     }
-    for (UIView *subview in self.subviews) {
-        if ([subview isDrawable]) {
-            CGRect intersection = [self subviewIntersection:subview layoutPageRect:rect];
-            if (CGRectIsNull(intersection) ||                                   // skip subviews that are not visible,
-                [self canLayoutSubview:subview intersection:intersection]) {    // or it is possible to draw them
-                continue;                                                       // on current page
-            }
-            CGPoint subviewRenderingOffset = [subview renderingOffsetForPageRect:rect];
-            CGFloat subviewYOffset = (subviewRenderingOffset.y) ?
-            fminf(CGRectGetHeight(intersection), subviewRenderingOffset.y) : CGRectGetHeight(intersection);
-            if (CGFloatIsEqual(CGRectGetHeight(rect), subviewYOffset)) { // views that has equal or greater height than
-                continue;                                                // the page will not be moved to the next page
-            }
-            // test again, required for special cases like table cells
-            if ([self shouldConsiderLayoutSubview:subview intersection:intersection] == NO) {
-                subviewYOffset = CGRectGetHeight(intersection);
-            }
-            renderingOffset.y = fmaxf(renderingOffset.y, subviewYOffset);
-        }
-    }
+    renderingOffset.y = intersectionHeight;
     return renderingOffset;
 }
+
+//- (CGPoint)renderingOffsetForPageRect:(CGRect)rect {
+//    CGPoint renderingOffset = CGPointZero;
+//    if (![self askSubviewsRenderingOffset]) {
+//        return renderingOffset;
+//    }
+//    for (UIView *subview in self.subviews) {
+//        if ([subview isDrawable]) {
+//            CGRect intersection = [self subviewIntersection:subview layoutPageRect:rect];
+//            if (CGRectIsNull(intersection) ||                                   // skip subviews that are not visible,
+//                [self canLayoutSubview:subview intersection:intersection]) {    // or it is possible to draw them
+//                continue;                                                       // on current page
+//            }
+//            CGPoint subviewRenderingOffset = [subview renderingOffsetForPageRect:rect];
+//            CGFloat subviewYOffset = (subviewRenderingOffset.y) ?
+//            fminf(CGRectGetHeight(intersection), subviewRenderingOffset.y) : CGRectGetHeight(intersection);
+//            if (CGFloatIsEqual(CGRectGetHeight(rect), subviewYOffset)) { // views that has equal or greater height than
+//                continue;                                                // the page will not be moved to the next page
+//            }
+//            // test again, required for special cases like table cells
+//            if ([self shouldConsiderLayoutSubview:subview intersection:intersection] == NO) {
+//                subviewYOffset = CGRectGetHeight(intersection);
+//            }
+//            renderingOffset.y = fmaxf(renderingOffset.y, subviewYOffset);
+//        }
+//    }
+//    return renderingOffset;
+//}
 
 - (CGRect)subviewRect:(UIView *)subview layoutPageRect:(CGRect)rect {
     CGRect subviewRect = subview.drawingFrame;

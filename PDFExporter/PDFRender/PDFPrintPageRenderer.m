@@ -6,6 +6,7 @@
 //
 
 #import "PDFPrintPageRenderer.h"
+#import "PDFPrintPageRenderer+Private.h"
 #import <objc/runtime.h>
 #import "PDFPaperSizes.h"
 #import "PDFRenderingDelegate.h"

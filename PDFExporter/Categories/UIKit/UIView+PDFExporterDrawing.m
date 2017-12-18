@@ -127,6 +127,11 @@
                                    CGPointMinus(rect.origin));
 }
 
+- (CGRect)intersectionRectForDrawingPageRect:(CGRect)rect {
+    CGRect drawingFrame = [self.renderingDelegate view:self convertRectToRootView:self.drawingFrame];
+    return CGRectIntersection(drawingFrame, CGRectBounds(rect));
+}
+
 - (CGRect)subviewIntersection:(UIView *)subview drawingPageRect:(CGRect)rect {
     CGRect subviewRect = [self subviewRect:subview drawingPageRect:rect];
     return CGRectIntersection(subviewRect, CGRectBounds(rect));
