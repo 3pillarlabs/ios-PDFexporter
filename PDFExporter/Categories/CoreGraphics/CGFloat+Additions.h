@@ -26,7 +26,7 @@ CF_ASSUME_NONNULL_BEGIN
 CG_INLINE BOOL CGFloatIsEqualPrecision(CGFloat lhs, CGFloat rhs, CGFloat marginOfError)
 {
     CGFloat difference = lhs - rhs;
-    return difference < marginOfError;
+    return fabs(difference) < marginOfError;
 }
 
 /**
