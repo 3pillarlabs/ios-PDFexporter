@@ -14,7 +14,7 @@ What's New:
 - More options to customize drawing, layout to not slice views or preserve state of views;
 - Support for UITableView;
 - Bug fixes
-- New Demo app implemented in Swift 4
+- New Demo app implemented in Swift 4 ([demo branch](https://github.com/3pillarlabs/ios-PDFexporter/tree/feature/PDFExporter-Swift-Demo-v2.0))
 
 ## Description
 
@@ -139,10 +139,11 @@ carthage update
 
 ## Important notes
 
-Images need to be used in Asset Catalog as vector .pdf files. Apple provides support for vectorial images starting with Xcode 6 and iOS 7. Regular images are drawn at their actual size. At a high zoom level, the images look pixelated.
-Drawing is supported only on main thread.
+- Images need to be used in Asset Catalog as vector .pdf files (Apple provides support for vectorial images starting with Xcode 6 and iOS 7)
+- Regular images are drawn at their actual size. At a high zoom level, the images look pixelated.
+- Drawing is supported only on main thread.
 
-Also if you feel the need for a small demo please check the demo project branch, add the framework and you are good to go.
+Also if you feel the need for a small demo please check the [demo project](https://github.com/3pillarlabs/ios-PDFexporter/tree/feature/PDFExporter-Swift-Demo-v2.0) branch.
 
 
 ## License
