@@ -2,17 +2,84 @@
 
 The framework aims to provide an **easy way** to render a custom UIView into pdf format **without the need to be aware** of the original view's implementation.
 
-With the ability to **easily scale** the size of the view to be rendered and **adjust the font size proportionally** if configured so, the framework will provide "**on the shelf**" solution to **generate** .pdf file directly from the device at **high quality** level. If you preview the .pdf file and zoom in, the text, backgrounds, borders and (vectorial) images have the same quality as the actual size.
+With the ability to **easily scale** the size of the view to be rendered and **adjust the font size proportionally** if configured so, the framework will provide an "**on the shelf**" solution to **generate** .pdf file directly from the device at **high quality** level. If you preview the .pdf file and zoom in, the text, backgrounds, borders and (vectorial) images have the same quality as the actual size.
 
-PDFExporter is supported for iOS 8.0 and later.
+PDFExporter is available in iOS 9.0 and later.
 
 ## Installation
 
-Link your application against the framework. Add the framework to the list of 'Embedded Binaries' from the project's General tab.
+
+Available in iOS 9.0 and later. 
+
+CocoaPods Installation
+
+- Run Terminal
+
+- Navigate to project folder
+
+- Use command:
+
+```
+pod init
+```
+
+- Add code to podfile
+
+```
+platform :ios, '9.0'
+
+target 'YourProjectName' do
+  use_frameworks!
+    pod 'PDFExporter'
+end
+```
+
+- Run command:
+
+```
+pod install
+```
+
+Remember to open project using workspace
+
+Carthage Installation
+
+- Run Terminal
+
+- Navigate to project folder
+
+- Use command in terminal:
+```
+touch cartfile
+```
+
+- Add code to Cartfile:
+
+```
+github "3pillarlabs/ios-PDFexporter.git"
+
+```
+
+- Run carthage by using command:
+
+```
+carthage update
+```
+- In order to link your app with the framework, you have to add the PDFExporter in 'Embedded Binaries' list from 'General' section on application's target from Carthage/Build/iOS in project folder.
+
+## PDFExporter 2
+
+What's New:
+
+- Paging for footer or header;
+- Ability to choose between scaled content or the one which is provided;
+- Ability to choose to slice views or not;
+- More options to customize drawing, layout to not slice views or preserve state of views;
+- Support for UITableView;
 
 ## Usage
 
-Basic usage is to configure renderer and ask him to perform the drawing. Once the renderer has d
+Basic usage is to configure renderer and ask him to perform the drawing.
 
 **Objective-C**
 
@@ -25,6 +92,8 @@ PDFRenderer.paperSize = PDFPaperSizeUSLetter; // modify paper size if you want t
 PDFRenderer.contentView = [UIView new]; // add the view to be drawn as content
 PDFRenderer.footerView = [UIView new]; // optionally set a footer view
 PDFRenderer.headerView = [UIView new]; // optionally set a header view
+PDFRenderer.scaleContent = YES; // set it YES if you want to scale content view to fit the width of page
+PDFRenderer.sliceViews = YES; // set it YES if you want you want to slice content view's subviews
 
 NSData *PDFData = [self.PDFRenderer drawPagesToPDFData]; // let the framework to  create the PDF data
 ```
@@ -39,38 +108,20 @@ PDFRenderer.paperSize = PDFPaperSizeUSLetter // modify paper size if you want to
 PDFRenderer.contentView = UIView() // add the view to be drawn as content
 PDFRenderer.footerView = UIView() // optionally set a footer view
 PDFRenderer.headerView = UIView() // optionally set a header view
+PDFRenderer.scaleContent = true // set it 'true' if you want to scale content view to fit the width of page
+PDFRenderer.sliceViews = true // set it 'true' if you want you want to slice content view's subviews
+
 let PDFData: NSData = PDFRenderer.drawPagesToPDFData() // let the framework to  create the PDF data
 ```
 
 For more paper sizes , see [PDFPaperSize header](Framework/PDFExporter/PDFExporter/PDFRender/PDFPaperSizes.h). 
 
-If the view hierarchy is complex and drawing is taking too long, the task may be moved on a background queue. E.g. :
-
-**Objective-C**
-
-```objective-c
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *PDFData = [PDFRenderer drawPagesToPDFData]; // draw pages on background queue
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // use PDFData on main queue
-        });
-    });
-```
-
-**Swift**
-
-```swift
-dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) { () -> Void in
-	let PDFData: NSData = PDFRenderer.drawPagesToPDFData() // draw pages on background queue
-	dispatch_async(dispatch_get_main_queue() { () -> Void in
-		// use PDFData on main queue
-	}
-}
-```
-
 ## Important notes
 
 Images need to be used in Asset Catalog as vector .pdf files. Apple provides support for vectorial images starting with Xcode 6 and iOS 7. Regular images are drawn at their actual size. At a high zoom level, the images look pixelated.
+
+Also if you feel the need for a small demo please check the demo project branch, add the framework and you are good to go.
+
 
 ## License
 
