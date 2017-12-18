@@ -14,7 +14,6 @@
 #import "UIView+PDFExporterPageInformation.h"
 #import "UIView+PDFExporterStatePersistance.h"
 #import "UIScrollView+PDFExporterDrawing.h"
-#import "PDFDispatchQueueExtension.h"
 #import "CGGeometry+Additions.h"
 
 static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
@@ -242,11 +241,9 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 }
 
 - (void)layoutViews {
-    PDFExporter_dispatch_sync_main_queue(^{
-        [self.headerView layoutIfNeeded];
-        [self.contentView layoutIfNeeded];
-        [self.footerView layoutIfNeeded];
-    });
+    [self.headerView layoutIfNeeded];
+    [self.contentView layoutIfNeeded];
+    [self.footerView layoutIfNeeded];
 }
 
 - (void)preparePersistance {
