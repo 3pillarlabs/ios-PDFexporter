@@ -9,7 +9,6 @@
 #import "UIView+PDFExporterStatePersistance.h"
 #import "UIView+PDFExporterPageInformation.h"
 #import "UIView+PDFExporterStatePersistance.h"
-#import "PDFDispatchQueueExtension.h"
 #import "CGGeometry+Additions.h"
 
 @implementation UITableView (PDFExporterExtension)
@@ -115,11 +114,9 @@
 }
 
 - (void)updateContentOffset:(CGPoint)contentOffset {
-    PDFExporter_dispatch_sync_main_queue(^{
-        self.contentOffset = contentOffset;
-        [self layoutIfNeeded];
-        [self layoutHeadersAndFooters];
-    });
+    self.contentOffset = contentOffset;
+    [self layoutIfNeeded];
+    [self layoutHeadersAndFooters];
 }
 
 - (void)scrollContentForRect:(CGRect)rect usingBlock:(void (NS_NOESCAPE ^)(void))block {
