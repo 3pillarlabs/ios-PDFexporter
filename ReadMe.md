@@ -16,13 +16,15 @@ What's New:
 - Bug fixes
 - New Demo app implemented in Swift 4
 
-# Description
+## Description
 
 The framework aims to provide an **easy way** to render a custom UIView into pdf format **without the need to be aware** of the original view's implementation.
 
 With the ability to **easily scale** the size of the view to be rendered and **adjust the font size proportionally** if configured so, the framework will provide an "**on the shelf**" solution to **generate** .pdf file directly from the device at **high quality** level. If you preview the .pdf file and zoom in, the text, backgrounds, borders and (vectorial) images have the same quality as the actual size.
 
 PDFExporter is available in iOS 9.0 and later.
+
+![Swipe animation](https://media.giphy.com/media/xT0xeGCfGMpouK2dGg/giphy.gif)
 
 ## Table of contents
 
