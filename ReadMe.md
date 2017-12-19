@@ -1,7 +1,7 @@
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-Compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) 
-[![CocoaPods compatible](https://img.shields.io/badge/CocoaPods-compatible-4BC51D.svg?style=flat)](https://github.com/CocoaPods/CocoaPods) 
-[![Swift 4.0](https://img.shields.io/badge/Swift-4-orange.svg)](https://swift.org)
+[![CocoaPods compatible](https://img.shields.io/badge/CocoaPods-Compatible-4BC51D.svg?style=flat)](https://github.com/CocoaPods/CocoaPods) 
+[![Swift 4.0](https://img.shields.io/badge/Swift-Compatible-orange.svg)](https://swift.org)
 
 
 ## PDFExporter 2
@@ -73,7 +73,7 @@ PDFRenderer.sliceViews = true // set it 'true' if you want you want to slice con
 let PDFData: NSData = PDFRenderer.drawPagesToPDFData() // let the framework to  create the PDF data
 ```
 
-For more paper sizes , see [PDFPaperSize header](Framework/PDFExporter/PDFExporter/PDFRender/PDFPaperSizes.h). 
+For more paper sizes , see [PDFPaperSize header](PDFExporter/PDFRender/PDFPaperSizes.h). 
 
 ## Installation
 
