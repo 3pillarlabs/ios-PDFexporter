@@ -1,7 +1,7 @@
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-Compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) 
-[![CocoaPods compatible](https://img.shields.io/badge/CocoaPods-compatible-4BC51D.svg?style=flat)](https://github.com/CocoaPods/CocoaPods) 
-[![Swift 4.0](https://img.shields.io/badge/Swift-4-orange.svg)](https://swift.org)
+[![CocoaPods compatible](https://img.shields.io/badge/CocoaPods-Compatible-4BC51D.svg?style=flat)](https://github.com/CocoaPods/CocoaPods) 
+[![Swift 4.0](https://img.shields.io/badge/Swift-Compatible-orange.svg)](https://swift.org)
 
 
 ## PDFExporter 2
@@ -14,9 +14,9 @@ What's New:
 - More options to customize drawing, layout to not slice views or preserve state of views;
 - Support for UITableView;
 - Bug fixes
-- New Demo app implemented in Swift 4
+- New Demo app implemented in Swift 4 ([demo branch](https://github.com/3pillarlabs/ios-PDFexporter/tree/feature/PDFExporter-Swift-Demo-v2.0))
 
-# Description
+## Description
 
 The framework aims to provide an **easy way** to render a custom UIView into pdf format **without the need to be aware** of the original view's implementation.
 
@@ -24,15 +24,17 @@ With the ability to **easily scale** the size of the view to be rendered and **a
 
 PDFExporter is available in iOS 9.0 and later.
 
+![Swipe animation](https://media.giphy.com/media/xT0xeGCfGMpouK2dGg/giphy.gif)
+
 ## Table of contents
 
 - [Usage](https://github.com/3pillarlabs/ios-PDFexporter#usage)
-- [Installation](https://github.com/3pillarlabs/ios-PDFexporter#Installation)
-	- [CocoaPods](https://github.com/3pillarlabs/ios-PDFexporter#CocoaPods)
-	- [Carthage](https://github.com/3pillarlabs/ios-PDFexporter#Carthage)
-- [Important Notes](https://github.com/3pillarlabs/ios-PDFexporter#Important-Notes)
-- [License](https://github.com/3pillarlabs/ios-PDFexporter#License)
-- [About](https://github.com/3pillarlabs/ios-PDFexporter#About-this-project)
+- [Installation](https://github.com/3pillarlabs/ios-PDFexporter#installation)
+	- [CocoaPods](https://github.com/3pillarlabs/ios-PDFexporter#cocoapods)
+	- [Carthage](https://github.com/3pillarlabs/ios-PDFexporter#carthage)
+- [Important Notes](https://github.com/3pillarlabs/ios-PDFexporter#important-notes)
+- [License](https://github.com/3pillarlabs/ios-PDFexporter#license)
+- [About](https://github.com/3pillarlabs/ios-PDFexporter#about-this-project)
 
 ## Usage
 
@@ -71,7 +73,7 @@ PDFRenderer.sliceViews = true // set it 'true' if you want you want to slice con
 let PDFData: NSData = PDFRenderer.drawPagesToPDFData() // let the framework to  create the PDF data
 ```
 
-For more paper sizes , see [PDFPaperSize header](Framework/PDFExporter/PDFExporter/PDFRender/PDFPaperSizes.h). 
+For more paper sizes , see [PDFPaperSize header](PDFExporter/PDFRender/PDFPaperSizes.h). 
 
 ## Installation
 
@@ -137,10 +139,11 @@ carthage update
 
 ## Important notes
 
-Images need to be used in Asset Catalog as vector .pdf files. Apple provides support for vectorial images starting with Xcode 6 and iOS 7. Regular images are drawn at their actual size. At a high zoom level, the images look pixelated.
-Drawing is supported only on main thread.
+- Images need to be used in Asset Catalog as vector .pdf files (Apple provides support for vectorial images starting with Xcode 6 and iOS 7)
+- Regular images are drawn at their actual size. At a high zoom level, the images look pixelated.
+- Drawing is supported only on main thread.
 
-Also if you feel the need for a small demo please check the demo project branch, add the framework and you are good to go.
+Also if you feel the need for a small demo please check the [demo project](https://github.com/3pillarlabs/ios-PDFexporter/tree/feature/PDFExporter-Swift-Demo-v2.0) branch.
 
 
 ## License

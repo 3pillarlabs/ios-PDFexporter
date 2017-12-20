@@ -46,10 +46,10 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 
 - (instancetype)init {
     if (self = [super init]) {
-        self.paperSize = PDFPaperSizeUSLetter;
-        self.pageOrientation = PDFPageOrientationPortrait;
-        self.paperInset = kDefaultPaperInsets;
-        self.pagingMask = PDFPagingOptionNone;
+        _paperSize = PDFPaperSizeUSLetter;
+        _pageOrientation = PDFPageOrientationPortrait;
+        _paperInset = kDefaultPaperInsets;
+        _pagingMask = PDFPagingOptionNone;
     }
     
     return self;

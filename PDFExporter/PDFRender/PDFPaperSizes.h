@@ -72,12 +72,12 @@ CG_EXTERN CGFloat PDFPaperConvertInchToPoint(CGFloat inches);
 /**
  Converts a papper inch into a point on the page from pdf document.
 
- @param milimeters the physical measument of paper.
+ @param millimeters the physical measument of paper.
  @return the digital measurement of paper.
  */
 CG_EXTERN CGFloat PDFPaperConvertMMToPoint(CGFloat millimeters);
 /**
- Create a paper size by providing the width and height in milimeters.
+ Create a paper size by providing the width and height in millimeters.
 
  @param widthUsingMM paper's width in millimeters.
  @param heightUsingMM paper's height in millimeters.

@@ -109,10 +109,7 @@ typedef NS_ENUM(NSUInteger, PDFPageOrientation) {
 @property (nonatomic, getter=shouldSliceViews) BOOL sliceViews;
 
 /**
- Draws content. Drawing may be performed on any queue.
- View's layout will be synchronized on main queue when and if needed.
-
- Method may be wrapped within an operation which may be cancelled.
+ Draws content. Drawing may be performed only on the main thread.
 
  @return the pdf as NSData.
  */
