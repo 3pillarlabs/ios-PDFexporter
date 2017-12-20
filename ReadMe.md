@@ -29,12 +29,12 @@ PDFExporter is available in iOS 9.0 and later.
 ## Table of contents
 
 - [Usage](https://github.com/3pillarlabs/ios-PDFexporter#usage)
-- [Installation](https://github.com/3pillarlabs/ios-PDFexporter#Installation)
-	- [CocoaPods](https://github.com/3pillarlabs/ios-PDFexporter#CocoaPods)
-	- [Carthage](https://github.com/3pillarlabs/ios-PDFexporter#Carthage)
-- [Important Notes](https://github.com/3pillarlabs/ios-PDFexporter#Important-Notes)
-- [License](https://github.com/3pillarlabs/ios-PDFexporter#License)
-- [About](https://github.com/3pillarlabs/ios-PDFexporter#About-this-project)
+- [Installation](https://github.com/3pillarlabs/ios-PDFexporter#installation)
+	- [CocoaPods](https://github.com/3pillarlabs/ios-PDFexporter#cocoapods)
+	- [Carthage](https://github.com/3pillarlabs/ios-PDFexporter#carthage)
+- [Important Notes](https://github.com/3pillarlabs/ios-PDFexporter#important-notes)
+- [License](https://github.com/3pillarlabs/ios-PDFexporter#license)
+- [About](https://github.com/3pillarlabs/ios-PDFexporter#about-this-project)
 
 ## Usage
 
