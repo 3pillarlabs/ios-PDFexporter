@@ -3,6 +3,15 @@
 [![CocoaPods compatible](https://img.shields.io/badge/CocoaPods-Compatible-4BC51D.svg?style=flat)](https://github.com/CocoaPods/CocoaPods) 
 [![Swift 4.0](https://img.shields.io/badge/Swift-Compatible-orange.svg)](https://swift.org)
 
+## Demo App Installation
+
+In order to successfully build the application please follow the next steps:
+
+- open Terminal
+- navigate to Demo project folder (Example/PDFExporterDemo)
+- run ``` carthage update ```
+
+
 
 ## PDFExporter 2
 
