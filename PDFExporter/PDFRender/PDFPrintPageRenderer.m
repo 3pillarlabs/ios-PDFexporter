@@ -55,16 +55,17 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 }
 
 - (void)drawPages:(CGRect)inBounds {
-    [self layoutViews];
     [self preparePersistance];
+    [self prepareContentForDrawing];
+    [self updateRenderingDelegates];
+    [self layoutViews];
     [self computeGeometry];
     [self computeNumberOfPages];
-    [self prepareContentForDrawing];
+    for (NSInteger pageNumber = 0; pageNumber < self.numberOfPages; pageNumber++) {
+        UIGraphicsBeginPDFPage();
+        [self drawPageAtIndex:pageNumber inRect:self.printableRect];
+    }
     [self cleanContentAfterDrawing];
-	for (NSInteger pageNumber = 0; pageNumber < self.numberOfPages; pageNumber++) {
-		UIGraphicsBeginPDFPage();
-		[self drawPageAtIndex:pageNumber inRect:self.printableRect];
-	}
     [self cleanPersistance];
 }
 
@@ -244,6 +245,8 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     [self.headerView layoutIfNeeded];
     [self.contentView layoutIfNeeded];
     [self.footerView layoutIfNeeded];
+
+    [self updateFrames];
 }
 
 - (void)preparePersistance {
@@ -260,7 +263,9 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     [self.headerView prepareForDrawing];
     [self.contentView prepareForDrawing];
     [self.footerView prepareForDrawing];
+}
 
+- (void)updateFrames {
     CGRect viewFrame = self.headerView.frame;
     viewFrame.origin = CGPointZero;
     self.headerView.frame = viewFrame;
@@ -270,7 +275,9 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     viewFrame = self.footerView.frame;
     viewFrame.origin = CGPointZero;
     self.footerView.frame = viewFrame;
-    
+}
+
+- (void)updateRenderingDelegates {
     self.contentView.renderingDelegate = self;
     self.headerView.renderingDelegate = self;
     self.footerView.renderingDelegate = self;
