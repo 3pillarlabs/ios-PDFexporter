@@ -56,9 +56,9 @@ CGSize const PDFPaperSizeNewsBroadsheet = {1692.f, 2124.f};
 CGSize const PDFPaperSizeNewsTabloid = {792.f, 1217.f};
 CGSize const PDFPaperSizeNewsRhenish = {1006.f, 1474.f};
 
-CGFloat _PDFPaperConvertMMToInch(CGFloat milimeters)
+CGFloat _PDFPaperConvertMMToInch(CGFloat millimeters)
 {
-    return milimeters / 25.4f;
+    return millimeters / 25.4f;
 }
 
 CGFloat PDFPaperConvertInchToPoint(CGFloat inches)
