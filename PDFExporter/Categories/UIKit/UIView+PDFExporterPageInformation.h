@@ -62,6 +62,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (CGRect)subviewIntersection:(UIView *)subview layoutPageRect:(CGRect)rect;
 
+/**
+ Compute the y offset for the provided intersection.
+
+ @param intersection The intersection between page rect and drawing frame.
+ @return The y offset for the provided intersection.
+ */
+- (CGFloat)yOffsetForIntersection:(CGRect)intersection;
+
 @end
 
 NS_ASSUME_NONNULL_END

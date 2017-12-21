@@ -128,7 +128,12 @@
 }
 
 - (CGRect)intersectionRectForDrawingPageRect:(CGRect)rect {
-    CGRect drawingFrame = [self.renderingDelegate view:self convertRectToRootView:self.drawingFrame];
+    CGRect drawingFrame;
+    if (self.superview) {
+        drawingFrame = [self.renderingDelegate view:self.superview convertRectToRootView:self.drawingFrame];
+    } else {
+        drawingFrame = self.drawingFrame;
+    }
     return CGRectIntersection(drawingFrame, CGRectBounds(rect));
 }
 

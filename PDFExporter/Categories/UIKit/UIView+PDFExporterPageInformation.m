@@ -27,15 +27,33 @@
 }
 
 - (CGPoint)renderingOffsetForPageRect:(CGRect)rect {
+    CGRect newRect = rect;
     CGPoint renderingOffset = CGPointZero;
-    CGRect intersection = [self intersectionRectForDrawingPageRect:rect];
+    CGRect intersection = [self intersectionRectForDrawingPageRect:newRect];
     CGFloat intersectionHeight = CGRectGetHeight(intersection);
-    if (CGFloatIsEqual(intersectionHeight, CGRectGetHeight(self.drawingFrame)) ||
-        CGFloatIsEqual(intersectionHeight, CGRectGetHeight(rect))) {
+    if (CGRectIsEmpty(intersection) ||
+        CGFloatIsEqual(intersectionHeight, CGRectGetHeight(self.drawingFrame))) {
         return CGPointZero;
     }
-    renderingOffset.y = intersectionHeight;
+    if (intersectionHeight != rect.size.height) {
+        renderingOffset.y = [self yOffsetForIntersection:intersection];
+    }
+
+    newRect.size.height = rect.size.height - renderingOffset.y;
+
+    for (UIView *subview in [self sortedSubViews]) {
+        CGPoint subviewOffset = [subview renderingOffsetForPageRect:newRect];
+        if (subviewOffset.y != 0) {
+            renderingOffset.y += subviewOffset.y;
+        }
+        newRect.size.height = rect.size.height - renderingOffset.y;
+    }
+
     return renderingOffset;
+}
+
+- (CGFloat)yOffsetForIntersection:(CGRect)intersection {
+    return  CGRectGetHeight(intersection);
 }
 
 //- (CGPoint)renderingOffsetForPageRect:(CGRect)rect {
@@ -75,6 +93,13 @@
 - (CGRect)subviewIntersection:(UIView *)subview layoutPageRect:(CGRect)rect {
     CGRect subviewRect = [self subviewRect:subview layoutPageRect:rect];
     return CGRectIntersection(subviewRect, rect);
+}
+
+- (NSArray<UIView *>*)sortedSubViews {
+    return [self.subviews sortedArrayUsingComparator:^NSComparisonResult(UIView * _Nonnull view1,
+                                                                         UIView * _Nonnull view2) {
+        return CGRectGetMaxY(view1.drawingFrame) < CGRectGetMaxY(view2.drawingFrame);
+    }];
 }
 
 @end

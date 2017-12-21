@@ -115,7 +115,9 @@
 
 - (void)updateContentOffset:(CGPoint)contentOffset {
     self.contentOffset = contentOffset;
+    CGRect frame = self.frame;
     [self layoutIfNeeded];
+    self.frame = frame;
     [self layoutHeadersAndFooters];
 }
 

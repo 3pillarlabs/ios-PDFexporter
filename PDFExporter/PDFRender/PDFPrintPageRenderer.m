@@ -56,6 +56,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 }
 
 - (void)drawPages:(CGRect)inBounds {
+    [self updateRenderingdelegates];
     [self layoutViews];
     [self preparePersistance];
     [self computeGeometry];
@@ -245,6 +246,8 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     [self.headerView layoutIfNeeded];
     [self.contentView layoutIfNeeded];
     [self.footerView layoutIfNeeded];
+
+    [self updateFrames];
 }
 
 - (void)preparePersistance {
@@ -261,7 +264,9 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     [self.headerView prepareForDrawing];
     [self.contentView prepareForDrawing];
     [self.footerView prepareForDrawing];
+}
 
+- (void)updateFrames {
     CGRect viewFrame = self.headerView.frame;
     viewFrame.origin = CGPointZero;
     self.headerView.frame = viewFrame;
@@ -271,7 +276,9 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     viewFrame = self.footerView.frame;
     viewFrame.origin = CGPointZero;
     self.footerView.frame = viewFrame;
-    
+}
+
+- (void)updateRenderingdelegates {
     self.contentView.renderingDelegate = self;
     self.headerView.renderingDelegate = self;
     self.footerView.renderingDelegate = self;
@@ -350,6 +357,8 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
         rootView = self.headerView;
     } else if ([view isDescendantOfView:self.footerView]) {
         rootView = self.footerView;
+    } else {
+        rootView = view.superview;
     }
     return [view convertRect:rect toView:rootView];
 }
