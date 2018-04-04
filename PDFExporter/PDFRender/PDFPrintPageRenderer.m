@@ -64,10 +64,10 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     [self computeNumberOfPages];
     [self prepareContentForDrawing];
     [self cleanContentAfterDrawing];
-	for (NSInteger pageNumber = 0; pageNumber < self.numberOfPages; pageNumber++) {
-		UIGraphicsBeginPDFPage();
-		[self drawPageAtIndex:pageNumber inRect:self.printableRect];
-	}
+    for (NSInteger pageNumber = 0; pageNumber < self.numberOfPages; pageNumber++) {
+        UIGraphicsBeginPDFPage();
+        [self drawPageAtIndex:pageNumber inRect:self.printableRect];
+    }
     [self cleanPersistance];
 }
 
