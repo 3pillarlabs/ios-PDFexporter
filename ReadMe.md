@@ -125,8 +125,7 @@ touch cartfile
 - Add code to Cartfile:
 
 ```
-github "3pillarlabs/ios-PDFexporter.git"
-
+github "3pillarlabs/ios-PDFexporter"
 ```
 
 - Run carthage by using command:
