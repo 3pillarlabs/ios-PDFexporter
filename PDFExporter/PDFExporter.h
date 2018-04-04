@@ -19,7 +19,6 @@ FOUNDATION_EXPORT const unsigned char PDFExporterVersionString[];
 #import <PDFExporter/PDFPaperSizes.h>
 #import <PDFExporter/PDFHeaderFooterPaging.h>
 #import <PDFExporter/PDFRenderingDelegate.h>
-#import <PDFExporter/PDFImageView.h>
 #import <PDFExporter/UIView+PDFExporterDrawing.h>
 #import <PDFExporter/UIView+PDFExporterViewSlicing.h>
 #import <PDFExporter/UIView+PDFExporterPageInformation.h>

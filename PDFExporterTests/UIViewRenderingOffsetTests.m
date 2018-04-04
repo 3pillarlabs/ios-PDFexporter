@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "PDFPrintPageRenderer.h"
 #import "PDFPrintPageRenderer+Private.h"
+#import "PDFPrintPageRenderer+PDFRenderingDelegate.h"
 #import "UIView+PDFExporterPageInformation.h"
 #import "PDFLongContentViewFactory.h"
 #import "UIView+PDFExporterViewSlicing.h"

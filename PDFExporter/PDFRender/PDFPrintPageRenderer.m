@@ -7,6 +7,7 @@
 
 #import "PDFPrintPageRenderer.h"
 #import "PDFPrintPageRenderer+Private.h"
+#import "PDFPrintPageRenderer+PDFRenderingDelegate.h"
 #import <objc/runtime.h>
 #import "PDFPaperSizes.h"
 #import "PDFRenderingDelegate.h"
@@ -25,7 +26,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 
 @end
 
-@interface PDFPrintPageRenderer () <PDFRenderingDelegate>
+@interface PDFPrintPageRenderer ()
 
 @property (nonatomic) CGFloat contentViewScale;
 @property (nonatomic) CGFloat contentRectScale;
@@ -56,7 +57,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
 }
 
 - (void)drawPages:(CGRect)inBounds {
-    [self updateRenderingdelegates];
+    [self updateRenderingDelegates];
     [self layoutViews];
     [self preparePersistance];
     [self computeGeometry];
@@ -278,7 +279,7 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
     self.footerView.frame = viewFrame;
 }
 
-- (void)updateRenderingdelegates {
+- (void)updateRenderingDelegates {
     self.contentView.renderingDelegate = self;
     self.headerView.renderingDelegate = self;
     self.footerView.renderingDelegate = self;
@@ -345,26 +346,6 @@ static UIEdgeInsets const kDefaultPaperInsets = {30.f, 30.f, 30.f, 30.f};
         pageOffset.origin.y = index * CGRectGetHeight(pageOffset);
     }
     return pageOffset;
-}
-
-#pragma mark - PDFRenderingDelegate
-
-- (CGRect)view:(UIView *)view convertRectToRootView:(CGRect)rect {
-    UIView *rootView = nil;
-    if ([view isDescendantOfView:self.contentView]) {
-        rootView = self.contentView;
-    } else if ([view isDescendantOfView:self.headerView]) {
-        rootView = self.headerView;
-    } else if ([view isDescendantOfView:self.footerView]) {
-        rootView = self.footerView;
-    } else {
-        rootView = view.superview;
-    }
-    return [view convertRect:rect toView:rootView];
-}
-
-- (BOOL)viewShouldSliceSubviews:(UIView *)view {
-    return self.shouldSliceViews;
 }
 
 @end
